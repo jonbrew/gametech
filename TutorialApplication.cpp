@@ -34,7 +34,10 @@ void TutorialApplication::createScene(void)
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
 
-    createWalls(200);
+    Room room(mSceneMgr);
+    room.setup();
+
+    // createWalls(200);
     Ball* ball = new Ball(mSceneMgr);
     Ogre::Entity* ballEntity = mSceneMgr->createEntity("sphere.mesh"); 
     //ball->setMaterialName("BallColor/CubeMap"); 

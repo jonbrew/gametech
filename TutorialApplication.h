@@ -20,6 +20,7 @@ http://www.ogre3d.org/wiki/
 
 #include "BaseApplication.h"
 #include "Ball.h"
+#include "Room.h"
 
 //---------------------------------------------------------------------------
 
