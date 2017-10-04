@@ -1,8 +1,8 @@
 #include <Ogre.h>
+#include "Goal.h"
 
 class ScoreWall { 
-    protected: 
-        Ogre::SceneNode* rootNode; 
+    protected:  
         int squareSize;
         std::vector<Goal> goals;
         Goal* activeGoal;
@@ -11,6 +11,5 @@ class ScoreWall {
         ScoreWall(Ogre::SceneManager* scnMgr, int wallSize); 
         ~ScoreWall(); 
         void pickGoal(); 
-        Ogre::SceneNode* getNode() { return rootNode; } 
         Goal* getActiveGoal() { return activeGoal; } 
 };
