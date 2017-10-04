@@ -19,6 +19,7 @@ http://www.ogre3d.org/wiki/
 #define __TutorialApplication_h_
 
 #include "BaseApplication.h"
+#include "Ball.h"
 
 //---------------------------------------------------------------------------
 
