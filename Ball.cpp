@@ -2,20 +2,24 @@
 #include <OgreSceneManager.h> 
 #include "Ball.h"
 
-Ball::Ball(Ogre::SceneManager* scnMgr) { 
-    Ogre::Entity* ball = scnMgr->createEntity("Sphere", "sphere.mesh"); 
-    ball->setMaterialName("Examples/SceneCubeMap2"); 
-    ball->setCastShadows(true); 
-
-    rootNode = scnMgr->createSceneNode("Ball"); 
-    rootNode->attachObject(ball); 
-    rootNode->scale(0.1,0.1,0.1); 
-    rootNode->setPosition(Ogre::Vector3(0, 0, 0));
+Ball::Ball(Ogre::SceneManager* scnMgr) {
+    sceneMgr = scnMgr;
     bRadius = 10.0f; 
     bDirection = Ogre::Vector3(1.0f, 2.0f, 3.0f); 
     bDirection.normalise(); 
     bSpeed = 250.0f; 
-} 
+}
+
+void Ball::createBall() {
+    Ogre::Entity* ball = sceneMgr->createEntity("Sphere", "sphere.mesh"); 
+    ball->setCastShadows(true);
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Ball"); 
+    rootNode->attachObject(ball);
+    rootNode->scale(0.1,0.1,0.1); 
+    rootNode->setPosition(Ogre::Vector3(0, 0, 0));
+}
+
+
 
 void Ball::move(const Ogre::FrameEvent& evt) { 
     // Ogre::Vector3 bPosition = rootNode->getPosition(); 

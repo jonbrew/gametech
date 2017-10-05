@@ -1,7 +1,7 @@
 #include "Wall.h"
 
 
-Wall::Wall(Ogre::SceneManager* mSceneMgr, int wallSize): wallMaterial("Examples/Rockwall") {
+Wall::Wall(Ogre::SceneManager* mSceneMgr, int wallSize): wallMaterial("Colors/Blue") {
 	 // Create plane and mesh
 	this->mSceneMgr = mSceneMgr;
 	this->wallSize = wallSize;

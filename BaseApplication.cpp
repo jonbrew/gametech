@@ -260,7 +260,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
 
     // Update ball
-    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("ball");
+    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Vector3 ballPosition = ballNode->getPosition();
     int bounds = 100;
     if(ballPosition.x > bounds || ballPosition.x < -bounds)
