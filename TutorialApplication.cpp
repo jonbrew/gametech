@@ -29,45 +29,51 @@ TutorialApplication::~TutorialApplication(void)
 //---------------------------------------------------------------------------
 bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
 { 
+    
    //change to paddle
-    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
+    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
    
-    ballNode = (Ogre::SceneNode*) ballNode;
-    int x = mDirection.x;
-    int y = mDirection.y;
-    int z = mDirection.z;
+    paddleNode = (Ogre::SceneNode*) paddleNode;
+    Ogre::Real x = mDirection.x;
+    Ogre::Real y = mDirection.y;
+    Ogre::Real z = mDirection.z;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y -= 1;
+            y += 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_DOWN:
-            y += 1;
+            y -= 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_LEFT:
-            x += 1;
+            x += 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_RIGHT:
-            x -= 1;
+            x -= 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_W:
-            mShutDown = true;
+            y += 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_A:
-            mShutDown = true;
+            x += 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_S:
-            mShutDown = true;
+            y -= 50;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
             break;
         case OIS::KC_D:
-            mShutDown = true;
+            x -= 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         default:
             break;
@@ -78,43 +84,47 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
  
 bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke) 
 { 
-    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild(0);
-    ballNode = (Ogre::SceneNode*) ballNode;
-    int x = mDirection.x;
-    int y = mDirection.y;
-    int z = mDirection.z;
+    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    paddleNode = (Ogre::SceneNode*) paddleNode;
+    Ogre::Real x = mDirection.x;
+    Ogre::Real y = mDirection.y;
+    Ogre::Real z = mDirection.z;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y += 1;
+            y -= 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_DOWN:
-            y -= 1;
+            y += 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_LEFT:
-            x -= 1;
+            x -= 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_RIGHT:
-            x += 1;
+            x += 50;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_W:
-            mShutDown = true;
+            y -= 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_A:
-            mShutDown = true;
+            x -= 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_S:
-            mShutDown = true;
+            y += 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_D:
-            mShutDown = true;
+            x += 50;
+            mDirection = Ogre::Vector3(x,y,z);
             break;
         default:
             break;
@@ -123,6 +133,8 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
     
   return true; 
 }
+
+
 void TutorialApplication::createScene(void)
 {
     mSceneMgr->setAmbientLight(Ogre::ColourValue(.35, .35, .35));
@@ -131,6 +143,8 @@ void TutorialApplication::createScene(void)
 
     Room room(mSceneMgr, 200);
     room.setup();
+
+    //Paddle paddle(mSceneMgr);
 
     scoreWall = room.getScoreWall();
     scoreWall->pickGoal();
