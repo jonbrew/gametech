@@ -94,7 +94,7 @@ void BaseApplication::createCamera(void)
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,-50,-80));
+    mCamera->setPosition(Ogre::Vector3(0,0,-100));
     // Look back along -Z
     mCamera->lookAt(Ogre::Vector3(0,-50,0));
     mCamera->setNearClipDistance(5);
@@ -264,7 +264,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
    
    //need to change ball to paddle
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
+    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
     Ogre::Vector3 ballPosition = ballNode->getPosition();
+    Ogre::Vector3 paddlePosition = paddleNode->getPosition();
     // int bounds = 100;
     // if(ballPosition.x > bounds || ballPosition.x < -bounds)
     //     direction.x *= -1;
@@ -273,8 +275,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // if(ballPosition.z > bounds || ballPosition.z < -bounds)
     //     direction.z *= -1;
     // ballNode->translate(speed * evt.timeSinceLastFrame * direction);
-    /*will need to change ballNode to paddleNode // ballNode->translate(mDirection);*/
-    // mCamera->lookAt(ballPosition);
+    paddleNode->translate(mDirection * evt.timeSinceLastFrame);
+    mCamera->lookAt(paddlePosition);
     return true;
 }
 //---------------------------------------------------------------------------
