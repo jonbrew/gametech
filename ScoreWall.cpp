@@ -5,6 +5,7 @@ ScoreWall::ScoreWall(Ogre::SceneManager* scnMgr, int wallSize) {
     this->scnMgr = scnMgr;
     this->wallSize = wallSize;
     squareSize = ((double) wallSize) / 3;
+    activeGoal = NULL;
 
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(
@@ -48,9 +49,10 @@ void ScoreWall::createScoreWall() {
 }
 
 void ScoreWall::pickGoal() { 
-    int i = rand()%(goals.size()-0 + 1) + 0;
-    if(activeGoal)
+    int i = rand() % goals.size();
+    if(activeGoal) {
         activeGoal->off();
+    }
     activeGoal = &(goals[i]);
     activeGoal->on();
 }

@@ -37,6 +37,7 @@ void TutorialApplication::createScene(void)
     room.setup();
 
     scoreWall = room.getScoreWall();
+    scoreWall->pickGoal();
 }
 //---------------------------------------------------------------------------
 

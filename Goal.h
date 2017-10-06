@@ -7,6 +7,7 @@
 class Goal { 
 protected: 
     Ogre::SceneNode* goalNode;
+    Ogre::Entity* goalEntity;
     bool isActive;
 
 public: 
