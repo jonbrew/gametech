@@ -37,42 +37,44 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
     Ogre::Real z = mDirection.z;
+
+    Ogre::Real move = 100;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y += 50;
+            y += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_DOWN:
-            y -= 50;
+            y -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_LEFT:
-            x += 50;
+            x += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_RIGHT:
-            x -= 50;
+            x -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_W:
-            y += 50;
+            y += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_A:
-            x += 50;
+            x += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_S:
-            y -= 50;
+            y -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
             break;
         case OIS::KC_D:
-            x -= 50;
+            x -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         default:
@@ -89,41 +91,43 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
     Ogre::Real z = mDirection.z;
+
+    Ogre::Real move = 100;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y -= 50;
+            y -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_DOWN:
-            y += 50;
+            y += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_LEFT:
-            x -= 50;
+            x -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_RIGHT:
-            x += 50;
+            x += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_W:
-            y -= 50;
+            y -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_A:
-            x -= 50;
+            x -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_S:
-            y += 50;
+            y += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_D:
-            x += 50;
+            x += move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
         default:
@@ -143,8 +147,6 @@ void TutorialApplication::createScene(void)
 
     Room room(mSceneMgr, 200);
     room.setup();
-
-    //Paddle paddle(mSceneMgr);
 
     scoreWall = room.getScoreWall();
     scoreWall->pickGoal();

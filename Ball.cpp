@@ -13,7 +13,7 @@ void Ball::createBall() {
     ball->setCastShadows(true);
     rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Ball"); 
     rootNode->attachObject(ball);
-    rootNode->scale(0.1,0.1,0.1); 
+    rootNode->scale(0.07,0.07,0.07); 
     rootNode->setPosition(Ogre::Vector3(0, 0, 0));
 }
 

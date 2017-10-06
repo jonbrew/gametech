@@ -93,10 +93,8 @@ void BaseApplication::createCamera(void)
     // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
-    // Position it at 500 in Z direction
     mCamera->setPosition(Ogre::Vector3(0,0,-100));
-    // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,-50,0));
+    mCamera->lookAt(Ogre::Vector3(0,0,0));
     mCamera->setNearClipDistance(5);
     mCamera->setFOVy(Ogre::Radian(Ogre::Degree(90)));
 }
@@ -260,21 +258,25 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
-    // Update ball
-   
-   //need to change ball to paddle
+    // Game rendering
+
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    
     Ogre::Vector3 ballPosition = ballNode->getPosition();
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
-    // int bounds = 100;
-    // if(ballPosition.x > bounds || ballPosition.x < -bounds)
-    //     direction.x *= -1;
-    // if(ballPosition.y > bounds || ballPosition.y < -bounds)
-    //     direction.y *= -1;
-    // if(ballPosition.z > bounds || ballPosition.z < -bounds)
-    //     direction.z *= -1;
-    // ballNode->translate(speed * evt.timeSinceLastFrame * direction);
+
+    // Update ball
+
+    int bounds = 100;
+    if(ballPosition.x > bounds || ballPosition.x < -bounds)
+        direction.x *= -1;
+    if(ballPosition.y > bounds || ballPosition.y < -bounds)
+        direction.y *= -1;
+    if(ballPosition.z > bounds || ballPosition.z < -bounds)
+        direction.z *= -1;
+    ballNode->translate(speed * evt.timeSinceLastFrame * direction);
+
     paddleNode->translate(mDirection * evt.timeSinceLastFrame);
     mCamera->move(mDirection * evt.timeSinceLastFrame);
     return true;
