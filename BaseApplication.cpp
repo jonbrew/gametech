@@ -276,7 +276,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //     direction.z *= -1;
     // ballNode->translate(speed * evt.timeSinceLastFrame * direction);
     paddleNode->translate(mDirection * evt.timeSinceLastFrame);
-    mCamera->lookAt(paddlePosition);
+    mCamera->move(mDirection * evt.timeSinceLastFrame);
     return true;
 }
 //---------------------------------------------------------------------------
