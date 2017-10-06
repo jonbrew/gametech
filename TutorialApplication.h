@@ -31,6 +31,8 @@ public:
 
 protected:
     virtual void createScene(void);
+    virtual bool keyPressed(const OIS::KeyEvent& ke);
+	 virtual bool keyReleased(const OIS::KeyEvent& ke);
 };
 
 //---------------------------------------------------------------------------
