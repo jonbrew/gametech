@@ -258,28 +258,40 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
-    // Game rendering
-
+    // Update ball
+   
+   //might be replaced with physics engine aside from move / translate operations
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
-    
     Ogre::Vector3 ballPosition = ballNode->getPosition();
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
+     int bounds = 100;
+     if(ballPosition.x > bounds || ballPosition.x < -bounds)
+         direction = direction.reflect(Ogre::Vector3::UNIT_X);;
+     if(ballPosition.y > bounds || ballPosition.y < -bounds)
+         direction = direction.reflect(Ogre::Vector3::UNIT_Y);;
+     if(ballPosition.z > bounds || ballPosition.z < -bounds)
+         direction = direction.reflect(Ogre::Vector3::UNIT_Z);;
+     ballNode->translate(speed * evt.timeSinceLastFrame * direction);
 
-    // Update ball
-
-    int bounds = 100;
-    if(ballPosition.x > bounds || ballPosition.x < -bounds)
-        direction.x *= -1;
-    if(ballPosition.y > bounds || ballPosition.y < -bounds)
-        direction.y *= -1;
-    if(ballPosition.z > bounds || ballPosition.z < -bounds)
-        direction.z *= -1;
-    ballNode->translate(speed * evt.timeSinceLastFrame * direction);
-
-    paddleNode->translate(mDirection * evt.timeSinceLastFrame);
-    mCamera->move(mDirection * evt.timeSinceLastFrame);
+     Ogre::Vector3 newDirection = mDirection;
+     if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
+        newDirection.x = 0;
+     if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
+        newDirection.y = 0;
+    paddleNode->translate(newDirection * evt.timeSinceLastFrame);
+    mCamera->move(newDirection * evt.timeSinceLastFrame);
+    mCamera->lookAt(ballPosition);
     return true;
+}
+//---------------------------------------------------------------------------
+bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
+{
+  if (arg.key == OIS::KC_ESCAPE) {
+    mShutDown = true;
+  }
+
+  return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
