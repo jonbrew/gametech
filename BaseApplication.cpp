@@ -37,6 +37,7 @@ BaseApplication::BaseApplication(void)
     mMouse(0),
     mKeyboard(0),
     mOverlaySystem(0),
+    mDirection(Ogre::Vector3::ZERO),
     speed(0),
     direction(0,0,0)
 {
@@ -260,6 +261,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
 
     // Update ball
+   
+   //need to change ball to paddle
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Vector3 ballPosition = ballNode->getPosition();
     // int bounds = 100;
@@ -270,6 +273,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // if(ballPosition.z > bounds || ballPosition.z < -bounds)
     //     direction.z *= -1;
     // ballNode->translate(speed * evt.timeSinceLastFrame * direction);
+    /*will need to change ballNode to paddleNode // ballNode->translate(mDirection);*/
     // mCamera->lookAt(ballPosition);
     return true;
 }
