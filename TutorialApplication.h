@@ -20,6 +20,7 @@ http://www.ogre3d.org/wiki/
 
 #include "BaseApplication.h"
 #include "Room.h"
+#include "Paddle.h"
 
 //---------------------------------------------------------------------------
 
@@ -32,7 +33,7 @@ public:
 protected:
     virtual void createScene(void);
     virtual bool keyPressed(const OIS::KeyEvent& ke);
-	 virtual bool keyReleased(const OIS::KeyEvent& ke);
+    virtual bool keyReleased(const OIS::KeyEvent& ke);
 };
 
 //---------------------------------------------------------------------------
