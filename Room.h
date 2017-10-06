@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "Ball.h"
 #include "ScoreWall.h"
+#include "Paddle.h"
 
 
 class Room {
@@ -16,6 +17,7 @@ private:
 	ScoreWall* scoreWall;
 	Wall wall;
 	Ball ball;
+	Paddle paddle;
 };
 
 #endif

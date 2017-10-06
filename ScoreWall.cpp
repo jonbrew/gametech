@@ -30,7 +30,7 @@ ScoreWall::ScoreWall(Ogre::SceneManager* scnMgr, int wallSize) {
 void ScoreWall::createScoreWall() {
     Ogre::Entity* scoreWallEntity = scnMgr->createEntity("scoreMesh");
     scoreWallEntity->setVisible(false);
-    scoreWallEntity->setMaterialName("Colors/Red");
+    scoreWallEntity->setMaterialName("Colors/Blue");
 
     Ogre::SceneNode* scoreWallNode = scnMgr->getRootSceneNode()->createChildSceneNode("scoreWall");
     scoreWallNode->attachObject(scoreWallEntity);

@@ -30,7 +30,7 @@ TutorialApplication::~TutorialApplication(void)
 bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
 { 
    //change to paddle
-    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild(0);
+    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
    
     ballNode = (Ogre::SceneNode*) ballNode;
     int x = mDirection.x;

@@ -1,11 +1,15 @@
+#ifndef __Paddle_h_
+#define __Paddle_h_
+
 #include <Ogre.h>
 
+
 class Paddle {
-protected:
-	Ogre::SceneNode* rootNode;
+private:
+	Ogre::SceneNode* paddleNode;
 
 public:
-	Paddle(Ogre::SceneManger* scnMgr);
-	~Paddle();
-	void move(const Ogre::FrameEvent& evt);
+	Paddle(Ogre::SceneManager*, int, int);
 };
+
+#endif
