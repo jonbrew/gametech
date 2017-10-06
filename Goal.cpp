@@ -1,14 +1,12 @@
-#include <OgreEntity.h> 
-#include <OgreSceneManager.h> 
 #include "Goal.h"
 
-Goal::Goal(Ogre::SceneManager* scnMgr, Ogre::Vector3 pos) { 
-    Ogre::Entity* goal = scnMgr->createEntity("sphere.mesh"); 
+Goal::Goal(Ogre::SceneManager* scnMgr, double goalSize, Ogre::Vector3 pos) { 
+    Ogre::Entity* goalEntity = scnMgr->createEntity("goalMesh");
+    goalEntity->setMaterialName("Colors/Red");
 
-    rootNode = scnMgr->createSceneNode(); 
-    rootNode->attachObject(goal); 
-    rootNode->setPosition(pos);
-    rootNode->scale(0.1,0.1,0.1);
+    goalNode = scnMgr->getSceneNode("scoreWall")->createChildSceneNode();
+    goalNode->attachObject(goalEntity);
+    goalNode->setPosition(pos);
 
     isActive = false;
 } 

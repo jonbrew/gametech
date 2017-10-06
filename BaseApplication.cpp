@@ -262,15 +262,15 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Update ball
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Vector3 ballPosition = ballNode->getPosition();
-    int bounds = 100;
-    if(ballPosition.x > bounds || ballPosition.x < -bounds)
-        direction.x *= -1;
-    if(ballPosition.y > bounds || ballPosition.y < -bounds)
-        direction.y *= -1;
-    if(ballPosition.z > bounds || ballPosition.z < -bounds)
-        direction.z *= -1;
-    ballNode->translate(speed * evt.timeSinceLastFrame * direction);
-    mCamera->lookAt(ballPosition);
+    // int bounds = 100;
+    // if(ballPosition.x > bounds || ballPosition.x < -bounds)
+    //     direction.x *= -1;
+    // if(ballPosition.y > bounds || ballPosition.y < -bounds)
+    //     direction.y *= -1;
+    // if(ballPosition.z > bounds || ballPosition.z < -bounds)
+    //     direction.z *= -1;
+    // ballNode->translate(speed * evt.timeSinceLastFrame * direction);
+    // mCamera->lookAt(ballPosition);
     return true;
 }
 //---------------------------------------------------------------------------

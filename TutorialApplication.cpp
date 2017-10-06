@@ -16,7 +16,6 @@ http://www.ogre3d.org/wiki/
 */
 
 #include "TutorialApplication.h"
-#include <OgreMeshManager.h>
 
 //---------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
@@ -34,8 +33,10 @@ void TutorialApplication::createScene(void)
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
 
-    Room room(mSceneMgr);
+    Room room(mSceneMgr, 200);
     room.setup();
+
+    scoreWall = room.getScoreWall();
 }
 //---------------------------------------------------------------------------
 

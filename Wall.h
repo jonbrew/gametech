@@ -1,10 +1,7 @@
 #ifndef __Wall_h_
 #define __Wall_h_
 
-#include "BaseApplication.h"
-#include <OgreMeshManager.h>
-
-#endif
+#include <Ogre.h>
 
 
 class Wall {
@@ -24,3 +21,5 @@ private:
 	void attachGround(Ogre::SceneNode*);
 	void attachCeiling(Ogre::SceneNode*);
 };
+
+#endif

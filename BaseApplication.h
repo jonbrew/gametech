@@ -18,6 +18,8 @@ http://www.ogre3d.org/wiki/
 #ifndef __BaseApplication_h_
 #define __BaseApplication_h_
 
+#include "ScoreWall.h"
+
 #include <OgreCamera.h>
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
@@ -26,6 +28,7 @@ http://www.ogre3d.org/wiki/
 #include <OgreSceneManager.h>
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
+#include <OgreMeshManager.h>
 
 #include <OgreWindowEventUtilities.h>
 #include <OgreFrameListener.h>
@@ -120,7 +123,11 @@ protected:
     OIS::Keyboard*              mKeyboard;
 
     // Added for Mac compatibility
-    Ogre::String                 m_ResourcePath;
+    Ogre::String                m_ResourcePath;
+
+    // Game components
+    ScoreWall*                  scoreWall;
+
 
 #ifdef OGRE_STATIC_LIB
     Ogre::StaticPluginLoader m_StaticPluginLoader;

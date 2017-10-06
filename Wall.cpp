@@ -19,22 +19,22 @@ Wall::Wall(Ogre::SceneManager* mSceneMgr, int wallSize): wallMaterial("Colors/Bl
 
 void Wall::createWalls() {
 	// Create SceneNodes
-    Ogre::SceneNode *groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachGround(groundNode);
 
-    Ogre::SceneNode *ceilingNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* ceilingNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachCeiling(ceilingNode);
 
-    Ogre::SceneNode *rightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* rightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachRight(rightNode);
 
-    Ogre::SceneNode *leftNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* leftNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachLeft(leftNode);
 
-    Ogre::SceneNode *frontNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    attachFront(frontNode);
+    // Ogre::SceneNode* frontNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    // attachFront(frontNode);
 
-    Ogre::SceneNode *backNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode* backNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachBack(backNode);
 }
 

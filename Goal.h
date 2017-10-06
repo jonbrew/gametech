@@ -1,13 +1,19 @@
+#ifndef __Goal_h_
+#define __Goal_h_
+
 #include <Ogre.h>
 
-class Goal { 
-    protected: 
-        Ogre::SceneNode* rootNode;
-        bool isActive;
 
-    public: 
-        Goal(Ogre::SceneManager* scnMgr, Ogre::Vector3 pos); 
-        void on();
-        void off(); 
-        Ogre::SceneNode* getNode() { return rootNode; } 
+class Goal { 
+protected: 
+    Ogre::SceneNode* goalNode;
+    bool isActive;
+
+public: 
+    Goal(Ogre::SceneManager* scnMgr, double, Ogre::Vector3 pos); 
+    void on();
+    void off(); 
+    Ogre::SceneNode* getNode() { return goalNode; } 
 };
+
+#endif

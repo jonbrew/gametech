@@ -1,5 +1,3 @@
-#include <OgreEntity.h> 
-#include <OgreSceneManager.h> 
 #include "Ball.h"
 
 Ball::Ball(Ogre::SceneManager* scnMgr) {

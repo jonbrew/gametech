@@ -1,17 +1,19 @@
 #include "Room.h"
 
 
-Room::Room(Ogre::SceneManager* mSceneMgr) {
-	wall = new Wall(mSceneMgr, 200);
-	ball = new Ball(mSceneMgr);
+Room::Room(Ogre::SceneManager* mSceneMgr, int wallSize):
+	wall(mSceneMgr, wallSize),
+	ball(mSceneMgr)
+{
+	scoreWall = new ScoreWall(mSceneMgr, wallSize);
 }
 
-Room::~Room() {
-	delete wall;
-	delete ball;
+void Room::setup() {
+	wall.createWalls();
+	ball.createBall();
+	scoreWall->createScoreWall();
 }
 
-void Room::setup(void) {
-	wall->Wall::createWalls();
-	ball->Ball::createBall();
+ScoreWall* Room::getScoreWall() {
+	return scoreWall;
 }
