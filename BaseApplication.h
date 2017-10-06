@@ -111,6 +111,8 @@ protected:
     Ogre::RenderWindow*         mWindow;
     Ogre::String                mResourcesCfg;
     Ogre::String                mPluginsCfg;
+    
+    Ogre::Vector3 mDirection;
 
     Ogre::OverlaySystem*        mOverlaySystem;
 
