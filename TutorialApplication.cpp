@@ -27,6 +27,102 @@ TutorialApplication::~TutorialApplication(void)
 }
 
 //---------------------------------------------------------------------------
+bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
+{ 
+   //change to paddle
+    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild(0);
+   
+    ballNode = (Ogre::SceneNode*) ballNode;
+    int x = mDirection.x;
+    int y = mDirection.y;
+    int z = mDirection.z;
+    switch (ke.key)
+    {
+        case OIS::KC_ESCAPE: 
+            mShutDown = true;
+            break;
+        case OIS::KC_UP:
+            y -= 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_DOWN:
+            y += 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_LEFT:
+            x += 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_RIGHT:
+            x -= 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_W:
+            mShutDown = true;
+            break;
+        case OIS::KC_A:
+            mShutDown = true;
+            break;
+        case OIS::KC_S:
+            mShutDown = true;
+            break;
+        case OIS::KC_D:
+            mShutDown = true;
+            break;
+        default:
+            break;
+
+    }
+  return true; 
+}
+ 
+bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke) 
+{ 
+    Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild(0);
+    ballNode = (Ogre::SceneNode*) ballNode;
+    int x = mDirection.x;
+    int y = mDirection.y;
+    int z = mDirection.z;
+    switch (ke.key)
+    {
+        case OIS::KC_ESCAPE: 
+            mShutDown = true;
+            break;
+        case OIS::KC_UP:
+            y += 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_DOWN:
+            y -= 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_LEFT:
+            x -= 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_RIGHT:
+            x += 1;
+            mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_W:
+            mShutDown = true;
+            break;
+        case OIS::KC_A:
+            mShutDown = true;
+            break;
+        case OIS::KC_S:
+            mShutDown = true;
+            break;
+        case OIS::KC_D:
+            mShutDown = true;
+            break;
+        default:
+            break;
+
+    }
+    
+  return true; 
+}
 void TutorialApplication::createScene(void)
 {
     mSceneMgr->setAmbientLight(Ogre::ColourValue(.35, .35, .35));
