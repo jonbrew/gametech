@@ -234,6 +234,12 @@ bool BaseApplication::setup(void)
     // Load resources
     loadResources();
 
+    // Init SDL Audio
+    mSound = new Sound;
+
+    // Init Bullet Physics
+    //mPhysics = new Physics;
+
     // Create the scene
     createScene();
 
@@ -283,15 +289,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mCamera->move(newDirection * evt.timeSinceLastFrame);
     mCamera->lookAt(ballPosition);
     return true;
-}
-//---------------------------------------------------------------------------
-bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
-{
-  if (arg.key == OIS::KC_ESCAPE) {
-    mShutDown = true;
-  }
-
-  return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )

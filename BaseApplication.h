@@ -19,6 +19,7 @@ http://www.ogre3d.org/wiki/
 #define __BaseApplication_h_
 
 #include "ScoreWall.h"
+#include "Sound.h"
 
 #include <OgreCamera.h>
 #include <OgreEntity.h>
@@ -123,6 +124,12 @@ protected:
     OIS::InputManager*          mInputManager;
     OIS::Mouse*                 mMouse;
     OIS::Keyboard*              mKeyboard;
+
+    // SDL Sound controller
+    Sound*                      mSound;
+
+    // Bullet Physics controller
+    //Physics*                    mPhysics;
 
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;
