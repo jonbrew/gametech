@@ -145,7 +145,7 @@ void TutorialApplication::createScene(void)
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
 
-    Room room(mSceneMgr, 200);
+    Room room(mSceneMgr, mPhysics, 200);
     room.setup();
 
     scoreWall = room.getScoreWall();

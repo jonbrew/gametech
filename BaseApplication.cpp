@@ -238,7 +238,7 @@ bool BaseApplication::setup(void)
     mSound = new Sound;
 
     // Init Bullet Physics
-    //mPhysics = new Physics;
+    mPhysics = new Physics;
 
     // Create the scene
     createScene();
@@ -265,7 +265,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
 
     // Update ball
-   
+    mPhysics->stepSimulation(evt.timeSinceLastFrame);
    //might be replaced with physics engine aside from move / translate operations
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
@@ -287,7 +287,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         newDirection.y = 0;
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
     mCamera->move(newDirection * evt.timeSinceLastFrame);
-    mCamera->lookAt(ballPosition);
+    mCamera->lookAt(paddlePosition);
     return true;
 }
 //---------------------------------------------------------------------------

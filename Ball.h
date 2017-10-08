@@ -2,7 +2,7 @@
 #define __Ball_h_
 
 #include <Ogre.h>
-
+#include "Physics.h"
 
 class Ball { 
 protected:
@@ -11,8 +11,16 @@ protected:
     Ogre::Real bRadius; 
     Ogre::Vector3 bDirection; 
     Ogre::Real bSpeed;
+    // Bullet fields
+    Physics* mPhysics;
+    btCollisionShape* btShape;
+    btDefaultMotionState *btMotionState;
+	btScalar btMass; 
+	btRigidBody* btBody; 
+	btTransform btTrans; 
+	btVector3 btInertia; 
 public: 
-    Ball(Ogre::SceneManager* scnMgr);
+    Ball(Ogre::SceneManager* scnMgr, Physics* mPhysics);
     void createBall(void);
     void move(const Ogre::FrameEvent& evt); 
     Ogre::SceneNode* getNode(void) { return rootNode; }

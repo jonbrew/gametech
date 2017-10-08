@@ -18,9 +18,11 @@ public:
     Physics();
     ~Physics();
     void addObject(btRigidBody* b);
-    bool removeObject(btRigidBody* b);
+    void removeObject(btRigidBody* b);
+    btAlignedObjectArray<btCollisionShape*>& getCollisionShapes(void) {return collisionShapes;}
+    btDiscreteDynamicsWorld* getDynamicsWorld(void) {return dynamicsWorld;}
     void stepSimulation(const Ogre::Real elapsedTime, 
-    	int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f); 
+        int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f); 
 };
 
 #endif

@@ -20,6 +20,7 @@ http://www.ogre3d.org/wiki/
 
 #include "ScoreWall.h"
 #include "Sound.h"
+#include "Physics.h"
 
 #include <OgreCamera.h>
 #include <OgreEntity.h>
@@ -129,7 +130,7 @@ protected:
     Sound*                      mSound;
 
     // Bullet Physics controller
-    //Physics*                    mPhysics;
+    Physics*                    mPhysics;
 
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;

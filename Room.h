@@ -10,7 +10,7 @@
 
 class Room {
 public:
-	Room(Ogre::SceneManager*, int);
+	Room(Ogre::SceneManager*, Physics* mPhys, int);
 	void setup(void);
 	ScoreWall* getScoreWall(void);
 private:
