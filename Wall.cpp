@@ -1,10 +1,12 @@
 #include "Wall.h"
 
 
-Wall::Wall(Ogre::SceneManager* mSceneMgr, int wallSize): wallMaterial("Colors/Blue") {
+Wall::Wall(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize): wallMaterial("Colors/Blue") {
 	 // Create plane and mesh
 	this->mSceneMgr = mSceneMgr;
 	this->wallSize = wallSize;
+    mPhysics = mPhys;
+    wallShape = new btBoxShape(btVector3(100.f,0.f,100.f));
 
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(
@@ -31,9 +33,6 @@ void Wall::createWalls() {
     Ogre::SceneNode* leftNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachLeft(leftNode);
 
-    // Ogre::SceneNode* frontNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    // attachFront(frontNode);
-
     Ogre::SceneNode* backNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     attachBack(backNode);
 }
@@ -44,13 +43,6 @@ Ogre::Entity* Wall::getWallEntity(const char* materialName) {
     wallEntity->setMaterialName(materialName);
 
     return wallEntity;
-}
-
-void Wall::attachFront(Ogre::SceneNode* frontNode) {
-	Ogre::Entity* wallEntity = getWallEntity(wallMaterial);
-	frontNode->attachObject(wallEntity);
-    frontNode->pitch(Ogre::Radian(Ogre::Degree(-90)));
-    frontNode->translate(Ogre::Vector3(0,0,wallSize/2));
 }
 
 void Wall::attachBack(Ogre::SceneNode* backNode) {
@@ -80,6 +72,18 @@ void Wall::attachGround(Ogre::SceneNode* groundNode) {
 	Ogre::Entity* wallEntity = getWallEntity(wallMaterial);
 	groundNode->attachObject(wallEntity);
 	groundNode->translate(Ogre::Vector3(0,-wallSize/2,0));
+    btTransform groundTransform;
+    groundTransform.setIdentity();
+    groundTransform.setOrigin(btVector3(0, -wallSize/2, 0));
+    btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+    btVector3 localGroundInertia(0, 0, 0);
+    btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+    wallShape->calculateLocalInertia(groundMass, localGroundInertia);
+    btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, wallShape, localGroundInertia);
+    btRigidBody *groundBody = new btRigidBody(groundRBInfo);
+    groundBody->setRestitution(1);
+    //add the body to the dynamics world
+    mPhysics->getDynamicsWorld()->addRigidBody(groundBody);
 }
 
 void Wall::attachCeiling(Ogre::SceneNode* ceilingNode) {

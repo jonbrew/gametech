@@ -2,7 +2,7 @@
 
 
 Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
-	wall(mSceneMgr, wallSize),
+	wall(mSceneMgr, mPhys, wallSize),
 	ball(mSceneMgr, mPhys),
 	paddle(mSceneMgr, 30, 15)
 {

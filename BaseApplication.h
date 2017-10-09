@@ -105,8 +105,6 @@ protected:
     virtual void windowResized(Ogre::RenderWindow* rw);
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
-    int                         speed;
-    Ogre::Vector3               direction;
     Ogre::Root*                 mRoot;
     Ogre::Camera*               mCamera;
     Ogre::SceneManager*         mSceneMgr;

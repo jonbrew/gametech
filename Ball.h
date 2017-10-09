@@ -22,7 +22,6 @@ protected:
 public: 
     Ball(Ogre::SceneManager* scnMgr, Physics* mPhysics);
     void createBall(void);
-    void move(const Ogre::FrameEvent& evt); 
     Ogre::SceneNode* getNode(void) { return rootNode; }
 };
 
