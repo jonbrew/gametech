@@ -113,6 +113,8 @@ protected:
     Ogre::String                mPluginsCfg;
     
     Ogre::Vector3 mDirection;
+    Ogre::Radian mRoll;
+    Ogre::Radian mPitch;
 
     Ogre::OverlaySystem*        mOverlaySystem;
 

@@ -72,10 +72,21 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             y -= move;
             mDirection = Ogre::Vector3(x,y,z);
             break;
-            break;
         case OIS::KC_D:
             x -= move;
             mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_K:
+            mRoll = Ogre::Radian(Ogre::Degree(.1));
+            break;
+        case OIS::KC_L:
+            mRoll = Ogre::Radian(Ogre::Degree(-.1));
+            break;
+        case OIS::KC_H:
+            mPitch = Ogre::Radian(Ogre::Degree(.1));
+            break;
+        case OIS::KC_J:
+            mPitch = Ogre::Radian(Ogre::Degree(-.1));
             break;
         default:
             break;
@@ -129,6 +140,18 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
         case OIS::KC_D:
             x += move;
             mDirection = Ogre::Vector3(x,y,z);
+            break;
+        case OIS::KC_K:
+            mRoll = 0;
+            break;
+        case OIS::KC_L:
+            mRoll = 0;
+            break;
+        case OIS::KC_H:
+            mPitch = 0;
+            break;
+        case OIS::KC_J:
+            mPitch = 0;
             break;
         default:
             break;

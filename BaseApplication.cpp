@@ -270,6 +270,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
        newDirection.y = 0;
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
+    paddleNode->roll(mRoll);
+    paddleNode->pitch(mPitch);
     mCamera->move(newDirection * evt.timeSinceLastFrame);
     mCamera->lookAt(paddlePosition);
     return true;

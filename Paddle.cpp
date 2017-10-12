@@ -19,4 +19,6 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, int paddleWidth, int paddleHeight) {
     paddleNode->attachObject(paddleEntity);
     paddleNode->pitch(Ogre::Radian(Ogre::Degree(-90)));
     paddleNode->translate(Ogre::Vector3(0,0,-50));
+
+    
 }
