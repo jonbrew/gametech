@@ -235,7 +235,7 @@ bool BaseApplication::setup(void)
     mSound = new Sound;
 
     // Init Bullet Physics
-    mPhysics = new Physics;
+    mPhysics = new Physics(mSound);
 
     // Create the scene
     createScene();

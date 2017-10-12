@@ -1,6 +1,8 @@
 #include "Physics.h"
 
-Physics::Physics() { 
+Physics::Physics(Sound* mSnd) {
+	mSound = mSnd;
+	isColliding = false;
 	collisionConfiguration = new btDefaultCollisionConfiguration(); 
 	dispatcher = new btCollisionDispatcher(collisionConfiguration); 
 	overlappingPairCache = new btDbvtBroadphase(); 
@@ -23,16 +25,16 @@ void Physics::removeObject (btRigidBody* b) {
 void Physics::stepSimulation(const Ogre::Real elapsedTime, 
 		int maxSubSteps, const Ogre::Real fixedTimestep) { 
 	dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);  
-	for (int i = 0; i < dynamicsWorld->getCollisionObjectArray().size(); i++) {
+	for(int i = 0; i < dynamicsWorld->getCollisionObjectArray().size(); i++) {
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
 
-		if (body && body->getMotionState()){
+		if(body && body->getMotionState()){
 			btTransform trans;
 			body->getMotionState()->getWorldTransform(trans);
 
 			void *userPointer = body->getUserPointer();
-			if (userPointer) {
+			if(userPointer) {
 				btQuaternion orientation = trans.getRotation();
 				Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(userPointer);
 				sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
@@ -40,4 +42,31 @@ void Physics::stepSimulation(const Ogre::Real elapsedTime,
 			}
 		}
 	}
+	handleCollisions();
+}
+
+void Physics::handleCollisions() {
+	int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+	if(!isColliding && numManifolds > 0) {
+    	for(int i = 0; i < numManifolds; i++) {
+    	    btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+    	    const btCollisionObject* obA = contactManifold->getBody0();
+    	    const btCollisionObject* obB = contactManifold->getBody1();
+    	    int aType = obA->getUserIndex();
+    	    int bType = obB->getUserIndex();
+    	    switch(aType) {
+    	    	case TYPE_BALL :
+    	    		// Set check to bType (not the ball) and allow to fall through
+    	    		aType = bType;
+    	    	case TYPE_WALL :
+    	    		mSound->play(Sound::SOUND_HIT);
+    	    		break;
+    	    	case TYPE_PADDLE :
+    	    		break;
+    	    	case TYPE_GOAL :
+    	    		break;
+    	    }
+    	}
+    }
+    isColliding = numManifolds > 0;
 }

@@ -150,9 +150,7 @@ void TutorialApplication::createScene(void)
 
     scoreWall = room.getScoreWall();
     scoreWall->pickGoal();
-
-    mSound->play(Sound::SOUND_HIT);
-
+    
 }
 //---------------------------------------------------------------------------
 
