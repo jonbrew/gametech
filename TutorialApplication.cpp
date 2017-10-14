@@ -45,20 +45,20 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            //y += move;
+            mPitch = Ogre::Radian(Ogre::Degree(-.1));
             break;
         case OIS::KC_DOWN:
-            y -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            //y -= move;
+            mPitch = Ogre::Radian(Ogre::Degree(.1));
             break;
         case OIS::KC_LEFT:
-            x += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            //x += move;
+            mRoll = Ogre::Radian(Ogre::Degree(.1));
             break;
         case OIS::KC_RIGHT:
-            x -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            //x -= move;
+            mRoll = Ogre::Radian(Ogre::Degree(-.1));
             break;
         case OIS::KC_W:
             y += move;
@@ -110,20 +110,16 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             mShutDown = true;
             break;
         case OIS::KC_UP:
-            y -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mPitch = 0;
             break;
         case OIS::KC_DOWN:
-            y += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mPitch = 0;
             break;
         case OIS::KC_LEFT:
-            x -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mRoll = 0;
             break;
         case OIS::KC_RIGHT:
-            x += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mRoll = 0;
             break;
         case OIS::KC_W:
             y -= move;
