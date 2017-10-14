@@ -6,7 +6,7 @@ Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 	ball(mSceneMgr, mPhys)
 {
 	paddle = new Paddle(mSceneMgr, mPhys, 30, 15);
-	scoreWall = new ScoreWall(mSceneMgr, wallSize);
+	scoreWall = new ScoreWall(mSceneMgr, mPhys, wallSize);
 }
 
 void Room::setup() {

@@ -13,9 +13,10 @@ protected:
     double squareSize;
     std::vector<Goal> goals;
     Goal* activeGoal;
+ 	Physics* mPhysics;
 
 public: 
-    ScoreWall(Ogre::SceneManager* scnMgr, int wallSize);
+    ScoreWall(Ogre::SceneManager* scnMgr, Physics* mPhys, int wallSize);
     void createScoreWall();
     void pickGoal(); 
     Goal* getActiveGoal() { return activeGoal; } 

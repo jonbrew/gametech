@@ -61,6 +61,7 @@ void Wall::attachBack(Ogre::SceneNode* backNode) {
     wallShape->calculateLocalInertia(backMass, localBackInertia);
     btRigidBody::btRigidBodyConstructionInfo backRBInfo(backMass, backMotionState, wallShape, localBackInertia);
     btRigidBody *backBody = new btRigidBody(backRBInfo);
+    backBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
     backBody->setUserIndex(Physics::TYPE_WALL);
     backBody->setRestitution(1);
     //add the body to the dynamics world
@@ -83,6 +84,7 @@ void Wall::attachLeft(Ogre::SceneNode* leftNode) {
     wallShape->calculateLocalInertia(leftMass, localleftInertia);
     btRigidBody::btRigidBodyConstructionInfo leftRBInfo(leftMass, leftMotionState, wallShape, localleftInertia);
     btRigidBody *leftBody = new btRigidBody(leftRBInfo);
+    leftBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
     leftBody->setUserIndex(Physics::TYPE_WALL);
     leftBody->setRestitution(1);
     //add the body to the dynamics world
@@ -105,6 +107,7 @@ void Wall::attachRight(Ogre::SceneNode* rightNode) {
     wallShape->calculateLocalInertia(rightMass, localrightInertia);
     btRigidBody::btRigidBodyConstructionInfo rightRBInfo(rightMass, rightMotionState, wallShape, localrightInertia);
     btRigidBody *rightBody = new btRigidBody(rightRBInfo);
+    rightBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
     rightBody->setUserIndex(Physics::TYPE_WALL);
     rightBody->setRestitution(1);
     //add the body to the dynamics world
@@ -124,6 +127,7 @@ void Wall::attachGround(Ogre::SceneNode* groundNode) {
     wallShape->calculateLocalInertia(groundMass, localGroundInertia);
     btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, wallShape, localGroundInertia);
     btRigidBody *groundBody = new btRigidBody(groundRBInfo);
+    groundBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
     groundBody->setUserIndex(Physics::TYPE_WALL);
     groundBody->setRestitution(1);
     //add the body to the dynamics world
@@ -145,6 +149,7 @@ void Wall::attachCeiling(Ogre::SceneNode* ceilingNode) {
     wallShape->calculateLocalInertia(ceilingMass, localceilingInertia);
     btRigidBody::btRigidBodyConstructionInfo ceilingRBInfo(ceilingMass, ceilingMotionState, wallShape, localceilingInertia);
     btRigidBody *ceilingBody = new btRigidBody(ceilingRBInfo);
+    ceilingBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
     ceilingBody->setUserIndex(Physics::TYPE_WALL);
     ceilingBody->setRestitution(1);
     //add the body to the dynamics world

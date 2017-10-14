@@ -20,7 +20,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     paddleNode->translate(Ogre::Vector3(0,0,-75));
     mPhysics = mPhys;
     //create the new physics shape
-    btShape = new btBoxShape(btVector3(paddleWidth,0.f,paddleHeight));    
+    btShape = new btBoxShape(btVector3(paddleWidth/2,0.f,paddleHeight/2));    
     mPhysics->getCollisionShapes().push_back(btShape);
     btTransform paddleTransform;
     paddleTransform.setIdentity();

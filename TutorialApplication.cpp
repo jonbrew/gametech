@@ -164,6 +164,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
 
 void TutorialApplication::createScene(void)
 {
+    srand(time(NULL));
     mSceneMgr->setAmbientLight(Ogre::ColourValue(.35, .35, .35));
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);

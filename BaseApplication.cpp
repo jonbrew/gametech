@@ -273,7 +273,16 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Update kinematic paddle position in physics sim
     room->getPaddle()->updateMotionState();
     // Update ball through physics sim step
-    mPhysics->stepSimulation(evt.timeSinceLastFrame);
+    void* ptr = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+    if(ptr != NULL) {
+        Goal* goal = static_cast<Goal*>(ptr);
+        if(goal->isOn()) {
+            mSound->play(Sound::SOUND_SCORE);
+            // TODO increase score and apply impulse to ball
+        } else {
+            mSound->play(Sound::SOUND_BOUNCE);
+        }
+    }
     mCamera->move(newDirection * evt.timeSinceLastFrame);
     mCamera->lookAt(paddlePosition);
     return true;

@@ -1,8 +1,9 @@
 #include "ScoreWall.h"
 
 
-ScoreWall::ScoreWall(Ogre::SceneManager* scnMgr, int wallSize) { 
+ScoreWall::ScoreWall(Ogre::SceneManager* scnMgr, Physics* mPhys, int wallSize) { 
     this->scnMgr = scnMgr;
+    mPhysics = mPhys;
     this->wallSize = wallSize;
     squareSize = ((double) wallSize) / 3;
     activeGoal = NULL;
@@ -37,15 +38,15 @@ void ScoreWall::createScoreWall() {
     scoreWallNode->pitch(Ogre::Radian(Ogre::Degree(-90)));
     scoreWallNode->translate(Ogre::Vector3(0,0,wallSize/2));
 
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(0,0,0)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(squareSize,0,0)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(-squareSize,0,0)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(0,0,squareSize)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(squareSize,0,squareSize)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(-squareSize,0,squareSize)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(0,0,-squareSize)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(squareSize,0,-squareSize)));
-    goals.push_back(Goal(scnMgr, squareSize, Ogre::Vector3(-squareSize,0,-squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(0,0,0)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(squareSize,0,0)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(-squareSize,0,0)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(0,0,squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(squareSize,0,squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(-squareSize,0,squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(0,0,-squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(squareSize,0,-squareSize)));
+    goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(-squareSize,0,-squareSize)));
 }
 
 void ScoreWall::pickGoal() { 

@@ -30,9 +30,11 @@ void Ball::createBall() {
     btMotionState = new btDefaultMotionState(btTrans);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
-    btBody->setRestitution(.85);
+    btBody->setRestitution(0.9);
+    btBody->setFriction(0.);
+    btBody->setRollingFriction(0.5);
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BALL);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
-    btBody->applyCentralImpulse(btVector3(0,10,-50));
+    btBody->applyCentralImpulse(btVector3(-10,10,-50));
 }

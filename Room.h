@@ -6,7 +6,7 @@
 #include "Ball.h"
 #include "ScoreWall.h"
 #include "Paddle.h"
-
+#include "Goal.h"
 
 class Room {
 public:

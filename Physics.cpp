@@ -22,14 +22,14 @@ void Physics::removeObject (btRigidBody* b) {
 	dynamicsWorld->removeRigidBody(b);       
 }
 
-void Physics::stepSimulation(const Ogre::Real elapsedTime, 
+void* Physics::stepSimulation(const Ogre::Real elapsedTime, 
 		int maxSubSteps, const Ogre::Real fixedTimestep) { 
 	dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);  
 	for(int i = 0; i < dynamicsWorld->getCollisionObjectArray().size(); i++) {
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
 
-		if(body && body->getMotionState()){
+		if(body && body->getMotionState() && !body->isStaticOrKinematicObject()){
 			btTransform trans;
 			body->getMotionState()->getWorldTransform(trans);
 
@@ -42,11 +42,12 @@ void Physics::stepSimulation(const Ogre::Real elapsedTime,
 			}
 		}
 	}
-	handleCollisions();
+	return handleCollisions();
 }
 
-void Physics::handleCollisions() {
+void* Physics::handleCollisions() {
 	int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+	void* ptr = NULL;
 	if(!isColliding && numManifolds > 0) {
     	for(int i = 0; i < numManifolds; i++) {
     	    btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
@@ -65,9 +66,11 @@ void Physics::handleCollisions() {
     	    		mSound->play(Sound::SOUND_HIT);
     	    		break;
     	    	case TYPE_GOAL :
+    	    		ptr = obA->getUserPointer();
     	    		break;
     	    }
     	}
     }
     isColliding = numManifolds > 0;
+    return ptr;
 }
