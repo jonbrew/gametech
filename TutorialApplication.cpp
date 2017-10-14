@@ -174,12 +174,45 @@ void TutorialApplication::createScene(void)
     scoreWall = room->getScoreWall();
     scoreWall->pickGoal();
 
+    mSound->play(Sound::SOUND_HIT);
+
+
+    // Setup CEGUI
+
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
+    CEGUI::Font::setDefaultResourceGroup("Fonts");
+    CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+    CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+
+    mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+
+    CEGUI::SchemeManager::getSingleton().createFromFile("VanillaSkin.scheme");
+    CEGUI::FontManager::getSingleton().createFreeTypeFont("Jura-Regular", 20, true, "Jura-Regular.ttf", "Fonts");
+
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    CEGUI::Window *sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+
+    CEGUI::Window *quit = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/QuitButton");
+    quit->setFont("Jura-Regular");
+    quit->setText("Quit");
+    quit->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+    quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
+
+    sheet->addChild(quit);
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+}
+
+bool TutorialApplication::quit(const CEGUI::EventArgs &e)
+{
+    mShutDown = true;
+    return true;
 }
 //---------------------------------------------------------------------------
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
-#include "windows.h"
+#include "windows.h"Button
 #endif
 
 #ifdef __cplusplus
