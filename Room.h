@@ -13,11 +13,12 @@ public:
 	Room(Ogre::SceneManager*, Physics* mPhys, int);
 	void setup(void);
 	ScoreWall* getScoreWall(void);
+	Paddle* getPaddle(void);
 private:
 	ScoreWall* scoreWall;
 	Wall wall;
 	Ball ball;
-	Paddle paddle;
+	Paddle* paddle;
 };
 
 #endif

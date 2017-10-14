@@ -19,6 +19,7 @@ http://www.ogre3d.org/wiki/
 #define __BaseApplication_h_
 
 #include "ScoreWall.h"
+#include "Room.h"
 #include "Sound.h"
 #include "Physics.h"
 
@@ -136,6 +137,7 @@ protected:
     Ogre::String                m_ResourcePath;
 
     // Game components
+    Room*                       room;
     ScoreWall*                  scoreWall;
 
 

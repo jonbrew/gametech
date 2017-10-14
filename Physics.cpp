@@ -59,9 +59,10 @@ void Physics::handleCollisions() {
     	    		// Set check to bType (not the ball) and allow to fall through
     	    		aType = bType;
     	    	case TYPE_WALL :
-    	    		mSound->play(Sound::SOUND_HIT);
+    	    		mSound->play(Sound::SOUND_BOUNCE);
     	    		break;
     	    	case TYPE_PADDLE :
+    	    		mSound->play(Sound::SOUND_HIT);
     	    		break;
     	    	case TYPE_GOAL :
     	    		break;

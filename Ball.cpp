@@ -34,5 +34,5 @@ void Ball::createBall() {
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BALL);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
-    btBody->applyCentralImpulse(btVector3(30,50,-20));
+    btBody->applyCentralImpulse(btVector3(0,10,-50));
 }

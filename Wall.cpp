@@ -7,6 +7,7 @@ Wall::Wall(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize): wallMat
 	this->wallSize = wallSize;
     mPhysics = mPhys;
     wallShape = new btBoxShape(btVector3(100.f,0.f,100.f));
+    mPhysics->getCollisionShapes().push_back(wallShape);
 
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(

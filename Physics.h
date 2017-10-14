@@ -4,6 +4,7 @@
 #include <Ogre.h>
 #include "btBulletDynamicsCommon.h"
 #include "Sound.h"
+#include "KinematicMotionState.h"
 
 
 class Physics { 

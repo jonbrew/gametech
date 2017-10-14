@@ -257,9 +257,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
-    // Update ball
-    mPhysics->stepSimulation(evt.timeSinceLastFrame);
-    //might be replaced with physics engine aside from move / translate operations
+    // Update kinematic paddle position
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
@@ -272,6 +270,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
     paddleNode->roll(mRoll);
     paddleNode->pitch(mPitch);
+    // Update kinematic paddle position in physics sim
+    room->getPaddle()->updateMotionState();
+    // Update ball through physics sim step
+    mPhysics->stepSimulation(evt.timeSinceLastFrame);
     mCamera->move(newDirection * evt.timeSinceLastFrame);
     mCamera->lookAt(paddlePosition);
     return true;

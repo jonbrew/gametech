@@ -4,6 +4,8 @@ Sound::Sound() {
     SDL_Init(SDL_INIT_AUDIO);
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
     sounds.push_back(Mix_LoadWAV("Sounds/hit.wav"));
+    sounds.push_back(Mix_LoadWAV("Sounds/bounce.wav"));
+    sounds.push_back(Mix_LoadWAV("Sounds/score.wav"));
     isOn = true;
 } 
 
