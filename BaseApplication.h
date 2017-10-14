@@ -119,7 +119,6 @@ protected:
     Ogre::Vector3 mDirection;
     Ogre::Radian mRoll;
     Ogre::Radian mPitch;
-    Ogre::Vector3               mDirection;
 
     Ogre::OverlaySystem*        mOverlaySystem;
 
