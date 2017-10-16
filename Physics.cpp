@@ -22,12 +22,11 @@ void Physics::removeObject (btRigidBody* b) {
 	dynamicsWorld->removeRigidBody(b);       
 }
 
-void* Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) { 
+bool Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) { 
 	dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);  
 	for(int i = 0; i < dynamicsWorld->getCollisionObjectArray().size(); i++) {
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
-
 		if(body && body->getMotionState() && !body->isStaticOrKinematicObject()){
 			btTransform trans;
 			body->getMotionState()->getWorldTransform(trans);
@@ -44,9 +43,9 @@ void* Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, con
 	return handleCollisions();
 }
 
-void* Physics::handleCollisions() {
+bool Physics::handleCollisions() {
 	int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
-	void* ptr = NULL;
+	bool scored = false;
 	if(!isColliding && numManifolds > 0) {
     	for(int i = 0; i < numManifolds; i++) {
     	    btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
@@ -54,22 +53,25 @@ void* Physics::handleCollisions() {
     	    const btCollisionObject* obB = contactManifold->getBody1();
     	    int aType = obA->getUserIndex();
     	    int bType = obB->getUserIndex();
+    	    if(aType == TYPE_BALL)
+    	    	aType = bType;
     	    switch(aType) {
-    	    	case TYPE_BALL :
-    	    		// Set check to bType (not the ball) and allow to fall through
-    	    		aType = bType;
     	    	case TYPE_WALL :
     	    		mSound->play(Sound::SOUND_BOUNCE);
     	    		break;
     	    	case TYPE_PADDLE :
     	    		mSound->play(Sound::SOUND_HIT);
     	    		break;
-    	    	case TYPE_GOAL :
-    	    		ptr = obA->getUserPointer();
+    	    	case TYPE_GOAL_OFF :
+    	    		mSound->play(Sound::SOUND_BOUNCE);
+    	    		break;
+    	    	case TYPE_GOAL_ON :
+    	    		mSound->play(Sound::SOUND_SCORE);
+    	    		scored = true;
     	    		break;
     	    }
     	}
     }
     isColliding = numManifolds > 0;
-    return ptr;
+    return scored;
 }

@@ -298,17 +298,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     room->getPaddle()->updateMotionState();
 
     // Update ball through physics sim step
-    void* ptr = mPhysics->stepSimulation(evt.timeSinceLastFrame);
-    if(ptr != NULL) {
-        Goal* goal = static_cast<Goal*>(ptr);
-        if(goal->isOn()) {
-            mSound->play(Sound::SOUND_SCORE);
-            // TODO increase score and apply impulse to ball
-            scoreWall->increaseScore();
-            updateScoreLabel();
-        } else {
-            mSound->play(Sound::SOUND_BOUNCE);
-        }
+    bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+    if(scored) {
+        // TODO increase score and apply impulse to ball
+        scoreWall->increaseScore();
+        updateScoreLabel();
     }
 
     // Inject timestamp to CEGUI system

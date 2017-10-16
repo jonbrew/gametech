@@ -21,7 +21,8 @@ public:
     static const int TYPE_BALL = 0;
     static const int TYPE_WALL = 1;
     static const int TYPE_PADDLE = 2;
-    static const int TYPE_GOAL = 3;
+    static const int TYPE_GOAL_OFF = 3;
+    static const int TYPE_GOAL_ON = 4;
 
     Physics(Sound* mSnd);
     ~Physics();
@@ -29,9 +30,9 @@ public:
     void removeObject(btRigidBody* b);
     btAlignedObjectArray<btCollisionShape*>& getCollisionShapes(void) {return collisionShapes;}
     btDiscreteDynamicsWorld* getDynamicsWorld(void) {return dynamicsWorld;}
-    void* stepSimulation(const Ogre::Real elapsedTime, 
+    bool stepSimulation(const Ogre::Real elapsedTime, 
         int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f);
-    void* handleCollisions(void); 
+    bool handleCollisions(void); 
 };
 
 #endif

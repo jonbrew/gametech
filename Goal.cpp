@@ -22,7 +22,6 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
     btRigidBody::btRigidBodyConstructionInfo goalRBInfo(btMass, btMotState, btShape, btInertia);
     btBody = new btRigidBody(goalRBInfo);
     btBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
-    btBody->setUserIndex(Physics::TYPE_GOAL);
     btBody->setUserPointer(this);
     btBody->setRestitution(1);
     //add the body to the dynamics world
@@ -32,10 +31,12 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
 
 void Goal::on() { 
     isActive = true;
+    btBody->setUserIndex(Physics::TYPE_GOAL_ON);
     goalEntity->setMaterialName("Colors/RadioactiveGreen");
 }
 
 void Goal::off() { 
     isActive = false;
+    btBody->setUserIndex(Physics::TYPE_GOAL_OFF);
     goalEntity->setMaterialName("Colors/Red");
 }

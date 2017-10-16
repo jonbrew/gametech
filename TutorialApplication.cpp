@@ -163,7 +163,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
 
 void TutorialApplication::createScene(void)
 {
-    srand(time(NULL));
+    //srand(time(NULL));
     mSceneMgr->setAmbientLight(Ogre::ColourValue(.35, .35, .35));
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
@@ -172,9 +172,6 @@ void TutorialApplication::createScene(void)
     room->setup();
     scoreWall = room->getScoreWall();
     scoreWall->pickGoal();
-
-    // mSound->play(Sound::SOUND_HIT);
-
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
     mCamera->lookAt(paddleNode->getPosition());
 
