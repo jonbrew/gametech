@@ -15,6 +15,9 @@ http://www.ogre3d.org/wiki/
 -----------------------------------------------------------------------------
 */
 
+#include <string> 
+#include <sstream>
+
 #include "TutorialApplication.h"
 
 //---------------------------------------------------------------------------
@@ -260,6 +263,7 @@ bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
 
 bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
     // Restart game
+    // Reset score
     return true;
 }
 
@@ -267,6 +271,14 @@ bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
     mShutDown = true;
     return true;
 }
+
+void TutorialApplication::updateScoreLabel() {
+    int score = scoreWall->getScore();
+    std::stringstream ss;
+    ss << score;
+    scoreLabel->setText(ss.str());
+}
+
 //---------------------------------------------------------------------------
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

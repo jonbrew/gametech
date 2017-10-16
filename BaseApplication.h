@@ -143,6 +143,7 @@ protected:
     // Game components
     Room*                       room;
     ScoreWall*                  scoreWall;
+    virtual void updateScoreLabel(void) = 0;
 
     // GUI component
     GUI*                        gui;

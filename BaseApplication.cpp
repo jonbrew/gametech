@@ -304,6 +304,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         if(goal->isOn()) {
             mSound->play(Sound::SOUND_SCORE);
             // TODO increase score and apply impulse to ball
+            scoreWall->increaseScore();
+            updateScoreLabel();
         } else {
             mSound->play(Sound::SOUND_BOUNCE);
         }

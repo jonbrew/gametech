@@ -14,12 +14,15 @@ protected:
     std::vector<Goal> goals;
     Goal* activeGoal;
  	Physics* mPhysics;
+ 	int score;
 
 public: 
     ScoreWall(Ogre::SceneManager* scnMgr, Physics* mPhys, int wallSize);
     void createScoreWall();
     void pickGoal(); 
     Goal* getActiveGoal() { return activeGoal; } 
+    void increaseScore();
+    int getScore();
 };
 
 #endif

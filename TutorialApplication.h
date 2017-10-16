@@ -53,6 +53,8 @@ protected:
     bool restart(const CEGUI::EventArgs &e);
     bool resume(const CEGUI::EventArgs &e);
     bool quit(const CEGUI::EventArgs &e);
+
+    void updateScoreLabel(void);
 };
 
 //---------------------------------------------------------------------------
