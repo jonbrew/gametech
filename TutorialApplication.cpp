@@ -183,41 +183,85 @@ void TutorialApplication::setupGUI() {
     gui = new GUI();
 
     CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();      
-    CEGUI::Window* sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+    sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
 
-    // Menu
-    CEGUI::Window* menu = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
-    menu->setFont("Jura-Regular");
-    menu->setText("Menu");
-    menu->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.05, 0)));
-    // menu->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
-    sheet->addChild(menu);
+    // Menu Button
+    menuButton = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
+    menuButton->setFont("Jura-Regular");
+    menuButton->setText("Menu");
+    menuButton->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.05, 0)));
+    menuButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::menu, this));
+    sheet->addChild(menuButton);
 
-    // Scorebox
-    CEGUI::Window* scorebox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/ScoreBox");
-    scorebox->setFont("Jura-Regular");
-    scorebox->setText("SCORE");
-    scorebox->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.125, 0)));
-    scorebox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.85, 0), CEGUI::UDim(0.8, 0)));
-    CEGUI::Window* scoreLabel = scorebox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/ScoreLabel");
+    // Score Box
+    scoreBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/ScoreBox");
+    scoreBox->setFont("Jura-Regular");
+    scoreBox->setText("SCORE");
+    scoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.125, 0)));
+    scoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.85, 0), CEGUI::UDim(0.8, 0)));
+    scoreLabel = scoreBox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/ScoreLabel");
     scoreLabel->setFont("Jura-Regular");
     scoreLabel->setText("0");
     scoreLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
     scoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    sheet->addChild(scoreBox);
 
-    sheet->addChild(scorebox);
+    // Menu
+    menuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/Menu");
+    menuBox->setFont("Jura-Regular");
+    menuBox->setText("Menu");
+    menuBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
+    menuBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.4, 0), CEGUI::UDim(0.2, 0)));
+    menuBox->hide();
 
+    // Resume Button
+    resumeButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    resumeButton->setFont("Jura-Regular");
+    resumeButton->setText("Resume");
+    resumeButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    resumeButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.1, 0)));
+    resumeButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::resume, this));
 
-    // Quit
-    CEGUI::Window* quit = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/QuitButton");
-    quit->setFont("Jura-Regular");
-    quit->setText("Quit");
-    quit->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
-    quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
-    // sheet->addChild(quit);
+    // Restart Button
+    restartButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    restartButton->setFont("Jura-Regular");
+    restartButton->setText("Restart");
+    restartButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    restartButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
+    restartButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::restart, this));
+
+    // Quit Button
+    quitButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    quitButton->setFont("Jura-Regular");
+    quitButton->setText("Quit");
+    quitButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    quitButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.5, 0)));
+    quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
+
+    sheet->addChild(menuBox);
 }
 
+bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
+    // Show menu
+    menuBox->show();
+
+    // Pause game
+    return true;
+}
+
+bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
+    // Hide menu
+    menuBox->hide();
+
+    // Resume game
+    return true;
+}
+
+bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
+    // Restart game
+    return true;
+}
 
 bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
     mShutDown = true;

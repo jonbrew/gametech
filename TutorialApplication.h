@@ -34,11 +34,24 @@ protected:
     virtual void createScene(void);
     virtual bool keyPressed(const OIS::KeyEvent& ke);
     virtual bool keyReleased(const OIS::KeyEvent& ke);
+
+    // GUI components
+    CEGUI::Window* sheet;
+    CEGUI::Window* menuButton;
+    CEGUI::Window* scoreBox;
+    CEGUI::Window* scoreLabel;
+    CEGUI::Window* menuBox;
+    CEGUI::Window* quitButton;
+    CEGUI::Window* resumeButton;
+    CEGUI::Window* restartButton;
     
     // CEGUI
     void setupGUI(void);
 
     // GUI Events
+    bool menu(const CEGUI::EventArgs &e);
+    bool restart(const CEGUI::EventArgs &e);
+    bool resume(const CEGUI::EventArgs &e);
     bool quit(const CEGUI::EventArgs &e);
 };
 
