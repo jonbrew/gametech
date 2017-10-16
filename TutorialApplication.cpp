@@ -41,7 +41,7 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
     Ogre::Real y = mDirection.y;
     Ogre::Real z = mDirection.z;
 
-    Ogre::Real move = 100;
+    Ogre::Real move = 200;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
@@ -112,7 +112,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
     Ogre::Real y = mDirection.y;
     Ogre::Real z = mDirection.z;
 
-    Ogre::Real move = 100;
+    Ogre::Real move = 200;
     switch (ke.key)
     {
         case OIS::KC_ESCAPE: 
@@ -158,7 +158,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
         case OIS::KC_J:
             mPitch = 0;
             break;
-        case OIS::KC_SPACE:
+        case OIS::KC_RETURN:
             if(mGameState == BaseApplication::STOPPED) {
                 startLabel->hide();
                 mGameState = BaseApplication::RUNNING;
@@ -204,7 +204,7 @@ void TutorialApplication::setupGUI() {
     // Start Label
     startLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/StartLabel");
     startLabel->setFont("Jura-Regular");
-    startLabel->setText("Press SPACEBAR to start");
+    startLabel->setText("Press ENTER / RETURN to start");
     startLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
     startLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
     sheet->addChild(startLabel);
