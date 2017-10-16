@@ -300,6 +300,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //    newDirection.y = 0;
 
    
+    Ogre::Radian newPitch = mPitch;
+    Ogre::Real curPitch = paddleNode->getOrientation().getPitch().valueDegrees();
+    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.1))) || 
+        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.1))))
+        newPitch = 0;
+   
     if(mHit){
         if(mHitFrames > mHitMaxFrames/2)
             paddleNode->translate(0, 0, 50 * evt.timeSinceLastFrame);
@@ -312,7 +318,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
    
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
     paddleNode->roll(mRoll);
-    paddleNode->pitch(mPitch);
+    paddleNode->pitch(newPitch);
 
     mCamera->move(newDirection * evt.timeSinceLastFrame);
 
