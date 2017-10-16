@@ -31,8 +31,7 @@ void Ball::createBall() {
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
     btBody->setRestitution(0.85);
-    btBody->setFriction(0);
-    btBody->setRollingFriction(0.5);
+    btBody->setFriction(0.5);
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BALL);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);

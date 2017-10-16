@@ -294,10 +294,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
 
     Ogre::Vector3 newDirection = mDirection;
-    if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
-       newDirection.x = 0;
-    if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
-       newDirection.y = 0;
+    // if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
+    //    newDirection.x = 0;
+    // if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
+    //    newDirection.y = 0;
 
    
     if(mHit){
@@ -321,17 +321,18 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     // Update ball through physics sim step
     bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+    btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
+    btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
     if(scored) {
         scoreWall->increaseScore();
         updateScoreLabel();
         scoreWall->pickGoal();
-        btRigidBody* ballRigidBody = room->getBall()->getRigidBody(); 
-        btVector3 ballVel = ballRigidBody->getLinearVelocity();
-        ballRigidBody->applyCentralImpulse(ballVel*0.1);
+        ballRigidBody->applyCentralImpulse(ballVelocity*0.1);
     }
 
     Ogre::Vector3 ballPosition = ballNode->getPosition();
-    if(ballPosition.z < paddlePosition.z) {
+    bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
+    if(ballPosition.z <= -80 || ballStopped) {
         mGameState = BaseApplication::STOPPED;
         gameOver();
     }
