@@ -125,6 +125,10 @@ protected:
 
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
+    bool                        mHit;
+    int                         mHitMaxFrames;
+    int                         mHitFrames;
+
 
     //OIS Input devices
     OIS::InputManager*          mInputManager;
