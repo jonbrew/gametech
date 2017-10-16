@@ -66,3 +66,7 @@ void ScoreWall::increaseScore() {
 int ScoreWall::getScore() {
     return score;
 }
+
+void ScoreWall::resetScore() {
+    score = 0;
+}

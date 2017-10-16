@@ -24,11 +24,10 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     //create the new physics shape
     btShape = new btBoxShape(btVector3(paddleWidth/2,0.f,paddleHeight/2));    
     mPhysics->getCollisionShapes().push_back(btShape);
-    btTransform paddleTransform;
     paddleTransform.setIdentity();
     paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(-90),btRadians(0)));
     paddleTransform.setOrigin(btVector3(0,0,-75));
-    btMass = 0.; //the mass is 0, because the ground is immovable (static)
+    btMass = 0; //the mass is 0, because the ground is immovable (static)
     btInertia = btVector3(0, 0, 0);
     btMotState = new KinematicMotionState(paddleTransform, paddleNode);
     btShape->calculateLocalInertia(btMass, btInertia);
@@ -44,4 +43,9 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
 
 void Paddle::updateMotionState() {
     btMotState->setKinematicPos();
+}
+
+void Paddle::resetPaddle() {
+    paddleNode->setPosition(Ogre::Vector3(0,0,-75));
+    paddleTransform.setOrigin(btVector3(0,0,-75));
 }

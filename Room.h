@@ -14,6 +14,7 @@ public:
 	void setup(void);
 	ScoreWall* getScoreWall(void);
 	Paddle* getPaddle(void);
+	void reset(void);
 private:
 	ScoreWall* scoreWall;
 	Wall wall;

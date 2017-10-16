@@ -152,6 +152,15 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
         case OIS::KC_J:
             mPitch = 0;
             break;
+        case OIS::KC_SPACE:
+            if(mGameState == BaseApplication::STOPPED) {
+                startLabel->hide();
+                mGameState = BaseApplication::RUNNING;
+            }
+            break;
+        case OIS::KC_R:
+            restartGame();
+            break;
         default:
             break;
 
@@ -185,6 +194,23 @@ void TutorialApplication::setupGUI() {
     CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();      
     sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+
+    // Start Label
+    startLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/StartLabel");
+    startLabel->setFont("Jura-Regular");
+    startLabel->setText("Press SPACEBAR to start");
+    startLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    startLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
+    sheet->addChild(startLabel);
+
+    // Game Over Label
+    gameOverLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/GameOverLabel");
+    gameOverLabel->setFont("Jura-Regular");
+    gameOverLabel->setText("Press R to restart");
+    gameOverLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    gameOverLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
+    gameOverLabel->hide();
+    sheet->addChild(gameOverLabel);
 
     // Menu Button
     menuButton = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
@@ -255,6 +281,7 @@ bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
     menuBox->show();
 
     // Pause game
+    mGameState = BaseApplication::PAUSED;
     return true;
 }
 
@@ -279,12 +306,14 @@ bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
     menuBox->hide();
 
     // Resume game
+    mGameState = BaseApplication::RUNNING;
     return true;
 }
 
 bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
-    // Restart game
-    // Reset score
+    restartGame();
+    // Hide Menu
+    menuBox->hide();
     return true;
 }
 
@@ -298,6 +327,23 @@ void TutorialApplication::updateScoreLabel() {
     std::stringstream ss;
     ss << score;
     scoreLabel->setText(ss.str());
+}
+
+void TutorialApplication::restartGame() {
+    // Stop game
+    mGameState = BaseApplication::STOPPED;
+    // Reset score
+    scoreWall->resetScore();
+    updateScoreLabel();
+    // Reset room
+    room->reset();
+    // Show label
+    startLabel->show();
+}
+
+void TutorialApplication::gameOver() {
+    // Show label
+    gameOverLabel->show();
 }
 
 //---------------------------------------------------------------------------

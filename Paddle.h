@@ -15,12 +15,13 @@ private:
     KinematicMotionState* btMotState;
 	btScalar btMass; 
 	btRigidBody* btBody; 
-	btTransform btTrans; 
-	btVector3 btInertia; 
+	btVector3 btInertia;
+	btTransform paddleTransform;
 
 public:
 	Paddle(Ogre::SceneManager*, Physics*, int, int);
 	void updateMotionState(void);
+	void resetPaddle(void);
 };
 
 #endif

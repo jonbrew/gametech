@@ -23,6 +23,7 @@ public:
     Goal* getActiveGoal() { return activeGoal; } 
     void increaseScore();
     int getScore();
+    void resetScore();
 };
 
 #endif

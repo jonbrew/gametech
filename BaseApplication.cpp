@@ -56,7 +56,8 @@ BaseApplication::BaseApplication(void)
     mMouse(0),
     mKeyboard(0),
     mOverlaySystem(0),
-    mDirection(Ogre::Vector3(0,0,0))
+    mDirection(Ogre::Vector3(0,0,0)),
+    mGameState(BaseApplication::STOPPED)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -277,6 +278,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
+    // Inject timestamp to CEGUI system
+    CEGUI::System::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
+
+    if(mGameState == BaseApplication::STOPPED || mGameState == BaseApplication::PAUSED) {
+        return true;
+    }
+
     // Update kinematic paddle position
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
@@ -305,8 +313,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         updateScoreLabel();
     }
 
-    // Inject timestamp to CEGUI system
-    CEGUI::System::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
+    Ogre::Vector3 ballPosition = ballNode->getPosition();
+    if(ballPosition.z < paddlePosition.z) {
+        mGameState = BaseApplication::STOPPED;
+        gameOver();
+    }
+
+    // std::cout << ballPosition.x << " " << ballPosition.y << " " << ballPosition.z << "\n";
+
     
     return true;
 }

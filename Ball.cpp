@@ -15,7 +15,7 @@ void Ball::createBall() {
     rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Ball"); 
     rootNode->attachObject(ball);
     rootNode->scale(0.07,0.07,0.07); 
-    rootNode->setPosition(Ogre::Vector3(0, 0, 0));
+    rootNode->setPosition(Ogre::Vector3(0, 0, -65));
     //create the new physics shape
     btShape = new btSphereShape(btScalar(bRadius));
     mPhysics->getCollisionShapes().push_back(btShape);
@@ -24,17 +24,22 @@ void Ball::createBall() {
     //set the mass of the object. a mass of "0" means that it is an immovable object
     btMass = 0.75f;
     btInertia = btVector3(0,0,0);
-    btTrans.setOrigin(btVector3(0,0,0));
+    btTrans.setOrigin(btVector3(0,0,-65));
     btShape->calculateLocalInertia(btMass, btInertia);
     //construct the body and add it to the dynamics world
     btMotionState = new btDefaultMotionState(btTrans);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
     btBody->setRestitution(0.85);
-    btBody->setFriction(0.);
+    btBody->setFriction(0);
     btBody->setRollingFriction(0.5);
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BALL);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
     btBody->applyCentralImpulse(btVector3(30,0,50));
+}
+
+void Ball::resetBall() {
+    rootNode->setPosition(Ogre::Vector3(0, 0, -65));
+    btTrans.setOrigin(btVector3(0,0,-65));
 }

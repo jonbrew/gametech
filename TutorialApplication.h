@@ -37,6 +37,8 @@ protected:
 
     // GUI components
     CEGUI::Window* sheet;
+    CEGUI::Window* startLabel;
+    CEGUI::Window* gameOverLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
     CEGUI::Window* scoreLabel;
@@ -50,6 +52,7 @@ protected:
     void setupGUI(void);
 
     // GUI Events
+    bool start(const CEGUI::EventArgs &e);
     bool menu(const CEGUI::EventArgs &e);
     bool sound(const CEGUI::EventArgs &e);
     bool restart(const CEGUI::EventArgs &e);
@@ -57,6 +60,8 @@ protected:
     bool quit(const CEGUI::EventArgs &e);
 
     void updateScoreLabel(void);
+    void gameOver(void);
+    void restartGame(void);
 };
 
 //---------------------------------------------------------------------------

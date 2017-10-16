@@ -22,3 +22,9 @@ ScoreWall* Room::getScoreWall() {
 Paddle* Room::getPaddle() {
 	return paddle;
 }
+
+void Room::reset() {
+	// Reset ball
+	// Reset paddle
+	// Reset wall
+}

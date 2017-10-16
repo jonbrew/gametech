@@ -147,6 +147,14 @@ protected:
 
     // GUI component
     GUI*                        gui;
+
+    // Game State
+    static const int            STOPPED = 0;
+    static const int            RUNNING = 1;
+    static const int            PAUSED = 2;
+
+    int                         mGameState;
+    virtual void gameOver(void) = 0;
     
 
 #ifdef OGRE_STATIC_LIB
