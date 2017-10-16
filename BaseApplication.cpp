@@ -52,6 +52,9 @@ BaseApplication::BaseApplication(void)
     mPluginsCfg(Ogre::StringUtil::BLANK),
     mCursorWasVisible(false),
     mShutDown(false),
+    mHit(false),
+    mHitMaxFrames(500),
+    mHitFrames(0),
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
@@ -296,6 +299,17 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
        newDirection.y = 0;
 
+   
+    if(mHit){
+        if(mHitFrames > mHitMaxFrames/2)
+            paddleNode->translate(0, 0, 50 * evt.timeSinceLastFrame);
+        else 
+            paddleNode->translate(0, 0, -50 * evt.timeSinceLastFrame);
+        mHitFrames--;
+        if(mHitFrames==0)
+            mHit = false;
+    }
+   
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
     paddleNode->roll(mRoll);
     paddleNode->pitch(mPitch);
