@@ -91,6 +91,12 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
         case OIS::KC_J:
             mPitch = Ogre::Radian(Ogre::Degree(-.1));
             break;
+         case OIS::KC_SPACE:
+            if(mHit)
+               break;
+            mHit = true;
+            mHitFrames = mHitMaxFrames;
+            break;
         default:
             break;
 
