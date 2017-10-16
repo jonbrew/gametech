@@ -22,6 +22,7 @@ http://www.ogre3d.org/wiki/
 #include "Room.h"
 #include "Sound.h"
 #include "Physics.h"
+#include "GUI.h"
 
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
@@ -116,9 +117,9 @@ protected:
     Ogre::String                mResourcesCfg;
     Ogre::String                mPluginsCfg;
     
-    Ogre::Vector3 mDirection;
-    Ogre::Radian mRoll;
-    Ogre::Radian mPitch;
+    Ogre::Vector3               mDirection;
+    Ogre::Radian                mRoll;
+    Ogre::Radian                mPitch;
 
     Ogre::OverlaySystem*        mOverlaySystem;
 
@@ -143,8 +144,8 @@ protected:
     Room*                       room;
     ScoreWall*                  scoreWall;
 
-    // CEGUI resource
-    CEGUI::OgreRenderer*        mRenderer;
+    // GUI component
+    GUI*                        gui;
     
 
 #ifdef OGRE_STATIC_LIB

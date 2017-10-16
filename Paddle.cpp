@@ -18,7 +18,9 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     paddleNode->attachObject(paddleEntity);
     paddleNode->pitch(Ogre::Radian(Ogre::Degree(-90)));
     paddleNode->translate(Ogre::Vector3(0,0,-75));
+
     mPhysics = mPhys;
+
     //create the new physics shape
     btShape = new btBoxShape(btVector3(paddleWidth/2,0.f,paddleHeight/2));    
     mPhysics->getCollisionShapes().push_back(btShape);
@@ -35,6 +37,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
 	btBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
     btBody->setUserIndex(Physics::TYPE_PADDLE);
     btBody->setRestitution(1);
+    
     //add the body to the dynamics world
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
 }

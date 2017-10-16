@@ -30,7 +30,7 @@ void Ball::createBall() {
     btMotionState = new btDefaultMotionState(btTrans);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
-    btBody->setRestitution(0.9);
+    btBody->setRestitution(0.85);
     btBody->setFriction(0.);
     btBody->setRollingFriction(0.5);
     btBody->setUserPointer(rootNode);

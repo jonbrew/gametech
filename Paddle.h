@@ -8,6 +8,7 @@
 class Paddle {
 private:
 	Ogre::SceneNode* paddleNode;
+	
 	// Bullet fields
     Physics* mPhysics;
     btCollisionShape* btShape;

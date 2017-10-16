@@ -170,37 +170,56 @@ void TutorialApplication::createScene(void)
     scoreWall = room->getScoreWall();
     scoreWall->pickGoal();
 
-    mSound->play(Sound::SOUND_HIT);
+    // mSound->play(Sound::SOUND_HIT);
+
+    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    mCamera->lookAt(paddleNode->getPosition());
+
+    setupGUI();
+}
 
 
-    // Setup CEGUI
+void TutorialApplication::setupGUI() {
+    gui = new GUI();
 
-    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
-    CEGUI::Font::setDefaultResourceGroup("Fonts");
-    CEGUI::Scheme::setDefaultResourceGroup("Schemes");
-    CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
-    CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+    CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();      
+    CEGUI::Window* sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
 
-    mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+    // Menu
+    CEGUI::Window* menu = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
+    menu->setFont("Jura-Regular");
+    menu->setText("Menu");
+    menu->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.05, 0)));
+    // menu->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
+    sheet->addChild(menu);
 
-    CEGUI::SchemeManager::getSingleton().createFromFile("VanillaSkin.scheme");
-    CEGUI::FontManager::getSingleton().createFreeTypeFont("Jura-Regular", 20, true, "Jura-Regular.ttf", "Fonts");
+    // Scorebox
+    CEGUI::Window* scorebox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/ScoreBox");
+    scorebox->setFont("Jura-Regular");
+    scorebox->setText("SCORE");
+    scorebox->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.125, 0)));
+    scorebox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.85, 0), CEGUI::UDim(0.8, 0)));
+    CEGUI::Window* scoreLabel = scorebox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/ScoreLabel");
+    scoreLabel->setFont("Jura-Regular");
+    scoreLabel->setText("0");
+    scoreLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
+    scoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
 
-    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    CEGUI::Window *sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+    sheet->addChild(scorebox);
 
-    CEGUI::Window *quit = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/QuitButton");
+
+    // Quit
+    CEGUI::Window* quit = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/QuitButton");
     quit->setFont("Jura-Regular");
     quit->setText("Quit");
     quit->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
     quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
-
-    sheet->addChild(quit);
-    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+    // sheet->addChild(quit);
 }
 
-bool TutorialApplication::quit(const CEGUI::EventArgs &e)
-{
+
+bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
     mShutDown = true;
     return true;
 }

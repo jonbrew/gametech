@@ -22,8 +22,7 @@ void Physics::removeObject (btRigidBody* b) {
 	dynamicsWorld->removeRigidBody(b);       
 }
 
-void* Physics::stepSimulation(const Ogre::Real elapsedTime, 
-		int maxSubSteps, const Ogre::Real fixedTimestep) { 
+void* Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) { 
 	dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);  
 	for(int i = 0; i < dynamicsWorld->getCollisionObjectArray().size(); i++) {
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
