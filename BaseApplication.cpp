@@ -322,9 +322,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Update ball through physics sim step
     bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
     if(scored) {
-        // TODO increase score and apply impulse to ball
         scoreWall->increaseScore();
         updateScoreLabel();
+        scoreWall->pickGoal();
+        btRigidBody* ballRigidBody = room->getBall()->getRigidBody(); 
+        btVector3 ballVel = ballRigidBody->getLinearVelocity();
+        ballRigidBody->applyCentralImpulse(ballVel*0.1);
     }
 
     Ogre::Vector3 ballPosition = ballNode->getPosition();

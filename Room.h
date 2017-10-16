@@ -14,11 +14,12 @@ public:
 	void setup(void);
 	ScoreWall* getScoreWall(void);
 	Paddle* getPaddle(void);
+	Ball* getBall(void);
 	void reset(void);
 private:
 	ScoreWall* scoreWall;
 	Wall wall;
-	Ball ball;
+	Ball* ball;
 	Paddle* paddle;
 };
 

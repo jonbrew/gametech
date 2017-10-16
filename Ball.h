@@ -23,6 +23,7 @@ public:
     Ball(Ogre::SceneManager* scnMgr, Physics* mPhysics);
     void createBall(void);
     Ogre::SceneNode* getNode(void) { return rootNode; }
+    btRigidBody* getRigidBody(void) { return btBody; }
     void resetBall(void);
 };
 

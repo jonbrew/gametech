@@ -1,250 +1,250 @@
-16/10/2017 15:36:28 (Std) 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-16/10/2017 15:36:28 (Std) 	+                     Crazy Eddie's GUI System - Event log                    +
-16/10/2017 15:36:28 (Std) 	+                          (http://www.cegui.org.uk/)                         +
-16/10/2017 15:36:28 (Std) 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+16/10/2017 17:12:11 (Std) 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+16/10/2017 17:12:11 (Std) 	+                     Crazy Eddie's GUI System - Event log                    +
+16/10/2017 17:12:11 (Std) 	+                          (http://www.cegui.org.uk/)                         +
+16/10/2017 17:12:11 (Std) 	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-16/10/2017 15:36:28 (Std) 	CEGUI::Logger singleton created. (0x1d4d710)
-16/10/2017 15:36:28 (Std) 	
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	* Important:                                                                   *
-16/10/2017 15:36:28 (Std) 	*     To get support at the CEGUI forums, you must post _at least_ the section *
-16/10/2017 15:36:28 (Std) 	*     of this log file indicated below.  Failure to do this will result in no  *
-16/10/2017 15:36:28 (Std) 	*     support being given; please do not waste our time.                       *
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	* -------- START OF ESSENTIAL SECTION TO BE POSTED ON THE FORUM       -------- *
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	---- Version: 0.8.7 (Build: Oct  6 2017 GNU/Linux g++ 5.4.0 20160609 64 bit) ----
-16/10/2017 15:36:28 (Std) 	---- Renderer module is: CEGUI::OgreRenderer - Official OGRE based 2nd generation renderer module. ----
-16/10/2017 15:36:28 (Std) 	---- XML Parser module is: CEGUI::ExpatParser - Official expat based parser module for CEGUI ----
-16/10/2017 15:36:28 (Std) 	---- Image Codec module is: OgreImageCodec - Integrated ImageCodec using the Ogre engine. ----
-16/10/2017 15:36:28 (Std) 	---- Scripting module is: None ----
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	* -------- END OF ESSENTIAL SECTION TO BE POSTED ON THE FORUM         -------- *
-16/10/2017 15:36:28 (Std) 	********************************************************************************
-16/10/2017 15:36:28 (Std) 	
-16/10/2017 15:36:28 (Std) 	---- Begining CEGUI System initialisation ----
-16/10/2017 15:36:28 (Std) 	[CEGUI::ImageManager] Singleton created (0x19b6060)
-16/10/2017 15:36:28 (Std) 	[CEGUI::ImageManager] Registered Image type: BasicImage
-16/10/2017 15:36:28 (Std) 	CEGUI::FontManager singleton created. (0x19b2300)
-16/10/2017 15:36:28 (Std) 	CEGUI::WindowFactoryManager singleton created
-16/10/2017 15:36:28 (Std) 	CEGUI::WindowManager singleton created (0x19b30c0)
-16/10/2017 15:36:28 (Std) 	CEGUI::SchemeManager singleton created. (0x19ca310)
-16/10/2017 15:36:28 (Std) 	CEGUI::GlobalEventSet singleton created. (0x19ae760)
-16/10/2017 15:36:28 (Std) 	CEGUI::AnimationManager singleton created (0x19c2ac0)
-16/10/2017 15:36:28 (Std) 	CEGUI::WidgetLookManager singleton created. (0x1c29ca0)
-16/10/2017 15:36:28 (Std) 	CEGUI::WindowRendererManager singleton created (0x19dc550)
-16/10/2017 15:36:28 (Std) 	CEGUI::RenderEffectManager singleton created (0x19d2520)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'DefaultWindow' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'DefaultWindow' windows added. (0x1d75d30)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'DragContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'DragContainer' windows added. (0x19b9fe0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'ScrolledContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'ScrolledContainer' windows added. (0x19ba180)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'ClippedContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'ClippedContainer' windows added. (0x19bc5d0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/PushButton' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/PushButton' windows added. (0x19bea50)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/RadioButton' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/RadioButton' windows added. (0x19bebf0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Combobox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Combobox' windows added. (0x17f4490)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ComboDropList' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ComboDropList' windows added. (0x1cc2d80)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Editbox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Editbox' windows added. (0x1cc2f20)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/FrameWindow' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/FrameWindow' windows added. (0x1d93ee0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ItemEntry' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ItemEntry' windows added. (0x1d94080)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Listbox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Listbox' windows added. (0x1d94220)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ListHeader' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ListHeader' windows added. (0x1d943c0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ListHeaderSegment' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ListHeaderSegment' windows added. (0x1d94560)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Menubar' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Menubar' windows added. (0x1d94700)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/PopupMenu' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/PopupMenu' windows added. (0x1d948a0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/MenuItem' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/MenuItem' windows added. (0x1d94a40)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/MultiColumnList' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/MultiColumnList' windows added. (0x1d94cf0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/MultiLineEditbox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/MultiLineEditbox' windows added. (0x1d94e90)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ProgressBar' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ProgressBar' windows added. (0x1d95030)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ScrollablePane' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ScrollablePane' windows added. (0x1d951d0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Scrollbar' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Scrollbar' windows added. (0x1d95370)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Slider' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Slider' windows added. (0x1d95510)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Spinner' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Spinner' windows added. (0x1d956b0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/TabButton' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/TabButton' windows added. (0x1d95850)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/TabControl' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/TabControl' windows added. (0x1d959f0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Thumb' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Thumb' windows added. (0x1d95b90)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Titlebar' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Titlebar' windows added. (0x1d95d30)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ToggleButton' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ToggleButton' windows added. (0x1d95ed0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Tooltip' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Tooltip' windows added. (0x1d96070)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/ItemListbox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/ItemListbox' windows added. (0x1d96210)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/GroupBox' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/GroupBox' windows added. (0x1d963b0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'CEGUI/Tree' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'CEGUI/Tree' windows added. (0x1d96550)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'LayoutCell' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'LayoutCell' windows added. (0x1d94be0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'HorizontalLayoutContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'HorizontalLayoutContainer' windows added. (0x1d969e0)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'VerticalLayoutContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'VerticalLayoutContainer' windows added. (0x1d96b80)
-16/10/2017 15:36:28 (Std) 	Created WindowFactory for 'GridLayoutContainer' windows.
-16/10/2017 15:36:28 (Std) 	WindowFactory for 'GridLayoutContainer' windows added. (0x1d96d20)
-16/10/2017 15:36:28 (Std) 	CEGUI::System singleton created. (0x19bd270)
-16/10/2017 15:36:28 (Std) 	---- CEGUI System initialisation completed ----
-16/10/2017 15:36:28 (Std) 	
-16/10/2017 15:36:28 (Std) 	Started creation of Scheme from XML specification:
-16/10/2017 15:36:28 (Std) 	---- CEGUI GUIScheme name: VanillaSkin
-16/10/2017 15:36:28 (Std) 	[ImageManager] Started creation of Imageset from XML specification:
-16/10/2017 15:36:28 (Std) 	[ImageManager] ---- CEGUI Imageset name: Vanilla-Images
-16/10/2017 15:36:28 (Std) 	[ImageManager] ---- Source texture file: vanilla.png
-16/10/2017 15:36:28 (Std) 	[ImageManager] ---- Source texture resource group: (Default)
-16/10/2017 15:36:28 (Std) 	[OgreRenderer] Created texture: Vanilla-Images
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/GenericBrush' (0x1d9d8b0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTopLeft' (0x1d9db80) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTopRight' (0x1d9dd90) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottomLeft' (0x1d9dfa0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottomRight' (0x1d9e1b0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameLeft' (0x1d9e3c0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameRight' (0x1d9e5d0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTop' (0x1d9e7e0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottom' (0x1d9e9f0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollUpArrow' (0x1d9ec00) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollDownArrow' (0x1d9ee10) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VertScrollContainer' (0x1d9f340) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollLeftArrow' (0x1d9d720) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollRightArrow' (0x1d9f730) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorzScrollContainer' (0x1d9f940) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollbarThumb' (0x1d9fd30) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ShadowBrush' (0x1d9ff40) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/MouseArrow' (0x1da0150) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxNormal' (0x1da0360) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxHover' (0x1da0570) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxMark' (0x1da0780) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonNormal' (0x1da0990) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonHover' (0x1da0d50) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonMark' (0x1da0f60) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollUpArrow' (0x1d9cf50) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollDownArrow' (0x1da1620) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollLeftArrow' (0x1da1970) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollRightArrow' (0x1da94d0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderThumb' (0x1da9a50) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderThumb' (0x1d9b700) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderContainer' (0x1daa490) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderContainer' (0x1d9b570) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DefaultScrollImage' (0x1daab50) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderTopEnd' (0x1daae80) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderBottomEnd' (0x1dab1f0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderLeftEnd' (0x1dab580) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderRightEnd' (0x1dab910) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ColourPickerCursor' (0x1dabca0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomEdge' (0x1dabfd0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomLeft' (0x1dac300) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopEdge' (0x1dac630) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopRight' (0x1dac840) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipRightEdge' (0x1daca50) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopLeft' (0x1dacc60) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipLeftEdge' (0x1dace70) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipMiddle' (0x1dad080) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomRight' (0x1dad290) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonNormal' (0x1dad5c0) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonHover' (0x1dad910) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonPushed' (0x1dadc60) of type: BasicImage
-16/10/2017 15:36:28 (Std) 	===== Falagard 'root' element: look and feel parsing begins =====
-16/10/2017 15:36:28 (Std) 	===== Look and feel parsing completed =====
-16/10/2017 15:36:28 (Std) 	No window renderer factories specified for module 'CEGUICoreWindowRendererSet' - adding all available factories...
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Button' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Button' added. (0x1d9d2a0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Default' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Default' added. (0x1d9d440)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Editbox' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Editbox' added. (0x1dce1c0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/FrameWindow' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/FrameWindow' added. (0x1da1170)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ItemEntry' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ItemEntry' added. (0x1da1310)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ListHeader' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ListHeader' added. (0x1da13d0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ListHeaderSegment' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ListHeaderSegment' added. (0x1f61850)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Listbox' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Listbox' added. (0x1f92080)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Menubar' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Menubar' added. (0x1f92220)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/MenuItem' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/MenuItem' added. (0x1f58c00)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/MultiColumnList' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/MultiColumnList' added. (0x1f58da0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/MultiLineEditbox' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/MultiLineEditbox' added. (0x1f58e60)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/PopupMenu' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/PopupMenu' added. (0x1f919c0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ProgressBar' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ProgressBar' added. (0x1f91b60)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ScrollablePane' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ScrollablePane' added. (0x1f6df70)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Scrollbar' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Scrollbar' added. (0x1f6e110)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Slider' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Slider' added. (0x1f6e2b0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Static' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Static' added. (0x1f6e560)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/StaticImage' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/StaticImage' added. (0x1f92370)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/StaticText' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/StaticText' added. (0x1f92510)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/TabButton' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/TabButton' added. (0x1f926b0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/TabControl' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/TabControl' added. (0x1f92850)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Titlebar' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Titlebar' added. (0x1f929f0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ToggleButton' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ToggleButton' added. (0x1f92b90)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Tooltip' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Tooltip' added. (0x1d9ac10)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/ItemListbox' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/ItemListbox' added. (0x1d9adb0)
-16/10/2017 15:36:28 (Std) 	Created WindowRendererFactory for 'Core/Tree' WindowRenderers.
-16/10/2017 15:36:28 (Std) 	WindowRendererFactory 'Core/Tree' added. (0x1d9af50)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Label' using base type 'DefaultWindow', window renderer 'Core/Default' Look'N'Feel 'Vanilla/Label' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Titlebar' using base type 'CEGUI/Titlebar', window renderer 'Core/Titlebar' Look'N'Feel 'Vanilla/Titlebar' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Button' using base type 'CEGUI/PushButton', window renderer 'Core/Button' Look'N'Feel 'Vanilla/Button' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/FrameWindow' using base type 'CEGUI/FrameWindow', window renderer 'Core/FrameWindow' Look'N'Feel 'Vanilla/FrameWindow' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Editbox' using base type 'CEGUI/Editbox', window renderer 'Core/Editbox' Look'N'Feel 'Vanilla/Editbox' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/VerticalScrollbarThumb' using base type 'CEGUI/Thumb', window renderer 'Core/Button' Look'N'Feel 'Vanilla/VerticalScrollbarThumb' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/VerticalScrollbar' using base type 'CEGUI/Scrollbar', window renderer 'Core/Scrollbar' Look'N'Feel 'Vanilla/VerticalScrollbar' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/HorizontalScrollbarThumb' using base type 'CEGUI/Thumb', window renderer 'Core/Button' Look'N'Feel 'Vanilla/HorizontalScrollbarThumb' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/HorizontalScrollbar' using base type 'CEGUI/Scrollbar', window renderer 'Core/Scrollbar' Look'N'Feel 'Vanilla/HorizontalScrollbar' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/StaticImage' using base type 'DefaultWindow', window renderer 'Core/StaticImage' Look'N'Feel 'Vanilla/StaticImage' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/StaticText' using base type 'DefaultWindow', window renderer 'Core/StaticText' Look'N'Feel 'Vanilla/StaticText' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Listbox' using base type 'CEGUI/Listbox', window renderer 'Core/Listbox' Look'N'Feel 'Vanilla/Listbox' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/MultiLineEditbox' using base type 'CEGUI/MultiLineEditbox', window renderer 'Core/MultiLineEditbox' Look'N'Feel 'Vanilla/MultiLineEditbox' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/ComboDropList' using base type 'CEGUI/ComboDropList', window renderer 'Core/Listbox' Look'N'Feel 'Vanilla/ComboDropList' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Combobox' using base type 'CEGUI/Combobox', window renderer 'Core/Default' Look'N'Feel 'Vanilla/Combobox' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/ProgressBar' using base type 'CEGUI/ProgressBar', window renderer 'Core/ProgressBar' Look'N'Feel 'Vanilla/ProgressBar' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Checkbox' using base type 'CEGUI/ToggleButton', window renderer 'Core/ToggleButton' Look'N'Feel 'Vanilla/Checkbox' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/RadioButton' using base type 'CEGUI/RadioButton', window renderer 'Core/ToggleButton' Look'N'Feel 'Vanilla/RadioButton' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	Creating falagard mapping for type 'Vanilla/Tooltip' using base type 'CEGUI/Tooltip', window renderer 'Core/Tooltip' Look'N'Feel 'Vanilla/Tooltip' and RenderEffect ''. (0x7ffd9c538650)
-16/10/2017 15:36:28 (Std) 	[OgreRenderer] Created texture: _ogre_tt_tex_0
-16/10/2017 15:36:28 (Std) 	[OgreRenderer] Created texture: _ogre_tt_tex_1
-16/10/2017 15:36:28 (Std) 	[OgreRenderer] Created texture: Jura-Regular_auto_glyph_images_32
+16/10/2017 17:12:11 (Std) 	CEGUI::Logger singleton created. (0x2acb690)
+16/10/2017 17:12:11 (Std) 	
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	* Important:                                                                   *
+16/10/2017 17:12:11 (Std) 	*     To get support at the CEGUI forums, you must post _at least_ the section *
+16/10/2017 17:12:11 (Std) 	*     of this log file indicated below.  Failure to do this will result in no  *
+16/10/2017 17:12:11 (Std) 	*     support being given; please do not waste our time.                       *
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	* -------- START OF ESSENTIAL SECTION TO BE POSTED ON THE FORUM       -------- *
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	---- Version: 0.8.7 (Build: Oct  6 2017 GNU/Linux g++ 5.4.0 20160609 64 bit) ----
+16/10/2017 17:12:11 (Std) 	---- Renderer module is: CEGUI::OgreRenderer - Official OGRE based 2nd generation renderer module. ----
+16/10/2017 17:12:11 (Std) 	---- XML Parser module is: CEGUI::ExpatParser - Official expat based parser module for CEGUI ----
+16/10/2017 17:12:11 (Std) 	---- Image Codec module is: OgreImageCodec - Integrated ImageCodec using the Ogre engine. ----
+16/10/2017 17:12:11 (Std) 	---- Scripting module is: None ----
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	* -------- END OF ESSENTIAL SECTION TO BE POSTED ON THE FORUM         -------- *
+16/10/2017 17:12:11 (Std) 	********************************************************************************
+16/10/2017 17:12:11 (Std) 	
+16/10/2017 17:12:11 (Std) 	---- Begining CEGUI System initialisation ----
+16/10/2017 17:12:11 (Std) 	[CEGUI::ImageManager] Singleton created (0x2727150)
+16/10/2017 17:12:11 (Std) 	[CEGUI::ImageManager] Registered Image type: BasicImage
+16/10/2017 17:12:11 (Std) 	CEGUI::FontManager singleton created. (0x2747b80)
+16/10/2017 17:12:11 (Std) 	CEGUI::WindowFactoryManager singleton created
+16/10/2017 17:12:11 (Std) 	CEGUI::WindowManager singleton created (0x2747cb0)
+16/10/2017 17:12:11 (Std) 	CEGUI::SchemeManager singleton created. (0x2749440)
+16/10/2017 17:12:11 (Std) 	CEGUI::GlobalEventSet singleton created. (0x2735500)
+16/10/2017 17:12:11 (Std) 	CEGUI::AnimationManager singleton created (0x2726f50)
+16/10/2017 17:12:11 (Std) 	CEGUI::WidgetLookManager singleton created. (0x274e0b0)
+16/10/2017 17:12:11 (Std) 	CEGUI::WindowRendererManager singleton created (0x2727010)
+16/10/2017 17:12:11 (Std) 	CEGUI::RenderEffectManager singleton created (0x273b540)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'DefaultWindow' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'DefaultWindow' windows added. (0x272afe0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'DragContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'DragContainer' windows added. (0x272b180)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'ScrolledContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'ScrolledContainer' windows added. (0x2565490)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'ClippedContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'ClippedContainer' windows added. (0x2a9df40)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/PushButton' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/PushButton' windows added. (0x2a9e0e0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/RadioButton' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/RadioButton' windows added. (0x2abfe60)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Combobox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Combobox' windows added. (0x2ac0000)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ComboDropList' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ComboDropList' windows added. (0x2b16590)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Editbox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Editbox' windows added. (0x2b16730)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/FrameWindow' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/FrameWindow' windows added. (0x2b168d0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ItemEntry' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ItemEntry' windows added. (0x2b16a70)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Listbox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Listbox' windows added. (0x2b16c10)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ListHeader' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ListHeader' windows added. (0x2b16db0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ListHeaderSegment' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ListHeaderSegment' windows added. (0x2b16f50)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Menubar' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Menubar' windows added. (0x2b170f0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/PopupMenu' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/PopupMenu' windows added. (0x2b17290)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/MenuItem' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/MenuItem' windows added. (0x2b17430)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/MultiColumnList' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/MultiColumnList' windows added. (0x2b176e0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/MultiLineEditbox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/MultiLineEditbox' windows added. (0x2b17880)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ProgressBar' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ProgressBar' windows added. (0x2b17a20)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ScrollablePane' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ScrollablePane' windows added. (0x2b17bc0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Scrollbar' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Scrollbar' windows added. (0x2b17d60)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Slider' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Slider' windows added. (0x2b17f00)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Spinner' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Spinner' windows added. (0x2b180a0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/TabButton' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/TabButton' windows added. (0x2b18240)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/TabControl' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/TabControl' windows added. (0x2b183e0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Thumb' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Thumb' windows added. (0x2b18580)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Titlebar' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Titlebar' windows added. (0x2b18720)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ToggleButton' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ToggleButton' windows added. (0x2b188c0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Tooltip' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Tooltip' windows added. (0x2b18a60)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/ItemListbox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/ItemListbox' windows added. (0x2b18c00)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/GroupBox' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/GroupBox' windows added. (0x2b18da0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'CEGUI/Tree' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'CEGUI/Tree' windows added. (0x2b18f40)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'LayoutCell' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'LayoutCell' windows added. (0x2b175d0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'HorizontalLayoutContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'HorizontalLayoutContainer' windows added. (0x2b193d0)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'VerticalLayoutContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'VerticalLayoutContainer' windows added. (0x2b19570)
+16/10/2017 17:12:11 (Std) 	Created WindowFactory for 'GridLayoutContainer' windows.
+16/10/2017 17:12:11 (Std) 	WindowFactory for 'GridLayoutContainer' windows added. (0x2b19710)
+16/10/2017 17:12:11 (Std) 	CEGUI::System singleton created. (0x2724ad0)
+16/10/2017 17:12:11 (Std) 	---- CEGUI System initialisation completed ----
+16/10/2017 17:12:11 (Std) 	
+16/10/2017 17:12:11 (Std) 	Started creation of Scheme from XML specification:
+16/10/2017 17:12:11 (Std) 	---- CEGUI GUIScheme name: VanillaSkin
+16/10/2017 17:12:11 (Std) 	[ImageManager] Started creation of Imageset from XML specification:
+16/10/2017 17:12:11 (Std) 	[ImageManager] ---- CEGUI Imageset name: Vanilla-Images
+16/10/2017 17:12:11 (Std) 	[ImageManager] ---- Source texture file: vanilla.png
+16/10/2017 17:12:11 (Std) 	[ImageManager] ---- Source texture resource group: (Default)
+16/10/2017 17:12:11 (Std) 	[OgreRenderer] Created texture: Vanilla-Images
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/GenericBrush' (0x2b203b0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTopLeft' (0x2b20590) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTopRight' (0x2b207a0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottomLeft' (0x2b209b0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottomRight' (0x2b20bc0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameLeft' (0x2b20dd0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameRight' (0x2b20fe0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameTop' (0x2b211f0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/FrameBottom' (0x2b21400) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollUpArrow' (0x2b21610) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollDownArrow' (0x2b21820) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VertScrollContainer' (0x2b21d50) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollLeftArrow' (0x2b20220) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollRightArrow' (0x2b22140) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorzScrollContainer' (0x2b22350) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ScrollbarThumb' (0x2b22740) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ShadowBrush' (0x2b22950) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/MouseArrow' (0x2b22b60) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxNormal' (0x2b22d70) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxHover' (0x2b22f80) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/CheckboxMark' (0x2b23190) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonNormal' (0x2b233a0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonHover' (0x2b23760) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/RadioButtonMark' (0x2b23970) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollUpArrow' (0x2b1f8c0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollDownArrow' (0x2b24030) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollLeftArrow' (0x2b1e090) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/SliderScrollRightArrow' (0x2b2bf30) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderThumb' (0x2b2c320) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderThumb' (0x2b2c740) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderContainer' (0x2b2ce80) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderContainer' (0x2b1df00) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DefaultScrollImage' (0x2b1dd70) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderTopEnd' (0x2b2d600) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/VerticalImageSliderBottomEnd' (0x2b2db00) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderLeftEnd' (0x2b23ea0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/HorizontalImageSliderRightEnd' (0x2b2e280) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/ColourPickerCursor' (0x2b2e610) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomEdge' (0x2b2e9d0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomLeft' (0x2b2ed00) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopEdge' (0x2b2f030) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopRight' (0x2b2f240) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipRightEdge' (0x2b2f450) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipTopLeft' (0x2b2f660) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipLeftEdge' (0x2b2f870) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipMiddle' (0x2b2fa80) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/TooltipBottomRight' (0x2b2fc90) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonNormal' (0x2b2ffc0) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonHover' (0x2b30310) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	[ImageManager] Created image: 'Vanilla-Images/DropDownButtonPushed' (0x2b30660) of type: BasicImage
+16/10/2017 17:12:11 (Std) 	===== Falagard 'root' element: look and feel parsing begins =====
+16/10/2017 17:12:11 (Std) 	===== Look and feel parsing completed =====
+16/10/2017 17:12:11 (Std) 	No window renderer factories specified for module 'CEGUICoreWindowRendererSet' - adding all available factories...
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Button' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Button' added. (0x2b2cb60)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Default' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Default' added. (0x2b2cd00)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Editbox' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Editbox' added. (0x2b2cdc0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/FrameWindow' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/FrameWindow' added. (0x2d10140)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ItemEntry' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ItemEntry' added. (0x2cedba0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ListHeader' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ListHeader' added. (0x2cedd40)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ListHeaderSegment' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ListHeaderSegment' added. (0x2cedee0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Listbox' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Listbox' added. (0x2b1b740)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Menubar' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Menubar' added. (0x2b1b8e0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/MenuItem' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/MenuItem' added. (0x2b1ba80)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/MultiColumnList' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/MultiColumnList' added. (0x2b1bc20)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/MultiLineEditbox' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/MultiLineEditbox' added. (0x2b1d710)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/PopupMenu' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/PopupMenu' added. (0x2b1d8b0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ProgressBar' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ProgressBar' added. (0x2b1da50)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ScrollablePane' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ScrollablePane' added. (0x2b1dbf0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Scrollbar' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Scrollbar' added. (0x2cdf520)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Slider' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Slider' added. (0x2cdf6c0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Static' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Static' added. (0x2cdf970)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/StaticImage' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/StaticImage' added. (0x2cdfb10)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/StaticText' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/StaticText' added. (0x2d10aa0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/TabButton' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/TabButton' added. (0x2d10c40)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/TabControl' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/TabControl' added. (0x2d10de0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Titlebar' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Titlebar' added. (0x2d10f80)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ToggleButton' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ToggleButton' added. (0x2d11120)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Tooltip' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Tooltip' added. (0x2ce5ab0)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/ItemListbox' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/ItemListbox' added. (0x2ce5c50)
+16/10/2017 17:12:11 (Std) 	Created WindowRendererFactory for 'Core/Tree' WindowRenderers.
+16/10/2017 17:12:11 (Std) 	WindowRendererFactory 'Core/Tree' added. (0x2ce5df0)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Label' using base type 'DefaultWindow', window renderer 'Core/Default' Look'N'Feel 'Vanilla/Label' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Titlebar' using base type 'CEGUI/Titlebar', window renderer 'Core/Titlebar' Look'N'Feel 'Vanilla/Titlebar' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Button' using base type 'CEGUI/PushButton', window renderer 'Core/Button' Look'N'Feel 'Vanilla/Button' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/FrameWindow' using base type 'CEGUI/FrameWindow', window renderer 'Core/FrameWindow' Look'N'Feel 'Vanilla/FrameWindow' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Editbox' using base type 'CEGUI/Editbox', window renderer 'Core/Editbox' Look'N'Feel 'Vanilla/Editbox' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/VerticalScrollbarThumb' using base type 'CEGUI/Thumb', window renderer 'Core/Button' Look'N'Feel 'Vanilla/VerticalScrollbarThumb' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/VerticalScrollbar' using base type 'CEGUI/Scrollbar', window renderer 'Core/Scrollbar' Look'N'Feel 'Vanilla/VerticalScrollbar' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/HorizontalScrollbarThumb' using base type 'CEGUI/Thumb', window renderer 'Core/Button' Look'N'Feel 'Vanilla/HorizontalScrollbarThumb' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/HorizontalScrollbar' using base type 'CEGUI/Scrollbar', window renderer 'Core/Scrollbar' Look'N'Feel 'Vanilla/HorizontalScrollbar' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/StaticImage' using base type 'DefaultWindow', window renderer 'Core/StaticImage' Look'N'Feel 'Vanilla/StaticImage' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/StaticText' using base type 'DefaultWindow', window renderer 'Core/StaticText' Look'N'Feel 'Vanilla/StaticText' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Listbox' using base type 'CEGUI/Listbox', window renderer 'Core/Listbox' Look'N'Feel 'Vanilla/Listbox' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/MultiLineEditbox' using base type 'CEGUI/MultiLineEditbox', window renderer 'Core/MultiLineEditbox' Look'N'Feel 'Vanilla/MultiLineEditbox' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/ComboDropList' using base type 'CEGUI/ComboDropList', window renderer 'Core/Listbox' Look'N'Feel 'Vanilla/ComboDropList' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Combobox' using base type 'CEGUI/Combobox', window renderer 'Core/Default' Look'N'Feel 'Vanilla/Combobox' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/ProgressBar' using base type 'CEGUI/ProgressBar', window renderer 'Core/ProgressBar' Look'N'Feel 'Vanilla/ProgressBar' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Checkbox' using base type 'CEGUI/ToggleButton', window renderer 'Core/ToggleButton' Look'N'Feel 'Vanilla/Checkbox' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/RadioButton' using base type 'CEGUI/RadioButton', window renderer 'Core/ToggleButton' Look'N'Feel 'Vanilla/RadioButton' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	Creating falagard mapping for type 'Vanilla/Tooltip' using base type 'CEGUI/Tooltip', window renderer 'Core/Tooltip' Look'N'Feel 'Vanilla/Tooltip' and RenderEffect ''. (0x7fffde0a7f50)
+16/10/2017 17:12:11 (Std) 	[OgreRenderer] Created texture: _ogre_tt_tex_0
+16/10/2017 17:12:11 (Std) 	[OgreRenderer] Created texture: _ogre_tt_tex_1
+16/10/2017 17:12:11 (Std) 	[OgreRenderer] Created texture: Jura-Regular_auto_glyph_images_32

@@ -178,7 +178,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
 
 void TutorialApplication::createScene(void)
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     mSceneMgr->setAmbientLight(Ogre::ColourValue(.35, .35, .35));
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
@@ -310,7 +310,7 @@ bool TutorialApplication::sound(const CEGUI::EventArgs &e) {
 bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
     // Hide menu
     menuBox->hide();
-
+    startLabel->hide();
     // Resume game
     mGameState = BaseApplication::RUNNING;
     return true;
@@ -343,6 +343,8 @@ void TutorialApplication::restartGame() {
     updateScoreLabel();
     // Reset room
     room->reset();
+    // Hide gameOverLabel       
+    gameOverLabel->hide();
     // Show label
     startLabel->show();
 }

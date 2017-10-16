@@ -9,6 +9,7 @@
 class Sound { 
 protected:
 	std::vector<Mix_Chunk*> sounds;
+	Mix_Music* music;
 	bool isOn;
 
 public:
