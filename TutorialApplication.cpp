@@ -216,27 +216,35 @@ void TutorialApplication::setupGUI() {
     menuBox->hide();
 
     // Resume Button
-    resumeButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    resumeButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/QuitButton");
     resumeButton->setFont("Jura-Regular");
     resumeButton->setText("Resume");
     resumeButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
     resumeButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.1, 0)));
     resumeButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::resume, this));
 
+    // Toggle Sound Button
+    soundButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/SoundButton");
+    soundButton->setFont("Jura-Regular");
+    soundButton->setText("Sound Off");
+    soundButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    soundButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
+    soundButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::sound, this));
+
     // Restart Button
-    restartButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    restartButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/RestartButton");
     restartButton->setFont("Jura-Regular");
     restartButton->setText("Restart");
     restartButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
-    restartButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
+    restartButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.5, 0)));
     restartButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::restart, this));
 
     // Quit Button
-    quitButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/QuitButton");
+    quitButton = menuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/QuitButton");
     quitButton->setFont("Jura-Regular");
     quitButton->setText("Quit");
     quitButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
-    quitButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.5, 0)));
+    quitButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.7, 0)));
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
 
     sheet->addChild(menuBox);
@@ -249,6 +257,22 @@ bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
     // Pause game
     return true;
 }
+
+bool TutorialApplication::sound(const CEGUI::EventArgs &e) {
+    // Toggle sound
+    mSound->toggle();
+
+    // Change text
+    if(mSound->getIsOn()) {
+        soundButton->setText("Sound Off");
+    }
+    else {
+        soundButton->setText("Sound On");
+    }
+
+    return true;
+}
+
 
 bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
     // Hide menu

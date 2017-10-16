@@ -17,6 +17,15 @@ Sound::~Sound() {
     SDL_Quit();
 }
 
+void Sound::toggle() {
+    if(isOn) {
+        off();
+    }
+    else {
+        on();
+    }
+}
+
 void Sound::on() {
     isOn = true;
 }
@@ -28,4 +37,8 @@ void Sound::off() {
 void Sound::play(int i) {
     if(isOn)
         Mix_PlayChannel(-1,sounds[i],0);
+}
+
+bool Sound::getIsOn() {
+    return isOn;
 }

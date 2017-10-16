@@ -18,9 +18,11 @@ public:
 
     Sound();
     ~Sound();
+    void toggle();
     void on();
     void off();
     void play(int i);
+    bool getIsOn();
 };
 
 #endif

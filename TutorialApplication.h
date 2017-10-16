@@ -44,12 +44,14 @@ protected:
     CEGUI::Window* quitButton;
     CEGUI::Window* resumeButton;
     CEGUI::Window* restartButton;
+    CEGUI::Window* soundButton;
     
     // CEGUI
     void setupGUI(void);
 
     // GUI Events
     bool menu(const CEGUI::EventArgs &e);
+    bool sound(const CEGUI::EventArgs &e);
     bool restart(const CEGUI::EventArgs &e);
     bool resume(const CEGUI::EventArgs &e);
     bool quit(const CEGUI::EventArgs &e);
