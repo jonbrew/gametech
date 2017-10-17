@@ -27,7 +27,6 @@ public:
     static const int TYPE_GOAL_ON = 4;
 
     Physics(Sound* mSnd);
-    ~Physics();
     void addObject(btRigidBody* b);
     void removeObject(btRigidBody* b);
     btAlignedObjectArray<btCollisionShape*>& getCollisionShapes(void) {return collisionShapes;}

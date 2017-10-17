@@ -10,13 +10,15 @@
 
 class Room {
 public:
-	Room(Ogre::SceneManager*, Physics* mPhys, int);
+	Room(Ogre::SceneManager*, Physics*, int);
 	void setup(void);
 	ScoreWall* getScoreWall(void);
 	Paddle* getPaddle(void);
 	Ball* getBall(void);
 	void reset(void);
 private:
+	Physics* mPhys;
+	Ogre::SceneManager* mSceneMgr;
 	ScoreWall* scoreWall;
 	Wall wall;
 	Ball* ball;

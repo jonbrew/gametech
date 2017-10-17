@@ -38,7 +38,21 @@ void Ball::createBall() {
     btBody->applyCentralImpulse(btVector3(0,10,-75));
 }
 
-void Ball::resetBall() {
+void Ball::reset() {
     rootNode->setPosition(Ogre::Vector3(0, 0, -65));
+
+    btBody->clearForces();
+    btBody->setLinearVelocity(btVector3(0, 0, 0));
+    btBody->setAngularVelocity(btVector3(0, 0, 0));
+    btBody->applyCentralImpulse(btVector3(0,10,-50));
     btTrans.setOrigin(btVector3(0,0,-65));
+    btTrans.setRotation(btQuaternion(1.0f, 1.0f, 1.0f, 0));
+
+    btBody->setWorldTransform(btTrans);
+    btMotionState->setWorldTransform(btTrans);
+}
+
+void Ball::printPos() {
+    Ogre::Vector3 pos = rootNode->getPosition();
+    std::cout << pos.x << " " << pos.y << " " << pos.z << "\n";
 }

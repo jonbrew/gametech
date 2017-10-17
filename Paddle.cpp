@@ -1,6 +1,8 @@
 #include "Paddle.h"
 
 Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int paddleHeight) {
+    sceneMgr = scnMgr;
+
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(
         "paddleMesh",
@@ -11,7 +13,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
         1, 5, 5, 
         Ogre::Vector3::UNIT_Z);
 
-    Ogre::Entity* paddleEntity = scnMgr->createEntity("paddleMesh");
+    Ogre::Entity* paddleEntity = scnMgr->createEntity("PaddleEntity", "paddleMesh");
     paddleEntity->setMaterialName("Colors/RadioactiveGreen");
 
     paddleNode = scnMgr->getRootSceneNode()->createChildSceneNode("Paddle");
@@ -45,7 +47,15 @@ void Paddle::updateMotionState() {
     btMotState->setKinematicPos();
 }
 
-void Paddle::resetPaddle() {
-    paddleNode->setPosition(Ogre::Vector3(0,0,-75));
+void Paddle::reset() {
+    paddleNode->setPosition(Ogre::Vector3(0, 0, -75));
+
+    btBody->clearForces();
+    btBody->setLinearVelocity(btVector3(0, 0, 0));
+    btBody->setAngularVelocity(btVector3(0, 0, 0));
     paddleTransform.setOrigin(btVector3(0,0,-75));
+    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(-90),btRadians(0)));
+
+    btBody->setWorldTransform(paddleTransform);
+    btMotState->setWorldTransform(paddleTransform);
 }

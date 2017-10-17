@@ -8,6 +8,7 @@
 class Paddle {
 private:
 	Ogre::SceneNode* paddleNode;
+	Ogre::SceneManager* sceneMgr;
 	
 	// Bullet fields
     Physics* mPhysics;
@@ -20,8 +21,9 @@ private:
 
 public:
 	Paddle(Ogre::SceneManager*, Physics*, int, int);
+	~Paddle(void);
 	void updateMotionState(void);
-	void resetPaddle(void);
+	void reset(void);
 };
 
 #endif
