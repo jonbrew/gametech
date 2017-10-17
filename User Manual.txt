@@ -1,0 +1,21 @@
+User Manual
+
+The objective of the game is to hit the ball into the score zone, which is
+denoted by a dark green box on a red wall. Each score is worth 1 point, and the goal is to score as many points as possible. The score zone will change to a random position on the red wall every time it is hit. If the player misses the ball and it goes past the paddle, they lose and must restart the game. To control the paddle use the following keys:
+
+W ->            move up 
+A ->            move left 
+S ->            move down 
+D -> 			move right 
+Up Arrow ->     pitch paddle to face upwards    -> Alternative Key: J
+Down Arrow ->   pitch paddle to face downwards  -> Alternative Key: H 
+Right Arrow ->  roll paddle to the Right        -> Alternative Key: K 
+Left Arrow ->   roll maddle to the Left         -> Alternative Key: L
+
+Use the SPACE bar to start the game and to hit the ball with the paddle.
+Important note: You must hit the ball with the paddle or the ball will
+eventually stop moving.
+
+Use the R key to pause and restart the game.
+
+There is also a menu the player can click on with the mouse to pause the game, turn on/off sounds, and quit the game.

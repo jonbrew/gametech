@@ -1,0 +1,26 @@
+Final Project Report
+
+Overall, we implemented every feature we planned to include in our game. Below are issues we ran into as we created our game delineated by requirement.
+
+-User-Controlled "racquet"
+
+We chose to use a semi-transparent plane as our racquet. Once we understood how to use OIS, we were able to add controls for each of the paddle's movements, pitches, and rolls. One issue with the paddle is that doing extreme pitches and rolls forces the paddle to disappear until the angle is changed enough for the rendering engine to see it agian. While the player should have no need to do this, we had to leave it as an element of the game. 
+
+-Camera Control
+
+The camera follows the paddle and sits inside the box shaped playing field. This follows the expectations we set forth for it and allows the user to see the entire playing field.
+
+-Sound effects
+
+We were able to add sound effects for the ball hitting anything, the paddle whiffing, and the score changing. The implementation for the paddle whiffing had to be different from the others because it did not occur during a collision but rather when there was no hit. We also added background music to enhance the game.
+
+-Physics engine for physics and collision detection
+
+We added the Bullet physics engine and created a Physics wrapper class to determine how collisions would provoke actions like sound and affect the different game bodies. We used gravity to slow the ball and make the paddle's hitting function necessary for the player.
+
+-Scoring Mechanic
+
+We keep the score using a HUD in the corner. We left the scoring mechanic simple in line with the game's features. The player scores 1 point for everytime they hit the score zone. We did not end up implementing a feature for the score to decrease on the paddle missing a hit attempt.
+
+Additionally, we attempted to add extra credit features for background music, end conditions, and player interfaces. Importing the CEGUI library gave us significant trouble, but we were able to build out the interface once we had it linked and installed.
+
