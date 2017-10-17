@@ -288,22 +288,21 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         return true;
     }
 
-    // Update kinematic paddle position
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
 
     Ogre::Vector3 newDirection = mDirection;
-    // if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
-    //    newDirection.x = 0;
-    // if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
-    //    newDirection.y = 0;
+    if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
+       newDirection.x = 0;
+    if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
+       newDirection.y = 0;
 
    
     Ogre::Radian newPitch = mPitch;
     Ogre::Real curPitch = paddleNode->getOrientation().getPitch().valueDegrees();
-    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.1))) || 
-        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.1))))
+    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || 
+        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.05))))
         newPitch = 0;
    
     if(mHit){
@@ -340,11 +339,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
     if(ballPosition.z <= -80 || ballStopped) {
         mGameState = BaseApplication::STOPPED;
-        gameOver();
+        gameOver(ballStopped);
     }
-
-    // std::cout << ballPosition.x << " " << ballPosition.y << " " << ballPosition.z << "\n";
-
     
     return true;
 }

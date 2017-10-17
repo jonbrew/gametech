@@ -39,6 +39,8 @@ protected:
     CEGUI::Window* sheet;
     CEGUI::Window* startLabel;
     CEGUI::Window* gameOverLabel;
+    CEGUI::Window* tooSlowLabel;
+    CEGUI::Window* youMissedLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
     CEGUI::Window* scoreLabel;
@@ -60,7 +62,7 @@ protected:
     bool quit(const CEGUI::EventArgs &e);
 
     void updateScoreLabel(void);
-    void gameOver(void);
+    void gameOver(bool);
     void restartGame(void);
 };
 

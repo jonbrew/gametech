@@ -9,7 +9,9 @@
 class Physics { 
 protected:
     Sound* mSound;
-    bool isColliding;
+    bool isCollidingWall;
+    bool isCollidingPaddle;
+    bool isCollidingGoal;
     btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btBroadphaseInterface* overlappingPairCache;

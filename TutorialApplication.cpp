@@ -49,19 +49,19 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             break;
         case OIS::KC_UP:
             //y += move;
-            mPitch = Ogre::Radian(Ogre::Degree(-.1));
+            mPitch = Ogre::Radian(Ogre::Degree(-.05));
             break;
         case OIS::KC_DOWN:
             //y -= move;
-            mPitch = Ogre::Radian(Ogre::Degree(.1));
+            mPitch = Ogre::Radian(Ogre::Degree(.05));
             break;
         case OIS::KC_LEFT:
             //x += move;
-            mRoll = Ogre::Radian(Ogre::Degree(.1));
+            mRoll = Ogre::Radian(Ogre::Degree(.05));
             break;
         case OIS::KC_RIGHT:
             //x -= move;
-            mRoll = Ogre::Radian(Ogre::Degree(-.1));
+            mRoll = Ogre::Radian(Ogre::Degree(-.05));
             break;
         case OIS::KC_W:
             y += move;
@@ -80,16 +80,16 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             mDirection = Ogre::Vector3(x,y,z);
             break;
         case OIS::KC_K:
-            mRoll = Ogre::Radian(Ogre::Degree(.1));
+            mRoll = Ogre::Radian(Ogre::Degree(.05));
             break;
         case OIS::KC_L:
-            mRoll = Ogre::Radian(Ogre::Degree(-.1));
+            mRoll = Ogre::Radian(Ogre::Degree(-.05));
             break;
         case OIS::KC_H:
-            mPitch = Ogre::Radian(Ogre::Degree(.1));
+            mPitch = Ogre::Radian(Ogre::Degree(.05));
             break;
         case OIS::KC_J:
-            mPitch = Ogre::Radian(Ogre::Degree(-.1));
+            mPitch = Ogre::Radian(Ogre::Degree(-.05));
             break;
          case OIS::KC_SPACE:
             if(mHit)
@@ -175,7 +175,6 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
   return true; 
 }
 
-
 void TutorialApplication::createScene(void)
 {
     srand(time(NULL));
@@ -217,6 +216,24 @@ void TutorialApplication::setupGUI() {
     gameOverLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
     gameOverLabel->hide();
     sheet->addChild(gameOverLabel);
+
+    // Too Slow! Label
+    tooSlowLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/TooSlowLabel");
+    tooSlowLabel->setFont("Jura-Regular");
+    tooSlowLabel->setText("Too Slow!");
+    tooSlowLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    tooSlowLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    tooSlowLabel->hide();
+    sheet->addChild(tooSlowLabel);
+
+    // You Missed! Label
+    youMissedLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/YouMissedLabel");
+    youMissedLabel->setFont("Jura-Regular");
+    youMissedLabel->setText("You Missed!");
+    youMissedLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    youMissedLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    youMissedLabel->hide();
+    sheet->addChild(youMissedLabel);
 
     // Menu Button
     menuButton = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
@@ -345,13 +362,19 @@ void TutorialApplication::restartGame() {
     room->reset();
     // Hide gameOverLabel       
     gameOverLabel->hide();
+    youMissedLabel->hide();
+    tooSlowLabel->hide();
     // Show label
     startLabel->show();
 }
 
-void TutorialApplication::gameOver() {
+void TutorialApplication::gameOver(bool ballStopped) {
     // Show label
     gameOverLabel->show();
+    if(ballStopped)
+        tooSlowLabel->show();
+    else
+        youMissedLabel->show();
 }
 
 //---------------------------------------------------------------------------

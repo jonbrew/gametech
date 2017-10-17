@@ -2,7 +2,9 @@
 
 Physics::Physics(Sound* mSnd) {
 	mSound = mSnd;
-	isColliding = false;
+	isCollidingWall = false;
+	isCollidingPaddle = false;
+	isCollidingGoal = false;
 	collisionConfiguration = new btDefaultCollisionConfiguration(); 
 	dispatcher = new btCollisionDispatcher(collisionConfiguration); 
 	overlappingPairCache = new btDbvtBroadphase(); 
@@ -45,8 +47,11 @@ bool Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, cons
 
 bool Physics::handleCollisions() {
 	int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+	bool hitWall = false;
+    bool hitPaddle = false;
+    bool hitGoal = false;
 	bool scored = false;
-	if(!isColliding && numManifolds > 0) {
+	if(numManifolds > 0) {
     	for(int i = 0; i < numManifolds; i++) {
     	    btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
     	    const btCollisionObject* obA = contactManifold->getBody0();
@@ -57,21 +62,32 @@ bool Physics::handleCollisions() {
     	    	aType = bType;
     	    switch(aType) {
     	    	case TYPE_WALL :
-    	    		mSound->play(Sound::SOUND_BOUNCE);
+    	    		if(!isCollidingWall)
+    	    			mSound->play(Sound::SOUND_BOUNCE);
+    	    		hitWall = true;
     	    		break;
     	    	case TYPE_PADDLE :
-    	    		mSound->play(Sound::SOUND_HIT);
+    	    		if(!isCollidingPaddle)
+    	    			mSound->play(Sound::SOUND_HIT);
+    	    		hitPaddle = true;
     	    		break;
     	    	case TYPE_GOAL_OFF :
-    	    		mSound->play(Sound::SOUND_BOUNCE);
+    	    		if(!isCollidingGoal)
+    	    			mSound->play(Sound::SOUND_BOUNCE);
+    	    		hitGoal = true;
     	    		break;
     	    	case TYPE_GOAL_ON :
-    	    		mSound->play(Sound::SOUND_SCORE);
-    	    		scored = true;
+    	    		if(!isCollidingGoal) {
+    	    			mSound->play(Sound::SOUND_SCORE);
+    	    			scored = true;
+    	    		}
+    	    		hitGoal = true;
     	    		break;
     	    }
     	}
     }
-    isColliding = numManifolds > 0;
+    isCollidingWall = hitWall;
+    isCollidingPaddle = hitPaddle;
+    isCollidingGoal = hitGoal;
     return scored;
 }

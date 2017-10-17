@@ -19,11 +19,12 @@ public:
     virtual void getWorldTransform(btTransform &worldTrans) const { worldTrans = mPos; }
     void setKinematicPos() {
         Ogre::Quaternion orientation = rootNode->getOrientation();
-        Ogre::Vector3 pos = rootNode->getPosition(); 
+        Ogre::Vector3 pos = rootNode->getPosition();
         mPos = btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w),
                            btVector3(pos.x, pos.y, pos.z));
+        btVector3 btpos = mPos.getOrigin();
     }
-    virtual void setWorldTransform(const btTransform &worldTrans) { mPos = worldTrans; }
+    virtual void setWorldTransform(const btTransform &worldTrans) { }
 };
 
 #endif

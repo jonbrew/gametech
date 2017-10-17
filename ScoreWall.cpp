@@ -54,6 +54,8 @@ void ScoreWall::pickGoal() {
     int i = rand() % goals.size();
     if(activeGoal) {
         activeGoal->off();
+        while(&(goals[i]) == activeGoal)
+            i = rand() % goals.size();
     }
     activeGoal = &(goals[i]);
     activeGoal->on();
