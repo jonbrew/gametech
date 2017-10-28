@@ -1,7 +1,7 @@
 User Manual
 
 The objective of the game is to hit the ball into the score zone, which is
-denoted by a dark green box on a red wall. Each score is worth 1 point, and the goal is to score as many points as possible. The score zone will change to a random position on the red wall every time it is hit. If the player misses the ball and it goes past the paddle, they lose and must restart the game. To control the paddle use the following keys:
+denoted by a dark green box on a red wall. Each score is worth 1 point, and the goal is to score as many points as possible. The score zone will change to a random position on the red wall every time it is hit and the ball will get a velocity boost. If the player misses the ball and it goes past the paddle or the ball is allowed to come to a slow creep, they lose and must restart the game. To control the paddle use the following keys:
 
 W ->            move up 
 A ->            move left 

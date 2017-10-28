@@ -187,9 +187,10 @@ void TutorialApplication::createScene(void)
     scoreWall = room->getScoreWall();
     scoreWall->pickGoal();
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
-    mCamera->lookAt(paddleNode->getPosition());
+    mCamera1->lookAt(paddleNode->getPosition());
 
     setupGUI();
+    mViewport->setCamera(mCamera2);
 }
 
 

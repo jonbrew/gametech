@@ -45,7 +45,8 @@ CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID)
 //---------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
     : mRoot(0),
-    mCamera(0),
+    mCamera1(0),
+    mCamera2(0),
     mSceneMgr(0),
     mWindow(0),
     mResourcesCfg(Ogre::StringUtil::BLANK),
@@ -111,13 +112,21 @@ void BaseApplication::chooseSceneManager(void)
 //---------------------------------------------------------------------------
 void BaseApplication::createCamera(void)
 {
-    // Create the camera
-    mCamera = mSceneMgr->createCamera("PlayerCam");
+    // Create the camera1
+    mCamera1 = mSceneMgr->createCamera("PlayerCam1");
 
-    mCamera->setPosition(Ogre::Vector3(0,0,-100));
-    mCamera->lookAt(Ogre::Vector3(0,0,0));
-    mCamera->setNearClipDistance(5);
-    mCamera->setFOVy(Ogre::Radian(Ogre::Degree(90)));
+    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+    mCamera1->lookAt(Ogre::Vector3(0,0,0));
+    mCamera1->setNearClipDistance(5);
+    mCamera1->setFOVy(Ogre::Radian(Ogre::Degree(90)));
+
+    // Create the camera2
+    mCamera2 = mSceneMgr->createCamera("PlayerCam2");
+
+    mCamera2->setPosition(Ogre::Vector3(0,0,100));
+    mCamera2->lookAt(Ogre::Vector3(0,0,0));
+    mCamera2->setNearClipDistance(5);
+    mCamera2->setFOVy(Ogre::Radian(Ogre::Degree(90)));
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -155,11 +164,13 @@ void BaseApplication::destroyScene(void)
 void BaseApplication::createViewports(void)
 {
     // Create one viewport, entire window
-    Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-    vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+    mViewport = mWindow->addViewport(mCamera1);
+    mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 
-    // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+    // Alter the cameras aspect ratio to match the viewport
+    mCamera1->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
+    mCamera2->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
+
 }
 //---------------------------------------------------------------------------
 void BaseApplication::setupResources(void)
@@ -319,7 +330,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     paddleNode->roll(mRoll);
     paddleNode->pitch(newPitch);
 
-    mCamera->move(newDirection * evt.timeSinceLastFrame);
+    mCamera1->move(newDirection * evt.timeSinceLastFrame);
 
     // Update kinematic paddle position in physics sim
     room->getPaddle()->updateMotionState();

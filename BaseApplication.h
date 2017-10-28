@@ -23,6 +23,7 @@ http://www.ogre3d.org/wiki/
 #include "Sound.h"
 #include "Physics.h"
 #include "GUI.h"
+#include "NetManager.h"
 
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
@@ -111,9 +112,11 @@ protected:
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
     Ogre::Root*                 mRoot;
-    Ogre::Camera*               mCamera;
+    Ogre::Camera*               mCamera1;
+    Ogre::Camera*               mCamera2;
     Ogre::SceneManager*         mSceneMgr;
     Ogre::RenderWindow*         mWindow;
+    Ogre::Viewport*             mViewport;
     Ogre::String                mResourcesCfg;
     Ogre::String                mPluginsCfg;
     
@@ -141,6 +144,9 @@ protected:
     // Bullet Physics controller
     Physics*                    mPhysics;
 
+    // Networking Manager
+    NetManager*                 mNetworking;
+
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;
 
@@ -159,6 +165,18 @@ protected:
 
     int                         mGameState;
     virtual void gameOver(bool) = 0;
+
+    // Game Mode
+    static const int            SINGLE = 0;
+    static const int            MULTI = 1;
+
+    int                         mGameMode;
+
+    // Networking Role
+    static const int            CLIENT = 0;
+    static const int            SERVER = 1;
+
+    int                         mNetRole;
     
 
 #ifdef OGRE_STATIC_LIB

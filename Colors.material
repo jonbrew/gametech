@@ -40,7 +40,9 @@ material Colors/RadioactiveGreen
          diffuse 0.2 0.2 0.2 0.3
          emissive 0.05 0.8 0.05 0.3
 
-         scene_blend alpha_blend 
+         scene_blend alpha_blend
+
+         cull_hardware none
       }
    }
 }

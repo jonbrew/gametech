@@ -4,7 +4,7 @@ Overall, we implemented every feature we planned to include in our game. Below a
 
 -User-Controlled "racquet"
 
-We chose to use a semi-transparent plane as our racquet. Once we understood how to use OIS, we were able to add controls for each of the paddle's movements, pitches, and rolls. One issue with the paddle is that doing extreme pitches and rolls forces the paddle to disappear until the angle is changed enough for the rendering engine to see it agian. While the player should have no need to do this, we had to leave it as an element of the game. 
+We chose to use a semi-transparent plane as our racquet. Once we understood how to use OIS, we were able to add controls for each of the paddle's movements, pitches, and rolls. One issue with the paddle is that doing extreme pitches and rolls could force the paddle to disappear until the angle is changed enough for the rendering engine to see it agian. We were able to solve this problem by adding bounds to the rotation.
 
 -Camera Control
 
@@ -12,11 +12,11 @@ The camera follows the paddle and sits inside the box shaped playing field. This
 
 -Sound effects
 
-We were able to add sound effects for the ball hitting anything, the paddle whiffing, and the score changing. The implementation for the paddle whiffing had to be different from the others because it did not occur during a collision but rather when there was no hit. We also added background music to enhance the game.
+We used the SDL library to create a sound wrapper class to handle playing audio. We added sound effects for the ball hitting walls, the paddle hitting the ball, and hitting the correct goal. We also added background music to enhance the game. Sounds can be toggled on and off within the GUI menu.
 
 -Physics engine for physics and collision detection
 
-We added the Bullet physics engine and created a Physics wrapper class to determine how collisions would provoke actions like sound and affect the different game bodies. We used gravity to slow the ball and make the paddle's hitting function necessary for the player.
+We added the Bullet physics engine and created a Physics wrapper class to determine how collisions would provoke actions like sound and affect the different game bodies. We also created a KinematicMotionState interface to update kinematic objects in the physics engine. We came accross a bug we were unable to solve with bullet where sometimes the paddle will not collide correctly even though the motionstate is being updated. We used gravity to slow the ball and made the player rely on scoring consistently and the paddle's hitting function to keep playing. 
 
 -Scoring Mechanic
 
