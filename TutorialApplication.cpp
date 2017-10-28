@@ -165,7 +165,9 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             }
             break;
         case OIS::KC_R:
-            restartGame();
+            if(mGameState == BaseApplication::STOPPED) {
+                restartGame();
+            }
             break;
         default:
             break;
@@ -336,6 +338,8 @@ bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
 
 bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
     restartGame();
+    // Show label
+    startLabel->show();
     // Hide Menu
     menuBox->hide();
     return true;
@@ -361,6 +365,8 @@ void TutorialApplication::restartGame() {
     updateScoreLabel();
     // Reset room
     room->reset();
+    // Re-center Camera
+    mCamera->setPosition(Ogre::Vector3(0,0,-100));
     // Hide gameOverLabel       
     gameOverLabel->hide();
     youMissedLabel->hide();

@@ -299,6 +299,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         return true;
     }
 
+    // Update kinematic paddle position
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
@@ -308,7 +309,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
        newDirection.x = 0;
     if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
        newDirection.y = 0;
-
    
     Ogre::Radian newPitch = mPitch;
     Ogre::Real curPitch = paddleNode->getOrientation().getPitch().valueDegrees();
@@ -352,7 +352,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         mGameState = BaseApplication::STOPPED;
         gameOver(ballStopped);
     }
-    
+
     return true;
 }
 //---------------------------------------------------------------------------

@@ -24,7 +24,8 @@ public:
     void createBall(void);
     Ogre::SceneNode* getNode(void) { return rootNode; }
     btRigidBody* getRigidBody(void) { return btBody; }
-    void resetBall(void);
+    void reset(void);
+    void printPos(void);
 };
 
 #endif
