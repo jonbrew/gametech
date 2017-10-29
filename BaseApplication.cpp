@@ -330,8 +330,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     paddleNode->translate(newDirection * evt.timeSinceLastFrame);
     paddleNode->roll(mRoll);
     paddleNode->pitch(newPitch);
-
+   
     mCamera1->move(newDirection * evt.timeSinceLastFrame);
+   
+    mDirection.x = 0;
+    mDirection.y = 0;
 
     // Update kinematic paddle position in physics sim
     room->getPaddle1()->updateMotionState();
