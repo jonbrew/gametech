@@ -184,15 +184,9 @@ void TutorialApplication::createScene(void)
     Ogre::Light* light = mSceneMgr->createLight("MainLight");
     light->setPosition(0, 75, 0);
 
-    room = new Room(mSceneMgr, mPhysics, 200);
-    room->setup();
-    scoreWall = room->getScoreWall();
-    scoreWall->pickGoal();
-    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
-    mCamera1->lookAt(paddleNode->getPosition());
-
     setupGUI();
-    mViewport->setCamera(mCamera2);
+
+    room = new Room(mSceneMgr, mPhysics, 200);
 }
 
 
@@ -209,6 +203,7 @@ void TutorialApplication::setupGUI() {
     startLabel->setText("Press ENTER / RETURN to start");
     startLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
     startLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
+    startLabel->hide();
     sheet->addChild(startLabel);
 
     // Game Over Label
@@ -244,6 +239,7 @@ void TutorialApplication::setupGUI() {
     menuButton->setText("Menu");
     menuButton->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.05, 0)));
     menuButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::menu, this));
+    menuButton->hide();
     sheet->addChild(menuButton);
 
     // Score Box
@@ -257,9 +253,65 @@ void TutorialApplication::setupGUI() {
     scoreLabel->setText("0");
     scoreLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
     scoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    scoreBox->hide();
     sheet->addChild(scoreBox);
 
-    // Menu
+    // Main Menu
+    mainMenuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/MainMenu");
+    mainMenuBox->setFont("Jura-Regular");
+    mainMenuBox->setText("Main Menu");
+    mainMenuBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
+    mainMenuBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.4, 0), CEGUI::UDim(0.2, 0)));
+
+    // Single Player Button
+    singleButton = mainMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/SinglePlayerButton");
+    singleButton->setFont("Jura-Regular");
+    singleButton->setText("Single Player");
+    singleButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    singleButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.1, 0)));
+    singleButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::single, this));
+
+    // Multi Player Button
+    multiButton = mainMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/MultiPlayerButton");
+    multiButton->setFont("Jura-Regular");
+    multiButton->setText("Multi Player");
+    multiButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    multiButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
+    multiButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::multi, this));
+
+    // Main Menu Sound Button
+    mainSoundButton = mainMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/MainSoundButton");
+    mainSoundButton->setFont("Jura-Regular");
+    mainSoundButton->setText("Sound Off");
+    mainSoundButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.1, 0)));
+    mainSoundButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.5, 0)));
+    mainSoundButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::sound, this));
+
+    // Multi Menu
+    multiMenuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/MultiMenu");
+    multiMenuBox->setFont("Jura-Regular");
+    multiMenuBox->setText("Multi Player");
+    multiMenuBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
+    multiMenuBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.4, 0), CEGUI::UDim(0.2, 0)));
+    multiMenuBox->hide();
+
+    // Become a Host Button
+    serverButton = multiMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/ServerButton");
+    serverButton->setFont("Jura-Regular");
+    serverButton->setText("Become a Host...");
+    serverButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.2, 0)));
+    serverButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.1, 0)));
+    serverButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::server, this));
+    
+    // Search for Host Button
+    clientButton = multiMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/ClientButton");
+    clientButton->setFont("Jura-Regular");
+    clientButton->setText("Search for a Host...");
+    clientButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.2, 0)));
+    clientButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
+    clientButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::client, this));
+
+    // In Game Menu
     menuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/Menu");
     menuBox->setFont("Jura-Regular");
     menuBox->setText("Menu");
@@ -300,6 +352,8 @@ void TutorialApplication::setupGUI() {
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::quit, this));
 
     sheet->addChild(menuBox);
+    sheet->addChild(mainMenuBox);
+    sheet->addChild(multiMenuBox);
 }
 
 bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
@@ -317,9 +371,11 @@ bool TutorialApplication::sound(const CEGUI::EventArgs &e) {
 
     // Change text
     if(mSound->getIsOn()) {
+        mainSoundButton->setText("Sound Off");
         soundButton->setText("Sound Off");
     }
     else {
+        mainSoundButton->setText("Sound On");
         soundButton->setText("Sound On");
     }
 
@@ -350,6 +406,78 @@ bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
     return true;
 }
 
+bool TutorialApplication::single(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Set game mode
+    mGameMode = BaseApplication::SINGLE;
+    // Show start label, menu button, and score box
+    startLabel->show();
+    menuButton->show();
+    scoreBox->show();
+
+    // Start game
+    start();
+
+    return true;
+}
+
+bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Set game mode
+    mGameMode = BaseApplication::MULTI;
+    // Show Multi Menu
+    multiMenuBox->show();
+
+    return true;
+}
+
+bool TutorialApplication::server(const CEGUI::EventArgs &e) {
+    // TODO wait for connection and show waiting label
+
+    // Set net role
+    mNetRole = BaseApplication::SERVER;
+
+    // Start game
+    start();
+
+    return true;
+}
+
+bool TutorialApplication::client(const CEGUI::EventArgs &e) {
+    // TODO connect to host and show waiting label
+
+    // Set net role
+    mNetRole = BaseApplication::CLIENT;
+
+    // Start game
+    start();
+
+    return true;
+}
+
+void TutorialApplication::start() {
+    if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
+        room->setupSingle();
+        scoreWall = room->getScoreWall();
+        scoreWall->allOff();
+        scoreWall->pickGoal();
+        Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+        mCamera1->lookAt(paddleNode->getPosition());
+    } else { // Setup multi player scene
+        room->setupMulti();
+        if(mNetRole == BaseApplication::SERVER) {
+            Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+            mCamera1->lookAt(paddleNode->getPosition());
+        } else {
+            mViewport->setCamera(mCamera2);
+            Ogre::Node* paddleNode = room->getPaddle2()->getNode();
+            mCamera2->lookAt(paddleNode->getPosition());
+        }
+    }
+}
+
 void TutorialApplication::updateScoreLabel() {
     int score = scoreWall->getScore();
     std::stringstream ss;
@@ -366,7 +494,7 @@ void TutorialApplication::restartGame() {
     // Reset room
     room->reset();
     // Re-center Camera
-    mCamera->setPosition(Ogre::Vector3(0,0,-100));
+    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
     // Hide gameOverLabel       
     gameOverLabel->hide();
     youMissedLabel->hide();

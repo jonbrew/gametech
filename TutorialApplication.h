@@ -44,6 +44,13 @@ protected:
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
     CEGUI::Window* scoreLabel;
+    CEGUI::Window* mainMenuBox;
+    CEGUI::Window* singleButton;
+    CEGUI::Window* multiButton;
+    CEGUI::Window* mainSoundButton;
+    CEGUI::Window* multiMenuBox;
+    CEGUI::Window* serverButton;
+    CEGUI::Window* clientButton;
     CEGUI::Window* menuBox;
     CEGUI::Window* quitButton;
     CEGUI::Window* resumeButton;
@@ -60,7 +67,12 @@ protected:
     bool restart(const CEGUI::EventArgs &e);
     bool resume(const CEGUI::EventArgs &e);
     bool quit(const CEGUI::EventArgs &e);
+    bool single(const CEGUI::EventArgs &e);
+    bool multi(const CEGUI::EventArgs &e);
+    bool server(const CEGUI::EventArgs &e);
+    bool client(const CEGUI::EventArgs &e);
 
+    void start(void);
     void updateScoreLabel(void);
     void gameOver(bool);
     void restartGame(void);

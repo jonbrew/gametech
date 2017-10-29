@@ -169,6 +169,7 @@ protected:
     // Game Mode
     static const int            SINGLE = 0;
     static const int            MULTI = 1;
+    static const int            IN_MENU = 2;
 
     int                         mGameMode;
 

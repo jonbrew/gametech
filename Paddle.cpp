@@ -1,7 +1,9 @@
 #include "Paddle.h"
 
-Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int paddleHeight) {
+Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int paddleHeight, Ogre::Vector3 pos, int rotation) {
     sceneMgr = scnMgr;
+    initialPos = pos;
+    initialRot = rotation;
 
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(
@@ -18,8 +20,8 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
 
     paddleNode = scnMgr->getRootSceneNode()->createChildSceneNode("Paddle");
     paddleNode->attachObject(paddleEntity);
-    paddleNode->pitch(Ogre::Radian(Ogre::Degree(-90)));
-    paddleNode->translate(Ogre::Vector3(0,0,-75));
+    paddleNode->pitch(Ogre::Radian(Ogre::Degree(initialRot)));
+    paddleNode->translate(initialPos);
 
     mPhysics = mPhys;
 
@@ -27,8 +29,8 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     btShape = new btBoxShape(btVector3(paddleWidth/2,0.f,paddleHeight/2));    
     mPhysics->getCollisionShapes().push_back(btShape);
     paddleTransform.setIdentity();
-    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(-90),btRadians(0)));
-    paddleTransform.setOrigin(btVector3(0,0,-75));
+    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(initialRot),btRadians(0)));
+    paddleTransform.setOrigin(btVector3(initialPos.x,initialPos.y,initialPos.z));
     btMass = 0; //the mass is 0, because the ground is immovable (static)
     btInertia = btVector3(0, 0, 0);
     btMotState = new KinematicMotionState(paddleTransform, paddleNode);
@@ -48,13 +50,13 @@ void Paddle::updateMotionState() {
 }
 
 void Paddle::reset() {
-    paddleNode->setPosition(Ogre::Vector3(0, 0, -75));
+    paddleNode->setPosition(initialPos);
 
     btBody->clearForces();
     btBody->setLinearVelocity(btVector3(0, 0, 0));
     btBody->setAngularVelocity(btVector3(0, 0, 0));
-    paddleTransform.setOrigin(btVector3(0,0,-75));
-    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(-90),btRadians(0)));
+    paddleTransform.setOrigin(btVector3(initialPos.x,initialPos.y,initialPos.z));
+    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(initialRot),btRadians(0)));
 
     btBody->setWorldTransform(paddleTransform);
     btMotState->setWorldTransform(paddleTransform);

@@ -11,9 +11,11 @@
 class Room {
 public:
 	Room(Ogre::SceneManager*, Physics*, int);
-	void setup(void);
+	void setupSingle(void);
+	void setupMulti(void);
 	ScoreWall* getScoreWall(void);
-	Paddle* getPaddle(void);
+	Paddle* getPaddle1(void);
+	Paddle* getPaddle2(void);
 	Ball* getBall(void);
 	void reset(void);
 private:
@@ -22,7 +24,8 @@ private:
 	ScoreWall* scoreWall;
 	Wall wall;
 	Ball* ball;
-	Paddle* paddle;
+	Paddle* paddle1;
+	Paddle* paddle2;
 };
 
 #endif

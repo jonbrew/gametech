@@ -9,6 +9,8 @@ class Paddle {
 private:
 	Ogre::SceneNode* paddleNode;
 	Ogre::SceneManager* sceneMgr;
+	Ogre::Vector3 initialPos;
+	int initialRot;
 	
 	// Bullet fields
     Physics* mPhysics;
@@ -20,7 +22,8 @@ private:
 	btTransform paddleTransform;
 
 public:
-	Paddle(Ogre::SceneManager*, Physics*, int, int);
+	Paddle(Ogre::SceneManager*, Physics*, int, int, Ogre::Vector3, int);
+	Ogre::SceneNode* getNode(void) { return paddleNode; }
 	~Paddle(void);
 	void updateMotionState(void);
 	void reset(void);

@@ -50,6 +50,11 @@ void ScoreWall::createScoreWall() {
     goals.push_back(Goal(scnMgr, mPhysics, squareSize, Ogre::Vector3(-squareSize,0,-squareSize)));
 }
 
+void ScoreWall::allOff() { 
+    for(int i = 0; i < goals.size(); ++i)
+        goals[i].off();
+}
+
 void ScoreWall::pickGoal() { 
     int i = rand() % goals.size();
     if(activeGoal) {

@@ -61,7 +61,8 @@ BaseApplication::BaseApplication(void)
     mKeyboard(0),
     mOverlaySystem(0),
     mDirection(Ogre::Vector3(0,0,0)),
-    mGameState(BaseApplication::STOPPED)
+    mGameState(BaseApplication::STOPPED),
+    mGameMode(BaseApplication::IN_MENU)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -333,7 +334,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mCamera1->move(newDirection * evt.timeSinceLastFrame);
 
     // Update kinematic paddle position in physics sim
-    room->getPaddle()->updateMotionState();
+    room->getPaddle1()->updateMotionState();
 
     // Update ball through physics sim step
     bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);

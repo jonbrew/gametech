@@ -2,7 +2,7 @@
 
 Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Vector3 pos) { 
     goalEntity = scnMgr->createEntity("goalMesh");
-    goalEntity->setMaterialName("Colors/Red");
+    goalEntity->setMaterialName("Colors/Blue");
 
     goalNode = scnMgr->getSceneNode("scoreWall")->createChildSceneNode();
     goalNode->attachObject(goalEntity);
@@ -26,7 +26,6 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
     btBody->setRestitution(1);
     //add the body to the dynamics world
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
-    this->off();
 } 
 
 void Goal::on() { 

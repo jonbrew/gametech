@@ -6,23 +6,35 @@ Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 {
 	this->mPhys = mPhys;
 	this->mSceneMgr = mSceneMgr;
+	wall.createWalls();
 	ball = new Ball(mSceneMgr, mPhys);
-	paddle = new Paddle(mSceneMgr, mPhys, 30, 15);
+	paddle1 = NULL;
+	paddle2 = NULL;
 	scoreWall = new ScoreWall(mSceneMgr, mPhys, wallSize);
+	scoreWall->createScoreWall();
 }
 
-void Room::setup() {
-	wall.createWalls();
+void Room::setupSingle() {
 	ball->createBall();
-	scoreWall->createScoreWall();
+	paddle1 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,-75), -90);
+}
+
+void Room::setupMulti() {
+	ball->createBall();
+	paddle1 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,-75), -90);
+	paddle2 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,75), 90);
 }
 
 ScoreWall* Room::getScoreWall() {
 	return scoreWall;
 }
 
-Paddle* Room::getPaddle() {
-	return paddle;
+Paddle* Room::getPaddle1() {
+	return paddle1;
+}
+
+Paddle* Room::getPaddle2() {
+	return paddle2;
 }
 
 Ball* Room::getBall() {
@@ -32,7 +44,8 @@ Ball* Room::getBall() {
 void Room::reset() {
 	// Reset ball
 	ball->reset();
-	// Reset paddle
-	paddle->reset();
-	// Reset wall
+	// Reset paddles
+	paddle1->reset();
+	if(paddle2 != NULL)
+		paddle2->reset();
 }
