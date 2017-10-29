@@ -33,7 +33,6 @@ TutorialApplication::~TutorialApplication(void)
 bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
 { 
     
-   //change to paddle
     Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
    
     paddleNode = (Ogre::SceneNode*) paddleNode;
@@ -64,32 +63,16 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             mRoll = Ogre::Radian(Ogre::Degree(-.05));
             break;
         case OIS::KC_W:
-            y += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mPitch = Ogre::Radian(Ogre::Degree(-.05));
             break;
         case OIS::KC_A:
-            x += move;
-            mDirection = Ogre::Vector3(x,y,z);
-            break;
-        case OIS::KC_S:
-            y -= move;
-            mDirection = Ogre::Vector3(x,y,z);
-            break;
-        case OIS::KC_D:
-            x -= move;
-            mDirection = Ogre::Vector3(x,y,z);
-            break;
-        case OIS::KC_K:
             mRoll = Ogre::Radian(Ogre::Degree(.05));
             break;
-        case OIS::KC_L:
-            mRoll = Ogre::Radian(Ogre::Degree(-.05));
-            break;
-        case OIS::KC_H:
+        case OIS::KC_S:
             mPitch = Ogre::Radian(Ogre::Degree(.05));
             break;
-        case OIS::KC_J:
-            mPitch = Ogre::Radian(Ogre::Degree(-.05));
+        case OIS::KC_D:
+            mRoll = Ogre::Radian(Ogre::Degree(-.05));
             break;
          case OIS::KC_SPACE:
             if(mHit)
@@ -99,7 +82,6 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             break;
         default:
             break;
-
     }
   return true; 
 }
@@ -131,32 +113,16 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             mRoll = 0;
             break;
         case OIS::KC_W:
-            y -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mPitch = 0;;
             break;
         case OIS::KC_A:
-            x -= move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mRoll = 0;
             break;
         case OIS::KC_S:
-            y += move;
-            mDirection = Ogre::Vector3(x,y,z);
+            mPitch = 0;
             break;
         case OIS::KC_D:
-            x += move;
-            mDirection = Ogre::Vector3(x,y,z);
-            break;
-        case OIS::KC_K:
             mRoll = 0;
-            break;
-        case OIS::KC_L:
-            mRoll = 0;
-            break;
-        case OIS::KC_H:
-            mPitch = 0;
-            break;
-        case OIS::KC_J:
-            mPitch = 0;
             break;
         case OIS::KC_RETURN:
             if(mGameState == BaseApplication::STOPPED) {
@@ -171,11 +137,20 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             break;
         default:
             break;
-
-    }
-    
+    } 
   return true; 
 }
+
+bool TutorialApplication::mouseMoved(const OIS::MouseEvent &arg)
+{
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
+    if(mGameState == BaseApplication::RUNNING){
+        mDirection.x = -arg.state.X.rel *0.5; //* -50;
+        mDirection.y = -arg.state.Y.rel *0.5; //* -50;
+    }
+    return true;
+}
+
 
 void TutorialApplication::createScene(void)
 {
