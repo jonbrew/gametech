@@ -34,6 +34,7 @@ protected:
     virtual void createScene(void);
     virtual bool keyPressed(const OIS::KeyEvent& ke);
     virtual bool keyReleased(const OIS::KeyEvent& ke);
+    virtual bool mouseMoved(const OIS::MouseEvent &arg);
 
     // GUI components
     CEGUI::Window* sheet;
