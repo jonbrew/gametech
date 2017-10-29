@@ -24,6 +24,7 @@ private:
 public:
 	Paddle(Ogre::SceneManager*, Physics*, int, int, Ogre::Vector3, int);
 	Ogre::SceneNode* getNode(void) { return paddleNode; }
+	KinematicMotionState* getMotionState(void) { return btMotState; }
 	~Paddle(void);
 	void updateMotionState(void);
 	void reset(void);

@@ -300,9 +300,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         return true;
     }
 
-    // Update kinematic paddle position
+    // Update paddle position
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
-    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    Ogre::Node* paddleNode = room->getPaddle1()->getNode();
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
 
     Ogre::Vector3 newDirection = mDirection;
@@ -335,6 +335,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     // Update kinematic paddle position in physics sim
     room->getPaddle1()->updateMotionState();
+    // std::cout << paddlePosition.x << " " << paddlePosition.y << " " << paddlePosition.z << "\n";
+    // std::cout << paddleNode->getOrientation().w << " " << paddleNode->getOrientation().x << " " << paddleNode->getOrientation().y << " " << paddleNode->getOrientation().z << "\nPHYSICS\n";
+    // btTransform trans;
+    // room->getPaddle1()->getMotionState()->getWorldTransform(trans);
+    // std::cout << trans.getRotation().getW() << " " << trans.getRotation().getX() << " " << trans.getRotation().getY() << " " << trans.getRotation().getZ() << "\n";
+    // std::cout << trans.getOrigin().getX() << " " << trans.getOrigin().getY() << " " << trans.getOrigin().getZ() << "\nGRAPHICS\n";
 
     // Update ball through physics sim step
     bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);

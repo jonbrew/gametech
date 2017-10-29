@@ -43,6 +43,11 @@ protected:
     CEGUI::Window* youMissedLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
+    CEGUI::Window* multiScoreBox;
+    CEGUI::Window* p1ScoreBox;
+    CEGUI::Window* p1ScoreLabel;
+    CEGUI::Window* p2ScoreBox;
+    CEGUI::Window* p2ScoreLabel;
     CEGUI::Window* scoreLabel;
     CEGUI::Window* mainMenuBox;
     CEGUI::Window* singleButton;

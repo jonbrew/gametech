@@ -33,8 +33,8 @@ TutorialApplication::~TutorialApplication(void)
 bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
 { 
     
-   //change to paddle
-    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    //change to paddle
+    Ogre::Node* paddleNode = room->getPaddle1()->getNode();
    
     paddleNode = (Ogre::SceneNode*) paddleNode;
     Ogre::Real x = mDirection.x;
@@ -94,6 +94,7 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
          case OIS::KC_SPACE:
             if(mHit)
                break;
+            mSound->play(Sound::SOUND_WHIFF);
             mHit = true;
             mHitFrames = mHitMaxFrames;
             break;
@@ -106,7 +107,7 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
  
 bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke) 
 { 
-    Ogre::Node* paddleNode = mSceneMgr->getRootSceneNode()->getChild("Paddle");
+    Ogre::Node* paddleNode = room->getPaddle1()->getNode();
     paddleNode = (Ogre::SceneNode*) paddleNode;
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
@@ -255,6 +256,35 @@ void TutorialApplication::setupGUI() {
     scoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
     scoreBox->hide();
     sheet->addChild(scoreBox);
+
+    // Multiplayer Score Box
+    multiScoreBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/MultiScoreBox");
+    multiScoreBox->setFont("Jura-Regular");
+    multiScoreBox->setText("SCORE");
+    multiScoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.21, 0), CEGUI::UDim(0.25, 0)));
+    multiScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.79, 0), CEGUI::UDim(0.75, 0)));
+    p1ScoreBox = multiScoreBox->createChild("Vanilla/FrameWindow", "CEGUIDemo/p1ScoreBox");
+    p1ScoreBox->setFont("Jura-Regular");
+    p1ScoreBox->setText("Player 1");
+    p1ScoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.7, 0)));
+    p1ScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.0, 0), CEGUI::UDim(0.1, 0)));
+    p1ScoreLabel = p1ScoreBox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/p1ScoreLabel");
+    p1ScoreLabel->setFont("Jura-Regular");
+    p1ScoreLabel->setText("0");
+    p1ScoreLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
+    p1ScoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    p2ScoreBox = multiScoreBox->createChild("Vanilla/FrameWindow", "CEGUIDemo/p2ScoreBox");
+    p2ScoreBox->setFont("Jura-Regular");
+    p2ScoreBox->setText("Player 2");
+    p2ScoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.7, 0)));
+    p2ScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.5, 0), CEGUI::UDim(0.1, 0)));
+    p2ScoreLabel = p2ScoreBox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/p2ScoreLabel");
+    p2ScoreLabel->setFont("Jura-Regular");
+    p2ScoreLabel->setText("0");
+    p2ScoreLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
+    p2ScoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    multiScoreBox->hide();
+    sheet->addChild(multiScoreBox);
 
     // Main Menu
     mainMenuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/MainMenu");
@@ -434,11 +464,17 @@ bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
 }
 
 bool TutorialApplication::server(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
     // TODO wait for connection and show waiting label
 
     // Set net role
     mNetRole = BaseApplication::SERVER;
-
+    // Show Score Box and set sub score boxes
+    multiScoreBox->show();
+    p1ScoreBox->setText("You");
+    p2ScoreBox->setText("Opponent");
     // Start game
     start();
 
@@ -446,11 +482,17 @@ bool TutorialApplication::server(const CEGUI::EventArgs &e) {
 }
 
 bool TutorialApplication::client(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
     // TODO connect to host and show waiting label
 
     // Set net role
     mNetRole = BaseApplication::CLIENT;
-
+    // Show Score Box
+    multiScoreBox->show();
+    p2ScoreBox->setText("You");
+    p1ScoreBox->setText("Opponent");
     // Start game
     start();
 

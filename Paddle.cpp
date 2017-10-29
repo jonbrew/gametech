@@ -15,10 +15,10 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
         1, 5, 5, 
         Ogre::Vector3::UNIT_Z);
 
-    Ogre::Entity* paddleEntity = scnMgr->createEntity("PaddleEntity", "paddleMesh");
+    Ogre::Entity* paddleEntity = scnMgr->createEntity("paddleMesh");
     paddleEntity->setMaterialName("Colors/RadioactiveGreen");
 
-    paddleNode = scnMgr->getRootSceneNode()->createChildSceneNode("Paddle");
+    paddleNode = scnMgr->getRootSceneNode()->createChildSceneNode();
     paddleNode->attachObject(paddleEntity);
     paddleNode->pitch(Ogre::Radian(Ogre::Degree(initialRot)));
     paddleNode->translate(initialPos);

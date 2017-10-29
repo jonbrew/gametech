@@ -9,6 +9,7 @@ Sound::Sound() {
     sounds.push_back(Mix_LoadWAV("Sounds/hit.wav"));
     sounds.push_back(Mix_LoadWAV("Sounds/bounce.wav"));
     sounds.push_back(Mix_LoadWAV("Sounds/score.wav"));
+    sounds.push_back(Mix_LoadWAV("Sounds/whiff.wav"));
     Mix_PlayMusic(music,-1);
     isOn = true;
 } 

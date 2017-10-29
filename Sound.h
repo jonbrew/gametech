@@ -16,6 +16,7 @@ public:
 	static const int SOUND_HIT = 0;
 	static const int SOUND_BOUNCE = 1;
 	static const int SOUND_SCORE = 2;
+    static const int SOUND_WHIFF = 3;
 
     Sound();
     ~Sound();
