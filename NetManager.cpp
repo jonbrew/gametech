@@ -1103,6 +1103,8 @@ bool NetManager::recvTCP(TCPsocket sock, void *data, int maxlen) {
     ret = false;
   }
 
+  std::cout << (char*) data << "\n";
+
   return ret;
 }
 

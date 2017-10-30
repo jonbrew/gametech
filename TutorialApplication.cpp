@@ -192,9 +192,34 @@ void TutorialApplication::createScene(void)
     mCamera1->lookAt(paddleNode->getPosition());
 
     setupGUI();
-    mViewport->setCamera(mCamera2);
+    // mViewport->setCamera(mCamera2);
 }
 
+void TutorialApplication::initNetwork() {
+    NetManager netMgr;
+    if(netMgr.initNetManager()) {
+        netMgr.addNetworkInfo(PROTOCOL_TCP, NULL, 8080);
+        if(netMgr.startServer()) {
+            std::cout << netMgr.getIPstring() << "\n";
+            std::cout << netMgr.getPort() << "\n";
+
+            netMgr.acceptConnections();
+            if(netMgr.pollForActivity(30000)) {
+                std::cout << "Client connected" << "\n";
+            }
+            if(netMgr.scanForActivity()) {
+            }
+        }
+    }
+
+    // if(netMgr.initNetManager()) {
+    //     netMgr.addNetworkInfo(PROTOCOL_TCP, "localhost", 8080);
+    //     if(netMgr.startClient()) {
+    //         std::cout << "Client Started" << "\n";
+    //         netMgr.messageServer(PROTOCOL_TCP, "hello socket", 32);
+    //     }
+    // }
+}
 
 void TutorialApplication::setupGUI() {
     gui = new GUI();
@@ -366,7 +391,7 @@ void TutorialApplication::restartGame() {
     // Reset room
     room->reset();
     // Re-center Camera
-    mCamera->setPosition(Ogre::Vector3(0,0,-100));
+    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
     // Hide gameOverLabel       
     gameOverLabel->hide();
     youMissedLabel->hide();

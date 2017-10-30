@@ -272,6 +272,9 @@ bool BaseApplication::setup(void)
     // Init Bullet Physics
     mPhysics = new Physics(mSound);
 
+    // Init NetManager
+    initNetwork();
+
     // Create the scene
     createScene();
 

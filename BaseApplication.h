@@ -177,6 +177,8 @@ protected:
     static const int            SERVER = 1;
 
     int                         mNetRole;
+
+    virtual void initNetwork(void) = 0; 
     
 
 #ifdef OGRE_STATIC_LIB

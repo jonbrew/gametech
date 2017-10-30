@@ -21,6 +21,7 @@ http://www.ogre3d.org/wiki/
 #include "BaseApplication.h"
 #include "Room.h"
 #include "Paddle.h"
+#include "NetManager.h"
 
 //---------------------------------------------------------------------------
 
@@ -64,6 +65,9 @@ protected:
     void updateScoreLabel(void);
     void gameOver(bool);
     void restartGame(void);
+
+    // Network functions
+    void initNetwork(void);
 };
 
 //---------------------------------------------------------------------------
