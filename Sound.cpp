@@ -12,6 +12,7 @@ Sound::Sound() {
     sounds.push_back(Mix_LoadWAV("Sounds/whiff.wav"));
     Mix_PlayMusic(music,-1);
     isOn = true;
+    soundToPlay = SOUND_NONE;
 } 
 
 Sound::~Sound() {
@@ -43,7 +44,7 @@ void Sound::off() {
 }
 
 void Sound::play(int i) {
-    if(isOn)
+    if(isOn && i > -1)
         Mix_PlayChannel(-1,sounds[i],0);
 }
 

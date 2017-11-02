@@ -63,7 +63,8 @@ BaseApplication::BaseApplication(void)
     mOverlaySystem(0),
     mDirection(Ogre::Vector3(0,0,0)),
     mGameState(BaseApplication::STOPPED),
-    mGameMode(BaseApplication::IN_MENU)
+    mGameMode(BaseApplication::IN_MENU),
+    mNetRole(-1)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -305,15 +306,25 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         return true;
     }
 
-    // Update paddle position
+    bool isClient = mNetRole == BaseApplication::CLIENT;
+
+    // Set what to update based on client vs server
     Ogre::Node* ballNode = mSceneMgr->getRootSceneNode()->getChild("Ball");
     Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+    Ogre::Camera* playerCam = mCamera1;
+    if(isClient) {
+        paddleNode = room->getPaddle2()->getNode();
+        playerCam = mCamera2;
+    }
+    
+    // Update paddle position
     Ogre::Vector3 paddlePosition = paddleNode->getPosition();
-
     Ogre::Vector3 newDirection = mDirection;
-    if((paddlePosition.x <= -70 && mDirection.x < 0) || (paddlePosition.x >= 70 && mDirection.x > 0))
+    if(isClient)
+        newDirection.x *= -1;
+    if((paddlePosition.x <= -70 && newDirection.x < 0) || (paddlePosition.x >= 70 && newDirection.x > 0))
        newDirection.x = 0;
-    if((paddlePosition.y <= -85 && mDirection.y < 0) || (paddlePosition.y >= 85 && mDirection.y > 0))
+    if((paddlePosition.y <= -85 && newDirection.y < 0) || (paddlePosition.y >= 85 && newDirection.y > 0))
        newDirection.y = 0;
    
     Ogre::Radian newPitch = mPitch;
@@ -323,10 +334,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         newPitch = 0;
    
     if(mHit){
+        int translate = 50;
+        if(isClient)
+            translate *= -1;
         if(mHitFrames > mHitMaxFrames/2)
-            paddleNode->translate(0, 0, 50 * evt.timeSinceLastFrame);
+            paddleNode->translate(0, 0, translate * evt.timeSinceLastFrame);
         else 
-            paddleNode->translate(0, 0, -50 * evt.timeSinceLastFrame);
+            paddleNode->translate(0, 0, -translate * evt.timeSinceLastFrame);
         mHitFrames--;
         if(mHitFrames==0)
             mHit = false;
@@ -336,34 +350,106 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     paddleNode->roll(mRoll);
     paddleNode->pitch(newPitch);
    
-    mCamera1->move(newDirection);
-   
+    playerCam->move(newDirection);
+    
     mDirection.x = 0;
     mDirection.y = 0;
 
-    // Update kinematic paddle position in physics sim
-    room->getPaddle1()->updateMotionState();
+    if(mGameMode == BaseApplication::SINGLE) { // Single player updates
+        // Update kinematic paddle position in physics sim
+        room->getPaddle1()->updateMotionState();
+    
+        // Update ball through physics sim step
+        bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+    
+        // Show Physics bounding boxes
+        //mDebugDraw->Update();
 
-    // Update ball through physics sim step
-    bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+        btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
+        btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
+        if(scored) {
+            scoreWall->increaseScore();
+            updateScoreLabel();
+            scoreWall->pickGoal();
+            ballRigidBody->applyCentralImpulse(ballVelocity*0.1);
+        }
+    
+        Ogre::Vector3 ballPosition = ballNode->getPosition();
+        bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
+        if(ballPosition.z <= -80 || ballStopped) {
+            mGameState = BaseApplication::STOPPED;
+            gameOver(ballStopped);
+        }
+    } else { // Multiplayer updates
+        if(isClient) { // Client updates
+            // TODO rcv packet
+            /* shitty pseudo code
+            if(packettype == update)
+                mSound->play(packet.soundToPlay)
+                ballNode->translate(packet.ballx,packet.bally,packet.ballz)
+                ballNode->rotate(packet.ballrotw,packet.ballrotx,packet.ballroty,packet.ballrotz)
+                Ogre::SceneNode* paddle1node = room->getPaddle1()->getNode();
+                paddle1Node->translate(packet.paddlex,packet.paddley,packet.paddlez)
+                paddle1Node->rotate(packet.paddlerotw,packet.paddlerotx,packet.paddleroty,packet.paddlerotz)
+            else if(packettype == roundover)
+                if(server score increase) {
+                    youMissedLabel->show();
+                    scoreWall->increaseScoreOther();
+                    updateScoreLabelOther();
+                } else if(client score increase) {
+                    youScoredLabel->show();
+                    scoreWall->increaseScore();
+                    updateScoreLabel();
+                    mSound->play(Sound::SOUND_SCORE);
+                } else if(no score increase) {
+                    drawLabel->show();
+                }
+                restartRound()
+            else if(packettype == gameover)
+                if(client win) {
+                    youWinLabel->show();
+                    scoreWall->increaseScore();
+                    updateScoreLabel();
+                    mSound->play(Sound::SOUND_SCORE);          
+                } else if(server win) {
+                    youLoseLabel->show();
+                    scoreWall->increaseScoreOther();
+                    updateScoreLabelOther();
+                }
+                endGame()
+            */
 
-    // Show Physics bounding boxes
-    mDebugDraw->Update();
+            // TODO send paddle pos update to server
 
-    btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
-    btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
-    if(scored) {
-        scoreWall->increaseScore();
-        updateScoreLabel();
-        scoreWall->pickGoal();
-        ballRigidBody->applyCentralImpulse(ballVelocity*0.1);
-    }
 
-    Ogre::Vector3 ballPosition = ballNode->getPosition();
-    bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
-    if(ballPosition.z <= -80 || ballStopped) {
-        mGameState = BaseApplication::STOPPED;
-        gameOver(ballStopped);
+        } else { // Server updates
+            // Update kinematic paddle position in physics sim
+            room->getPaddle1()->updateMotionState();
+        
+            // Update ball through physics sim step
+            bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+        
+            // Show Physics bounding boxes
+            //mDebugDraw->Update();
+
+            btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
+            btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
+
+            Ogre::Vector3 ballPosition = ballNode->getPosition();
+            bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
+            if(ballPosition.z <= -80 || ballStopped || ballPosition.z >= 80) {
+                mGameState = BaseApplication::STOPPED;
+                roundOverMulti(ballPosition.z, ballStopped);
+            }
+
+            // TODO send updates packet to client with ball and paddle position and sound to play
+            //packet.soundToPlay = mSound->soundToPlay
+
+            // TODO rcv client packet and update paddle2 pos
+
+            // Reset sound to play
+            mSound->soundToPlay = Sound::SOUND_NONE;
+        }
     }
 
     return true;

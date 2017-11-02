@@ -13,6 +13,8 @@ protected:
 	bool isOn;
 
 public:
+    int soundToPlay;
+    static const int SOUND_NONE = -1;
 	static const int SOUND_HIT = 0;
 	static const int SOUND_BOUNCE = 1;
 	static const int SOUND_SCORE = 2;

@@ -8,6 +8,7 @@ ScoreWall::ScoreWall(Ogre::SceneManager* scnMgr, Physics* mPhys, int wallSize) {
     squareSize = ((double) wallSize) / 3;
     activeGoal = NULL;
     score = 0;
+    scoreOther = 0;
 
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane(
@@ -70,10 +71,22 @@ void ScoreWall::increaseScore() {
     score++;
 }
 
+void ScoreWall::increaseScoreOther() {
+    scoreOther++;
+}
+
 int ScoreWall::getScore() {
     return score;
 }
 
+int ScoreWall::getScoreOther() {
+    return scoreOther;
+}
+
 void ScoreWall::resetScore() {
     score = 0;
+}
+
+void ScoreWall::resetScoreOther() {
+    scoreOther = 0;
 }

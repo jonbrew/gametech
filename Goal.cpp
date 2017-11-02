@@ -22,6 +22,7 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
     btRigidBody::btRigidBodyConstructionInfo goalRBInfo(btMass, btMotState, btShape, btInertia);
     btBody = new btRigidBody(goalRBInfo);
     btBody->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+    btBody->setUserIndex(Physics::TYPE_GOAL_OFF);
     btBody->setUserPointer(this);
     btBody->setRestitution(1);
     //add the body to the dynamics world

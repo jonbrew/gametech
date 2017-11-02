@@ -42,6 +42,10 @@ protected:
     CEGUI::Window* gameOverLabel;
     CEGUI::Window* tooSlowLabel;
     CEGUI::Window* youMissedLabel;
+    CEGUI::Window* youScoredLabel;
+    CEGUI::Window* drawLabel;
+    CEGUI::Window* youWinLabel;
+    CEGUI::Window* youLoseLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
     CEGUI::Window* multiScoreBox;
@@ -80,7 +84,9 @@ protected:
 
     void start(void);
     void updateScoreLabel(void);
+    void updateScoreLabelOther(void);
     void gameOver(bool);
+    void roundOverMulti(int,bool);
     void restartGame(void);
 
     // Network functions

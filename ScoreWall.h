@@ -15,6 +15,7 @@ protected:
     Goal* activeGoal;
  	Physics* mPhysics;
  	int score;
+    int scoreOther;
 
 public: 
     ScoreWall(Ogre::SceneManager* scnMgr, Physics* mPhys, int wallSize);
@@ -23,8 +24,11 @@ public:
     void pickGoal(); 
     Goal* getActiveGoal() { return activeGoal; } 
     void increaseScore();
+    void increaseScoreOther();
     int getScore();
+    int getScoreOther();
     void resetScore();
+    void resetScoreOther();
 };
 
 #endif

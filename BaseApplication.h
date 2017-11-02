@@ -170,6 +170,7 @@ protected:
 
     int                         mGameState;
     virtual void gameOver(bool) = 0;
+    virtual void roundOverMulti(int,bool) = 0;
 
     // Game Mode
     static const int            SINGLE = 0;

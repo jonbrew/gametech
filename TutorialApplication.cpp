@@ -32,9 +32,9 @@ TutorialApplication::~TutorialApplication(void)
 //---------------------------------------------------------------------------
 bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke) 
 { 
-
-    //change to paddle
     Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+    if(mNetRole == BaseApplication::CLIENT)
+        paddleNode = room->getPaddle2()->getNode();
 
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
@@ -90,7 +90,9 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
 bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke) 
 { 
     Ogre::Node* paddleNode = room->getPaddle1()->getNode();
-    paddleNode = (Ogre::SceneNode*) paddleNode;
+    if(mNetRole == BaseApplication::CLIENT)
+        paddleNode = room->getPaddle2()->getNode();
+
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
     Ogre::Real z = mDirection.z;
@@ -233,6 +235,42 @@ void TutorialApplication::setupGUI() {
     youMissedLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
     youMissedLabel->hide();
     sheet->addChild(youMissedLabel);
+
+    // You Scored! Label
+    youScoredLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/YouScoredLabel");
+    youScoredLabel->setFont("Jura-Regular");
+    youScoredLabel->setText("You Scored!");
+    youScoredLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    youScoredLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    youScoredLabel->hide();
+    sheet->addChild(youScoredLabel);
+
+    // Draw! Label
+    drawLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/DrawLabel");
+    drawLabel->setFont("Jura-Regular");
+    drawLabel->setText("Draw!");
+    drawLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    drawLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    drawLabel->hide();
+    sheet->addChild(drawLabel);
+
+    // You Win! Label
+    youWinLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/YouWinLabel");
+    youWinLabel->setFont("Jura-Regular");
+    youWinLabel->setText("You Win!");
+    youWinLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    youWinLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    youWinLabel->hide();
+    sheet->addChild(youWinLabel);
+
+    // You Lose! Label
+    youLoseLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/YouLoseLabel");
+    youLoseLabel->setFont("Jura-Regular");
+    youLoseLabel->setText("You Lose!");
+    youLoseLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    youLoseLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    youLoseLabel->hide();
+    sheet->addChild(youLoseLabel);
 
     // Menu Button
     menuButton = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
@@ -522,7 +560,17 @@ void TutorialApplication::updateScoreLabel() {
     int score = scoreWall->getScore();
     std::stringstream ss;
     ss << score;
-    scoreLabel->setText(ss.str());
+    if(mGameMode == BaseApplication::MULTI)
+        p1ScoreLabel->setText(ss.str());
+    else 
+        scoreLabel->setText(ss.str());
+}
+
+void TutorialApplication::updateScoreLabelOther() {
+    int scoreOther = scoreWall->getScoreOther();
+    std::stringstream ss;
+    ss << scoreOther;
+    p2ScoreLabel->setText(ss.str());
 }
 
 void TutorialApplication::restartGame() {
@@ -550,6 +598,37 @@ void TutorialApplication::gameOver(bool ballStopped) {
         tooSlowLabel->show();
     else
         youMissedLabel->show();
+}
+
+void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
+    // This method only called by server
+    if(ballPos <= -80) {
+        youMissedLabel->show();
+        scoreWall->increaseScoreOther();
+        updateScoreLabelOther();
+    } else if(ballPos >= 80) {
+        youScoredLabel->show();
+        scoreWall->increaseScore();
+        updateScoreLabel();
+        mSound->play(Sound::SOUND_SCORE);
+    } else if(ballStopped) {
+        drawLabel->show();
+    }
+
+    if(scoreWall->getScore() == 3) {
+        youScoredLabel->hide();
+        youWinLabel->show();
+        // TODO send gameover packet to client with new score and end game
+
+    } else if(scoreWall->getScoreOther() == 3) {
+        youMissedLabel->hide();
+        youLoseLabel->show();
+        // TODO send gameover packet to client with score and end game
+
+    } else {
+        // TODO send roundover packet to client with score and restart round
+
+    }
 }
 
 //---------------------------------------------------------------------------

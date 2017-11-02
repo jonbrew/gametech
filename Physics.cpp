@@ -62,18 +62,23 @@ bool Physics::handleCollisions() {
     	    	aType = bType;
     	    switch(aType) {
     	    	case TYPE_WALL :
-    	    		if(!isCollidingWall)
+    	    		if(!isCollidingWall) {
     	    			mSound->play(Sound::SOUND_BOUNCE);
+                        mSound->soundToPlay = Sound::SOUND_BOUNCE;
+                    }
     	    		hitWall = true;
     	    		break;
     	    	case TYPE_PADDLE :
-    	    		if(!isCollidingPaddle)
+    	    		if(!isCollidingPaddle) {
     	    			mSound->play(Sound::SOUND_HIT);
+                    }
     	    		hitPaddle = true;
     	    		break;
     	    	case TYPE_GOAL_OFF :
-    	    		if(!isCollidingGoal)
+    	    		if(!isCollidingGoal) {
     	    			mSound->play(Sound::SOUND_BOUNCE);
+                        mSound->soundToPlay = Sound::SOUND_BOUNCE;
+                    }
     	    		hitGoal = true;
     	    		break;
     	    	case TYPE_GOAL_ON :
