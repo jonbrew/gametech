@@ -165,6 +165,31 @@ void TutorialApplication::createScene(void)
     room = new Room(mSceneMgr, mPhysics, 200);
 }
 
+void TutorialApplication::initNetwork() {
+    NetManager netMgr;
+    if(netMgr.initNetManager()) {
+        netMgr.addNetworkInfo(PROTOCOL_TCP, NULL, 8080);
+        if(netMgr.startServer()) {
+            std::cout << netMgr.getIPstring() << "\n";
+            std::cout << netMgr.getPort() << "\n";
+
+            netMgr.acceptConnections();
+            // if(netMgr.pollForActivity(30000)) {
+            //     std::cout << "Client connected" << "\n";
+            // }
+            // if(netMgr.scanForActivity()) {
+            // }
+        }
+    }
+
+    // if(netMgr.initNetManager()) {
+    //     netMgr.addNetworkInfo(PROTOCOL_TCP, "localhost", 8080);
+    //     if(netMgr.startClient()) {
+    //         std::cout << "Client Started" << "\n";
+    //         netMgr.messageServer(PROTOCOL_TCP, "hello socket", 32);
+    //     }
+    // }
+}
 
 void TutorialApplication::setupGUI() {
     gui = new GUI();
@@ -240,7 +265,7 @@ void TutorialApplication::setupGUI() {
     multiScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.79, 0), CEGUI::UDim(0.75, 0)));
     p1ScoreBox = multiScoreBox->createChild("Vanilla/FrameWindow", "CEGUIDemo/p1ScoreBox");
     p1ScoreBox->setFont("Jura-Regular");
-    p1ScoreBox->setText("Player 1");
+    p1ScoreBox->setText("You");
     p1ScoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.7, 0)));
     p1ScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.0, 0), CEGUI::UDim(0.1, 0)));
     p1ScoreLabel = p1ScoreBox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/p1ScoreLabel");
@@ -250,7 +275,7 @@ void TutorialApplication::setupGUI() {
     p1ScoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
     p2ScoreBox = multiScoreBox->createChild("Vanilla/FrameWindow", "CEGUIDemo/p2ScoreBox");
     p2ScoreBox->setFont("Jura-Regular");
-    p2ScoreBox->setText("Player 2");
+    p2ScoreBox->setText("Opponent");
     p2ScoreBox->setSize(CEGUI::USize(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.7, 0)));
     p2ScoreBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.5, 0), CEGUI::UDim(0.1, 0)));
     p2ScoreLabel = p2ScoreBox->createChild("Vanilla/Label", "CEGUIDemo/ScoreBox/p2ScoreLabel");
@@ -446,10 +471,8 @@ bool TutorialApplication::server(const CEGUI::EventArgs &e) {
 
     // Set net role
     mNetRole = BaseApplication::SERVER;
-    // Show Score Box and set sub score boxes
+    // Show Score Box
     multiScoreBox->show();
-    p1ScoreBox->setText("You");
-    p2ScoreBox->setText("Opponent");
     // Start game
     start();
 
@@ -466,8 +489,6 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     mNetRole = BaseApplication::CLIENT;
     // Show Score Box
     multiScoreBox->show();
-    p2ScoreBox->setText("You");
-    p1ScoreBox->setText("Opponent");
     // Start game
     start();
 
@@ -485,6 +506,8 @@ void TutorialApplication::start() {
     } else { // Setup multi player scene
         room->setupMulti();
         if(mNetRole == BaseApplication::SERVER) {
+            mViewport->setCamera(mCamera2);
+            mViewport->setCamera(mCamera1);
             Ogre::Node* paddleNode = room->getPaddle1()->getNode();
             mCamera1->lookAt(paddleNode->getPosition());
         } else {

@@ -26,7 +26,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     mPhysics = mPhys;
 
     //create the new physics shape
-    btShape = new btBoxShape(btVector3(paddleWidth/2,0.f,paddleHeight/2));    
+    btShape = new btBoxShape(btVector3(paddleWidth/2,1,paddleHeight/2));    
     mPhysics->getCollisionShapes().push_back(btShape);
     paddleTransform.setIdentity();
     paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(initialRot),btRadians(0)));
@@ -38,6 +38,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
     btRigidBody::btRigidBodyConstructionInfo paddleRBInfo(btMass, btMotState, btShape, btInertia);
     btBody = new btRigidBody(paddleRBInfo);
 	btBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+    btBody->setActivationState(DISABLE_DEACTIVATION);
     btBody->setUserIndex(Physics::TYPE_PADDLE);
     btBody->setRestitution(1);
     
@@ -51,13 +52,12 @@ void Paddle::updateMotionState() {
 
 void Paddle::reset() {
     paddleNode->setPosition(initialPos);
+    paddleNode->resetOrientation();
+    paddleNode->pitch(Ogre::Radian(Ogre::Degree(initialRot)));
 
     btBody->clearForces();
     btBody->setLinearVelocity(btVector3(0, 0, 0));
     btBody->setAngularVelocity(btVector3(0, 0, 0));
-    paddleTransform.setOrigin(btVector3(initialPos.x,initialPos.y,initialPos.z));
-    paddleTransform.setRotation(btQuaternion(btRadians(0),btRadians(initialRot),btRadians(0)));
 
-    btBody->setWorldTransform(paddleTransform);
-    btMotState->setWorldTransform(paddleTransform);
+    updateMotionState();
 }

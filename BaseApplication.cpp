@@ -56,6 +56,7 @@ BaseApplication::BaseApplication(void)
     mHit(false),
     mHitMaxFrames(500),
     mHitFrames(0),
+    mRoundNum(0),
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
@@ -272,6 +273,10 @@ bool BaseApplication::setup(void)
 
     // Init Bullet Physics
     mPhysics = new Physics(mSound);
+    mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
+
+    // Init NetManager
+    initNetwork();
 
     // Create the scene
     createScene();
@@ -338,15 +343,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     // Update kinematic paddle position in physics sim
     room->getPaddle1()->updateMotionState();
-    // std::cout << paddlePosition.x << " " << paddlePosition.y << " " << paddlePosition.z << "\n";
-    // std::cout << paddleNode->getOrientation().w << " " << paddleNode->getOrientation().x << " " << paddleNode->getOrientation().y << " " << paddleNode->getOrientation().z << "\nPHYSICS\n";
-    // btTransform trans;
-    // room->getPaddle1()->getMotionState()->getWorldTransform(trans);
-    // std::cout << trans.getRotation().getW() << " " << trans.getRotation().getX() << " " << trans.getRotation().getY() << " " << trans.getRotation().getZ() << "\n";
-    // std::cout << trans.getOrigin().getX() << " " << trans.getOrigin().getY() << " " << trans.getOrigin().getZ() << "\nGRAPHICS\n";
 
     // Update ball through physics sim step
     bool scored = mPhysics->stepSimulation(evt.timeSinceLastFrame);
+
+    // Show Physics bounding boxes
+    mDebugDraw->Update();
+
     btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
     btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
     if(scored) {

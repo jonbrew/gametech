@@ -21,10 +21,12 @@ protected:
 	btVector3 btInertia; 
 public: 
     Ball(Ogre::SceneManager* scnMgr, Physics* mPhysics);
-    void createBall(void);
+    void createBall(Ogre::Vector3 startPos);
     Ogre::SceneNode* getNode(void) { return rootNode; }
     btRigidBody* getRigidBody(void) { return btBody; }
+    btDefaultMotionState* getMotionState(void) { return btMotionState; }
     void reset(void);
+    void resetMultiplayer(int roundNum);
     void printPos(void);
 };
 

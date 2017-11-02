@@ -15,12 +15,14 @@ Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 }
 
 void Room::setupSingle() {
-	ball->createBall();
+	ball->createBall(Ogre::Vector3(0,0,-60));
+	ball->getRigidBody()->applyCentralImpulse(btVector3(0,10,75));
 	paddle1 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,-75), -90);
 }
 
 void Room::setupMulti() {
-	ball->createBall();
+	ball->createBall(Ogre::Vector3(0,0,0));
+	ball->getRigidBody()->applyCentralImpulse(btVector3(0,10,75));
 	paddle1 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,-75), -90);
 	paddle2 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,75), 90);
 }
@@ -44,8 +46,14 @@ Ball* Room::getBall() {
 void Room::reset() {
 	// Reset ball
 	ball->reset();
+	// Reset paddle
+	paddle1->reset();
+}
+
+void Room::resetMultiplayer(int roundNum) {
+	// Reset ball
+	ball->resetMultiplayer(roundNum);
 	// Reset paddles
 	paddle1->reset();
-	if(paddle2 != NULL)
-		paddle2->reset();
+	paddle2->reset();
 }

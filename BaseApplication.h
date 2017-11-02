@@ -24,6 +24,7 @@ http://www.ogre3d.org/wiki/
 #include "Physics.h"
 #include "GUI.h"
 #include "NetManager.h"
+#include "DebugDraw.hpp"
 
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
@@ -131,6 +132,7 @@ protected:
     bool                        mHit;
     int                         mHitMaxFrames;
     int                         mHitFrames;
+    int                         mRoundNum;
 
 
     //OIS Input devices
@@ -143,6 +145,9 @@ protected:
 
     // Bullet Physics controller
     Physics*                    mPhysics;
+
+    // Debug Drawer for Physics bounding boxes
+    CDebugDraw*                 mDebugDraw;
 
     // Networking Manager
     NetManager*                 mNetworking;
@@ -178,6 +183,8 @@ protected:
     static const int            SERVER = 1;
 
     int                         mNetRole;
+
+    virtual void initNetwork(void) = 0;
     
 
 #ifdef OGRE_STATIC_LIB

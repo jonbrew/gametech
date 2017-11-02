@@ -18,6 +18,8 @@ public:
 	Paddle* getPaddle2(void);
 	Ball* getBall(void);
 	void reset(void);
+	void resetMultiplayer(int roundNum);
+
 private:
 	Physics* mPhys;
 	Ogre::SceneManager* mSceneMgr;

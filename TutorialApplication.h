@@ -82,6 +82,9 @@ protected:
     void updateScoreLabel(void);
     void gameOver(bool);
     void restartGame(void);
+
+    // Network functions
+    void initNetwork(void);
 };
 
 //---------------------------------------------------------------------------
