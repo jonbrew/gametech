@@ -125,6 +125,15 @@ protected:
     Ogre::Radian                mRoll;
     Ogre::Radian                mPitch;
 
+    Ogre::Radian                maxRoll;
+    Ogre::Radian                maxPitch;
+
+    Ogre::Radian                dRoll1;
+    Ogre::Radian                dPitch1;
+    Ogre::Radian                dRoll2;
+    Ogre::Radian                dPitch2;
+
+
     Ogre::OverlaySystem*        mOverlaySystem;
 
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
