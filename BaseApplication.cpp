@@ -53,6 +53,12 @@ BaseApplication::BaseApplication(void)
     mPluginsCfg(Ogre::StringUtil::BLANK),
     mCursorWasVisible(false),
     mShutDown(false),
+    maxRoll(.35),
+    maxPitch(.35),
+    dPitch1(0),
+    dRoll1(0),
+    dPitch2(0),
+    dRoll2(0),
     mHit(false),
     mHitMaxFrames(500),
     mHitFrames(0),
@@ -327,12 +333,37 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if((paddlePosition.y <= -85 && newDirection.y < 0) || (paddlePosition.y >= 85 && newDirection.y > 0))
        newDirection.y = 0;
    
+/* //old pitch limiter 
     Ogre::Radian newPitch = mPitch;
     Ogre::Real curPitch = paddleNode->getOrientation().getPitch().valueDegrees();
-    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || 
-        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.05))))
+    if(isClient)
+        curPitch -= 180;
+    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || //up
+        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.05))))     //down
         newPitch = 0;
-   
+
+*/
+    Ogre::Radian newPitch = mPitch;
+    Ogre::Radian newRoll = mRoll;
+    if(isClient){
+        if((dRoll2 <= -maxRoll && newRoll == Ogre::Radian(Ogre::Degree(-.05))) || //right
+                (dRoll2 >= maxRoll && newRoll == Ogre::Radian(Ogre::Degree(.05))))     //left
+            newRoll = 0;
+
+        if((dPitch2 <= -maxPitch && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || //right
+                (dPitch2 >= maxPitch && newPitch == Ogre::Radian(Ogre::Degree(.05))))     //left
+            newPitch = 0;
+    }
+    else{
+        if((dRoll1 <= -maxRoll && newRoll == Ogre::Radian(Ogre::Degree(-.05))) || //right
+                (dRoll1 >= maxRoll && newRoll == Ogre::Radian(Ogre::Degree(.05))))     //left
+            newRoll = 0;
+
+        if((dPitch1 <= -maxPitch && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || //right
+                (dPitch1 >= maxPitch && newPitch == Ogre::Radian(Ogre::Degree(.05))))     //left
+            newPitch = 0;
+    }
+
     if(mHit){
         int translate = 50;
         if(isClient)
@@ -347,8 +378,16 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     }
    
     paddleNode->translate(newDirection);
-    paddleNode->roll(mRoll);
+    paddleNode->roll(newRoll);
     paddleNode->pitch(newPitch);
+    if(isClient){
+        dRoll2 += newRoll;
+        dPitch2 += newPitch;
+    }
+    else{
+        dRoll1 += newRoll;
+        dPitch1 += newPitch;
+    }
    
     playerCam->move(newDirection);
     
