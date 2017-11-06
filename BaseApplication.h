@@ -142,6 +142,8 @@ protected:
     int                         mHitMaxFrames;
     int                         mHitFrames;
     int                         mRoundNum;
+    double                      mTimeToRound;
+    CEGUI::Window*              roundTimerLabel;
 
 
     //OIS Input devices

@@ -70,7 +70,8 @@ BaseApplication::BaseApplication(void)
     mDirection(Ogre::Vector3(0,0,0)),
     mGameState(BaseApplication::STOPPED),
     mGameMode(BaseApplication::IN_MENU),
-    mNetRole(-1)
+    mNetRole(-1),
+    mTimeToRound(3)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -308,9 +309,22 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Inject timestamp to CEGUI system
     CEGUI::System::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
 
-    if(mGameState == BaseApplication::STOPPED || mGameState == BaseApplication::PAUSED) {
-        return true;
+    bool stopped = mGameState == BaseApplication::STOPPED || mGameState == BaseApplication::PAUSED;
+
+    if(mTimeToRound > 0 && mGameMode == BaseApplication::MULTI) {
+        mTimeToRound -= evt.timeSinceLastFrame;
+        std::ostringstream strs;
+        strs << std::fixed << std::setprecision(1) << mTimeToRound;
+        std::string str = strs.str();
+        roundTimerLabel->setText("Round starts in " + str);
     }
+    if(mTimeToRound <= 0 && stopped && mGameMode == BaseApplication::MULTI) {
+        mGameState = BaseApplication::RUNNING;
+        roundTimerLabel->hide();
+    }
+    
+    if(stopped)
+        return true;    
 
     bool isClient = mNetRole == BaseApplication::CLIENT;
 

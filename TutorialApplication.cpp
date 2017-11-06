@@ -128,7 +128,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             mRoll = 0;
             break;
         case OIS::KC_RETURN:
-            if(mGameState == BaseApplication::STOPPED) {
+            if(mGameState == BaseApplication::STOPPED && mGameMode == BaseApplication::SINGLE) {
                 startLabel->hide();
                 mGameState = BaseApplication::RUNNING;
             }
@@ -271,6 +271,15 @@ void TutorialApplication::setupGUI() {
     youLoseLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
     youLoseLabel->hide();
     sheet->addChild(youLoseLabel);
+
+    // Round Timer Label
+    roundTimerLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/RoundTimerLabel");
+    roundTimerLabel->setFont("Jura-Regular");
+    roundTimerLabel->setText("Round starts in 3");
+    roundTimerLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    roundTimerLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    roundTimerLabel->hide();
+    sheet->addChild(roundTimerLabel);
 
     // Menu Button
     menuButton = wmgr.createWindow("Vanilla/Button", "CEGUIDemo/MenuButton");
@@ -548,6 +557,8 @@ void TutorialApplication::start() {
             mViewport->setCamera(mCamera1);
             Ogre::Node* paddleNode = room->getPaddle1()->getNode();
             mCamera1->lookAt(paddleNode->getPosition());
+            mTimeToRound = 3;
+            roundTimerLabel->show();
         } else {
             mViewport->setCamera(mCamera2);
             Ogre::Node* paddleNode = room->getPaddle2()->getNode();
