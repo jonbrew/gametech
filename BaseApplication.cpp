@@ -321,6 +321,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if(mTimeToRound <= 0 && stopped && mGameMode == BaseApplication::MULTI) {
         mGameState = BaseApplication::RUNNING;
         roundTimerLabel->hide();
+        youMissedLabel->hide();
+        youScoredLabel->hide();
+        drawLabel->hide();
     }
     
     if(stopped)

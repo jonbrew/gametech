@@ -144,7 +144,11 @@ protected:
     int                         mRoundNum;
     double                      mTimeToRound;
     CEGUI::Window*              roundTimerLabel;
-
+    CEGUI::Window*              youMissedLabel;
+    CEGUI::Window*              youScoredLabel;
+    CEGUI::Window*              drawLabel;
+    CEGUI::Window*              youWinLabel;
+    CEGUI::Window*              youLoseLabel;
 
     //OIS Input devices
     OIS::InputManager*          mInputManager;

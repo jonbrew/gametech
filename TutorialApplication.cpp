@@ -165,6 +165,7 @@ void TutorialApplication::createScene(void)
     setupGUI();
 
     room = new Room(mSceneMgr, mPhysics, 200);
+    scoreWall = room->getScoreWall();
 }
 
 void TutorialApplication::initNetwork() {
@@ -277,7 +278,7 @@ void TutorialApplication::setupGUI() {
     roundTimerLabel->setFont("Jura-Regular");
     roundTimerLabel->setText("Round starts in 3");
     roundTimerLabel->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
-    roundTimerLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.65, 0)));
+    roundTimerLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
     roundTimerLabel->hide();
     sheet->addChild(roundTimerLabel);
 
@@ -545,7 +546,6 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
 void TutorialApplication::start() {
     if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
         room->setupSingle();
-        scoreWall = room->getScoreWall();
         scoreWall->allOff();
         scoreWall->pickGoal();
         Ogre::Node* paddleNode = room->getPaddle1()->getNode();
@@ -622,6 +622,11 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
         scoreWall->increaseScore();
         updateScoreLabel();
         mSound->play(Sound::SOUND_SCORE);
+        ++mRoundNum;
+        room->resetMultiplayer(mRoundNum);
+        mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+        mTimeToRound = 3;
+        roundTimerLabel->show();
     } else if(ballStopped) {
         drawLabel->show();
     }

@@ -41,11 +41,6 @@ protected:
     CEGUI::Window* startLabel;
     CEGUI::Window* gameOverLabel;
     CEGUI::Window* tooSlowLabel;
-    CEGUI::Window* youMissedLabel;
-    CEGUI::Window* youScoredLabel;
-    CEGUI::Window* drawLabel;
-    CEGUI::Window* youWinLabel;
-    CEGUI::Window* youLoseLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
     CEGUI::Window* multiScoreBox;
