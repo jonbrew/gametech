@@ -71,7 +71,8 @@ BaseApplication::BaseApplication(void)
     mGameState(BaseApplication::STOPPED),
     mGameMode(BaseApplication::IN_MENU),
     mNetRole(-1),
-    mTimeToRound(3)
+    mTimeToRound(3),
+    mWaiting(false)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -284,7 +285,8 @@ bool BaseApplication::setup(void)
     mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
 
     // Init NetManager
-    initNetwork();
+    //initNetwork();
+    mNetMgr = new NetManager();
 
     // Create the scene
     createScene();
@@ -311,6 +313,19 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     bool stopped = mGameState == BaseApplication::STOPPED || mGameState == BaseApplication::PAUSED;
 
+    // Wait for client connection
+    if(mWaiting) {
+        if(mNetMgr->scanForActivity()) {
+            mWaiting = false;
+            // Show Score Box
+            multiScoreBox->show();
+            // Set game mode
+            mGameMode = BaseApplication::MULTI;
+            // Start game
+            start();
+        }
+    }
+    // Round start timer
     if(mTimeToRound > 0 && mGameMode == BaseApplication::MULTI) {
         mTimeToRound -= evt.timeSinceLastFrame;
         std::ostringstream strs;
@@ -394,9 +409,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             mHit = false;
     }
    
-    paddleNode->translate(newDirection);
-    paddleNode->roll(newRoll);
-    paddleNode->pitch(newPitch);
     if(isClient){
         dRoll2 += newRoll;
         dPitch2 += newPitch;
@@ -405,6 +417,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         dRoll1 += newRoll;
         dPitch1 += newPitch;
     }
+
+    paddleNode->translate(newDirection);
+    paddleNode->roll(newRoll);
+    paddleNode->pitch(newPitch);
    
     playerCam->move(newDirection);
     

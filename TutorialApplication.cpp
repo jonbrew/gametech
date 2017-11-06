@@ -75,11 +75,13 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
             mRoll = Ogre::Radian(Ogre::Degree(-.05));
             break;
          case OIS::KC_SPACE:
-            if(mHit)
-               break;
-            mSound->play(Sound::SOUND_WHIFF);
-            mHit = true;
-            mHitFrames = mHitMaxFrames;
+            if(mGameMode != BaseApplication::IN_MENU) {
+                if(mHit)
+                   break;
+                mSound->play(Sound::SOUND_WHIFF);
+                mHit = true;
+                mHitFrames = mHitMaxFrames;
+            }
             break;
         default:
             break;
@@ -134,7 +136,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
             }
             break;
         case OIS::KC_R:
-            if(mGameState == BaseApplication::STOPPED) {
+            if(mGameState == BaseApplication::STOPPED && mGameMode == BaseApplication::SINGLE) {
                 restartGame();
             }
             break;
@@ -192,6 +194,37 @@ void TutorialApplication::initNetwork() {
     //         netMgr.messageServer(PROTOCOL_TCP, "hello socket", 32);
     //     }
     // }
+}
+
+
+bool TutorialApplication::initServer() {
+    if(!mNetMgr->initNetManager()) {
+        return false;
+    }
+    mNetMgr->addNetworkInfo(PROTOCOL_TCP, NULL, 8080);
+    if(!mNetMgr->startServer()) {
+        return false;    
+    }
+    mNetMgr->acceptConnections();
+    return true;
+}
+
+void TutorialApplication::waitForClient() {
+    if(!mNetMgr->pollForActivity(30000)) {
+        // prompt wait again
+    }
+}
+
+bool TutorialApplication::initClient(const char* hostname) {
+    if(!mNetMgr->initNetManager()) {
+        return false;
+    }
+    mNetMgr->addNetworkInfo(PROTOCOL_TCP, hostname, 8080);
+    if(!mNetMgr->startClient()) {
+        return false;
+    }
+    mNetMgr->messageServer(PROTOCOL_TCP, "hello socket", 32);
+    return true;
 }
 
 void TutorialApplication::setupGUI() {
@@ -503,8 +536,6 @@ bool TutorialApplication::single(const CEGUI::EventArgs &e) {
 bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
     // Hide Menu
     mainMenuBox->hide();
-    // Set game mode
-    mGameMode = BaseApplication::MULTI;
     // Show Multi Menu
     multiMenuBox->show();
 
@@ -515,15 +546,17 @@ bool TutorialApplication::server(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
-    // TODO wait for connection and show waiting label
+    // show waiting label
 
+    std::string ip = mNetMgr->getIPstring();
+    std::cout << ip << "\n";
     // Set net role
     mNetRole = BaseApplication::SERVER;
-    // Show Score Box
-    multiScoreBox->show();
-    // Start game
-    start();
-
+    // Init Server
+    initServer();
+    // Set waiting for client flag to true
+    mWaiting = true;
+    
     return true;
 }
 
@@ -531,12 +564,14 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
-    // TODO connect to host and show waiting label
-
+    // Init Client and send message to server
+    initClient("localhost");
     // Set net role
     mNetRole = BaseApplication::CLIENT;
     // Show Score Box
     multiScoreBox->show();
+    // Set game mode
+    mGameMode = BaseApplication::MULTI;
     // Start game
     start();
 
@@ -622,11 +657,6 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
         scoreWall->increaseScore();
         updateScoreLabel();
         mSound->play(Sound::SOUND_SCORE);
-        ++mRoundNum;
-        room->resetMultiplayer(mRoundNum);
-        mCamera1->setPosition(Ogre::Vector3(0,0,-100));
-        mTimeToRound = 3;
-        roundTimerLabel->show();
     } else if(ballStopped) {
         drawLabel->show();
     }
@@ -634,16 +664,22 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
     if(scoreWall->getScore() == 3) {
         youScoredLabel->hide();
         youWinLabel->show();
+        mTimeToRound = std::numeric_limits<double>::max();
         // TODO send gameover packet to client with new score and end game
 
     } else if(scoreWall->getScoreOther() == 3) {
         youMissedLabel->hide();
         youLoseLabel->show();
+        mTimeToRound = std::numeric_limits<double>::max();
         // TODO send gameover packet to client with score and end game
 
     } else {
-        // TODO send roundover packet to client with score and restart round
-
+        // TODO send roundover packet to client with score
+        ++mRoundNum;
+        room->resetMultiplayer(mRoundNum);
+        mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+        mTimeToRound = 3;
+        roundTimerLabel->show();
     }
 }
 

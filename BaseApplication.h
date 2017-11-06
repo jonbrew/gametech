@@ -139,6 +139,7 @@ protected:
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
     bool                        mHit;
+    bool                        mWaiting;
     int                         mHitMaxFrames;
     int                         mHitFrames;
     int                         mRoundNum;
@@ -149,6 +150,8 @@ protected:
     CEGUI::Window*              drawLabel;
     CEGUI::Window*              youWinLabel;
     CEGUI::Window*              youLoseLabel;
+    CEGUI::Window* multiScoreBox;
+
 
     //OIS Input devices
     OIS::InputManager*          mInputManager;
@@ -165,7 +168,7 @@ protected:
     CDebugDraw*                 mDebugDraw;
 
     // Networking Manager
-    NetManager*                 mNetworking;
+    NetManager*                 mNetMgr;
 
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;
@@ -201,6 +204,7 @@ protected:
     int                         mNetRole;
 
     virtual void initNetwork(void) = 0;
+    virtual void start(void) = 0;
     
 
 #ifdef OGRE_STATIC_LIB
