@@ -68,6 +68,9 @@ protected:
 
     // Network functions
     void initNetwork(void);
+    bool initServer(void);
+    void waitForClient(void);
+    bool initClient(const char*);
 };
 
 //---------------------------------------------------------------------------

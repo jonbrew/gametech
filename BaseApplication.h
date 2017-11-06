@@ -145,7 +145,7 @@ protected:
     Physics*                    mPhysics;
 
     // Networking Manager
-    NetManager*                 mNetworking;
+    NetManager*                 mNetMgr;
 
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;

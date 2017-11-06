@@ -273,7 +273,8 @@ bool BaseApplication::setup(void)
     mPhysics = new Physics(mSound);
 
     // Init NetManager
-    initNetwork();
+    // initNetwork();
+    mNetMgr = new NetManager();
 
     // Create the scene
     createScene();

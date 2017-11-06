@@ -221,6 +221,36 @@ void TutorialApplication::initNetwork() {
     // }
 }
 
+bool TutorialApplication::initServer() {
+    if(!mNetMgr->initNetManager()) {
+        return false;
+    }
+    mNetMgr->addNetworkInfo(PROTOCOL_TCP, NULL, 8080);
+    if(!mNetMgr->startServer()) {
+        return false;    
+    }
+    mNetMgr->acceptConnections();
+    return true;
+}
+
+void TutorialApplication::waitForClient() {
+    if(!mNetMgr->pollForActivity(30000)) {
+        // prompt wait again
+    }
+}
+
+bool TutorialApplication::initClient(const char* hostname) {
+    if(!mNetMgr->initNetManager()) {
+        return false;
+    }
+    mNetMgr->addNetworkInfo(PROTOCOL_TCP, hostname, 8080);
+    if(!mNetMgr->startClient()) {
+        return false;
+    }
+    mNetMgr->messageServer(PROTOCOL_TCP, "hello socket", 32);
+    return true;
+}
+
 void TutorialApplication::setupGUI() {
     gui = new GUI();
 
@@ -373,6 +403,94 @@ bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
 bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
     mShutDown = true;
     return true;
+}
+
+bool TutorialApplication::single(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Set game mode
+    mGameMode = BaseApplication::SINGLE;
+    // Show start label, menu button, and score box
+    startLabel->show();
+    menuButton->show();
+    scoreBox->show();
+
+    // Start game
+    start();
+
+    return true;
+}
+
+bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Set game mode
+    mGameMode = BaseApplication::MULTI;
+    // Show Multi Menu
+    multiMenuBox->show();
+
+    return true;
+}
+
+bool TutorialApplication::server(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    // TODO wait for connection and show waiting label
+    if(initServer()) {
+        std::cout << "waiting for client to connect\n";
+        waitForClient();
+    }
+
+    // Set net role
+    mNetRole = BaseApplication::SERVER;
+    // Show Score Box
+    multiScoreBox->show();
+    // Start game
+    start();
+
+    return true;
+}
+
+bool TutorialApplication::client(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    // TODO connect to host and show waiting label
+    initClient("localhost");
+
+    // Set net role
+    mNetRole = BaseApplication::CLIENT;
+    // Show Score Box
+    multiScoreBox->show();
+    // Start game
+    start();
+
+    return true;
+}
+
+void TutorialApplication::start() {
+    if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
+        room->setupSingle();
+        scoreWall->allOff();
+        scoreWall->pickGoal();
+        Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+        mCamera1->lookAt(paddleNode->getPosition());
+    } else { // Setup multi player scene
+        room->setupMulti();
+        if(mNetRole == BaseApplication::SERVER) {
+            mViewport->setCamera(mCamera2);
+            mViewport->setCamera(mCamera1);
+            Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+            mCamera1->lookAt(paddleNode->getPosition());
+            mTimeToRound = 3;
+            roundTimerLabel->show();
+        } else {
+            mViewport->setCamera(mCamera2);
+            Ogre::Node* paddleNode = room->getPaddle2()->getNode();
+            mCamera2->lookAt(paddleNode->getPosition());
+        }
+    }
 }
 
 void TutorialApplication::updateScoreLabel() {
