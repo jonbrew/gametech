@@ -504,6 +504,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             // Show Physics bounding boxes
             //mDebugDraw->Update();
 
+            if(mNetMgr->scanForActivity()) {
+                std::cout << "DATA: " << mNetMgr->tcpClientData[0]->output << "\n";
+            }
             btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
             btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
 
@@ -514,8 +517,17 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                 roundOverMulti(ballPosition.z, ballStopped);
             }
 
-            // TODO send updates packet to client with ball and paddle position and sound to play
-            //packet.soundToPlay = mSound->soundToPlay
+            // Build update packet and send to client
+            UpdatePacket packet;
+            packet.packetType = BaseApplication::PACKET_UPDATE;
+            packet.soundToPlay = mSound->soundToPlay;
+            packet.ballPos = ballPosition;
+            packet.ballRot = ballNode->getOrientation();
+            packet.paddlePos = paddleNode->getPosition();
+            packet.paddleRot = paddleNode->getOrientation();
+            char toSend[sizeof(packet)];
+            std::memcpy(&toSend[0],&packet,sizeof(packet));
+            mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
 
             // TODO rcv client packet and update paddle2 pos
 
