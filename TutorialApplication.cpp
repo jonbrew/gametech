@@ -606,8 +606,6 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     searchMenu->hide();
     searchBox->hide();
 
-    mTimeToRound = 3;
-
     start();
 
     return true;
@@ -637,6 +635,8 @@ void TutorialApplication::start() {
             room->getBall()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
             room->getPaddle1()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
             room->getPaddle2()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            mTimeToRound = 3;
+            roundTimerLabel->show();
         }
     }
 }

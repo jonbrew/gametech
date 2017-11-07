@@ -230,7 +230,6 @@ protected:
     UpdatePacket                clientPacketBuffer;
     UpdatePacket                clientPacket;
 
-    virtual void initNetwork(void) = 0;
     virtual void start(void) = 0;
     
 
