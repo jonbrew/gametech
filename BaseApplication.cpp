@@ -367,16 +367,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if((paddlePosition.y <= -85 && newDirection.y < 0) || (paddlePosition.y >= 85 && newDirection.y > 0))
        newDirection.y = 0;
    
-/* //old pitch limiter 
-    Ogre::Radian newPitch = mPitch;
-    Ogre::Real curPitch = paddleNode->getOrientation().getPitch().valueDegrees();
-    if(isClient)
-        curPitch -= 180;
-    if((curPitch <= -115 && newPitch == Ogre::Radian(Ogre::Degree(-.05))) || //up
-        (curPitch >= -65 && newPitch == Ogre::Radian(Ogre::Degree(.05))))     //down
-        newPitch = 0;
-
-*/
     Ogre::Radian newPitch = mPitch;
     Ogre::Radian newRoll = mRoll;
     if(isClient){

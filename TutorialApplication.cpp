@@ -173,33 +173,6 @@ void TutorialApplication::createScene(void)
     scoreWall = room->getScoreWall();
 }
 
-void TutorialApplication::initNetwork() {
-    NetManager netMgr;
-    if(netMgr.initNetManager()) {
-        netMgr.addNetworkInfo(PROTOCOL_TCP, NULL, 8080);
-        if(netMgr.startServer()) {
-            std::cout << netMgr.getIPstring() << "\n";
-            std::cout << netMgr.getPort() << "\n";
-
-            netMgr.acceptConnections();
-            // if(netMgr.pollForActivity(30000)) {
-            //     std::cout << "Client connected" << "\n";
-            // }
-            // if(netMgr.scanForActivity()) {
-            // }
-        }
-    }
-
-    // if(netMgr.initNetManager()) {
-    //     netMgr.addNetworkInfo(PROTOCOL_TCP, "localhost", 8080);
-    //     if(netMgr.startClient()) {
-    //         std::cout << "Client Started" << "\n";
-    //         netMgr.messageServer(PROTOCOL_TCP, "hello socket", 32);
-    //     }
-    // }
-}
-
-
 bool TutorialApplication::initServer() {
     if(!mNetMgr->initNetManager()) {
         return false;
@@ -210,12 +183,6 @@ bool TutorialApplication::initServer() {
     }
     mNetMgr->acceptConnections();
     return true;
-}
-
-void TutorialApplication::waitForClient() {
-    if(!mNetMgr->pollForActivity(30000)) {
-        // prompt wait again
-    }
 }
 
 bool TutorialApplication::initClient(const char* hostname) {
@@ -603,7 +570,6 @@ bool TutorialApplication::server(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
-    // TODO wait for connection and show waiting label
     // waiting label
     waitingBox->show();
     ipLabel->setText("Your IP Address: " + mNetMgr->getIPstring());
@@ -623,7 +589,6 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
-
     CEGUI::String ip_addr = searchBox->getText();
 
     // Init Client and send message to server
@@ -640,6 +605,8 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     searchButton->hide();
     searchMenu->hide();
     searchBox->hide();
+
+    mTimeToRound = 3;
 
     start();
 
