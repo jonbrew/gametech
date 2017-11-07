@@ -71,7 +71,9 @@ BaseApplication::BaseApplication(void)
     mGameState(BaseApplication::STOPPED),
     mGameMode(BaseApplication::IN_MENU),
     mNetRole(-1),
-    mTimeToRound(5000)
+    mTimeToRound(3),
+    mWaiting(false)
+
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -284,7 +286,8 @@ bool BaseApplication::setup(void)
     mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
 
     // Init NetManager
-    initNetwork();
+    //initNetwork();
+    mNetMgr = new NetManager();
 
     // Create the scene
     createScene();
@@ -311,6 +314,19 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     bool stopped = mGameState == BaseApplication::STOPPED || mGameState == BaseApplication::PAUSED;
 
+    // Wait for client connection
+    if(mWaiting) {
+        if(mNetMgr->scanForActivity()) {
+            mWaiting = false;
+            // Show Score Box
+            multiScoreBox->show();
+            // Set game mode
+            mGameMode = BaseApplication::MULTI;
+            // Start game
+            start();
+        }
+    }
+    // Round start timer
     if(mTimeToRound > 0 && mGameMode == BaseApplication::MULTI) {
         mTimeToRound -= evt.timeSinceLastFrame;
         std::ostringstream strs;
@@ -394,9 +410,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             mHit = false;
     }
    
-    paddleNode->translate(newDirection);
-    paddleNode->roll(newRoll);
-    paddleNode->pitch(newPitch);
     if(isClient){
         dRoll2 += newRoll;
         dPitch2 += newPitch;
@@ -405,6 +418,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         dRoll1 += newRoll;
         dPitch1 += newPitch;
     }
+
+    paddleNode->translate(newDirection);
+    paddleNode->roll(newRoll);
+    paddleNode->pitch(newPitch);
    
     playerCam->move(newDirection);
     
@@ -488,6 +505,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             // Show Physics bounding boxes
             //mDebugDraw->Update();
 
+            if(mNetMgr->scanForActivity()) {
+                std::cout << "DATA: " << mNetMgr->tcpClientData[0]->output << "\n";
+            }
             btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
             btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
 
@@ -498,8 +518,17 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                 roundOverMulti(ballPosition.z, ballStopped);
             }
 
-            // TODO send updates packet to client with ball and paddle position and sound to play
-            //packet.soundToPlay = mSound->soundToPlay
+            // Build update packet and send to client
+            UpdatePacket packet;
+            packet.packetType = BaseApplication::PACKET_UPDATE;
+            packet.soundToPlay = mSound->soundToPlay;
+            packet.ballPos = ballPosition;
+            packet.ballRot = ballNode->getOrientation();
+            packet.paddlePos = paddleNode->getPosition();
+            packet.paddleRot = paddleNode->getOrientation();
+            char toSend[sizeof(packet)];
+            std::memcpy(&toSend[0],&packet,sizeof(packet));
+            mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
 
             // TODO rcv client packet and update paddle2 pos
 

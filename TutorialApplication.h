@@ -43,7 +43,6 @@ protected:
     CEGUI::Window* tooSlowLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
-    CEGUI::Window* multiScoreBox;
     CEGUI::Window* p1ScoreBox;
     CEGUI::Window* p1ScoreLabel;
     CEGUI::Window* p2ScoreBox;
@@ -91,6 +90,9 @@ protected:
 
     // Network functions
     void initNetwork(void);
+    bool initServer(void);
+    void waitForClient(void);
+    bool initClient(const char*);
 };
 
 //---------------------------------------------------------------------------

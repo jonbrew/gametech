@@ -139,6 +139,7 @@ protected:
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
     bool                        mHit;
+    bool                        mWaiting;
     int                         mHitMaxFrames;
     int                         mHitFrames;
     int                         mRoundNum;
@@ -149,6 +150,8 @@ protected:
     CEGUI::Window*              drawLabel;
     CEGUI::Window*              youWinLabel;
     CEGUI::Window*              youLoseLabel;
+    CEGUI::Window* multiScoreBox;
+
 
     //OIS Input devices
     OIS::InputManager*          mInputManager;
@@ -165,7 +168,7 @@ protected:
     CDebugDraw*                 mDebugDraw;
 
     // Networking Manager
-    NetManager*                 mNetworking;
+    NetManager*                 mNetMgr;
 
     // Added for Mac compatibility
     Ogre::String                m_ResourcePath;
@@ -200,7 +203,37 @@ protected:
 
     int                         mNetRole;
 
+    // Packet Types
+    static const int            PACKET_UPDATE = 0;
+    static const int            PACKET_ROUND = 1;
+    static const int            PACKET_GAME = 2;
+
+    // Score Types
+    static const int            SCORE_SERVER = 0;
+    static const int            SCORE_CLIENT = 1;
+    static const int            SCORE_DRAW = 2;
+
+    struct UpdatePacket {
+        int packetType;
+        int soundToPlay;
+        Ogre::Vector3 ballPos;
+        Ogre::Quaternion ballRot;
+        Ogre::Vector3 paddlePos;
+        Ogre::Quaternion paddleRot;
+    };
+
+    struct RoundOverPacket {
+        int packetType;
+        int scoreType;
+    };
+
+    struct GameOverPacket {
+        int packetType;
+        int scoreType;
+    };
+
     virtual void initNetwork(void) = 0;
+    virtual void start(void) = 0;
     
 
 #ifdef OGRE_STATIC_LIB
