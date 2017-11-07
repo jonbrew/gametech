@@ -73,6 +73,7 @@ BaseApplication::BaseApplication(void)
     mNetRole(-1),
     mTimeToRound(3),
     mWaiting(false)
+
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";

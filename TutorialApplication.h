@@ -60,6 +60,10 @@ protected:
     CEGUI::Window* resumeButton;
     CEGUI::Window* restartButton;
     CEGUI::Window* soundButton;
+    CEGUI::Window* waitingBox;
+    CEGUI::Editbox* searchBox;
+    CEGUI::Window* searchMenu;
+    CEGUI::Window* searchButton;
     
     // CEGUI
     void setupGUI(void);
@@ -70,6 +74,7 @@ protected:
     bool sound(const CEGUI::EventArgs &e);
     bool restart(const CEGUI::EventArgs &e);
     bool resume(const CEGUI::EventArgs &e);
+    bool search(const CEGUI::EventArgs &e);
     bool quit(const CEGUI::EventArgs &e);
     bool single(const CEGUI::EventArgs &e);
     bool multi(const CEGUI::EventArgs &e);
