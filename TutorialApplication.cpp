@@ -565,7 +565,7 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     multiMenuBox->hide();
 
     // Init Client and send message to server
-    initClient("localhost");
+    initClient("128.83.120.174");
     // Set net role
     mNetRole = BaseApplication::CLIENT;
     // Show Score Box
@@ -598,6 +598,10 @@ void TutorialApplication::start() {
             mViewport->setCamera(mCamera2);
             Ogre::Node* paddleNode = room->getPaddle2()->getNode();
             mCamera2->lookAt(paddleNode->getPosition());
+
+            room->getBall()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle1()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle2()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
         }
     }
 }

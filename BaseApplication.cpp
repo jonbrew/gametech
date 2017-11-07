@@ -282,7 +282,7 @@ bool BaseApplication::setup(void)
 
     // Init Bullet Physics
     mPhysics = new Physics(mSound);
-    mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
+    // mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
 
     // Init NetManager
     //initNetwork();
@@ -454,46 +454,74 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
     } else { // Multiplayer updates
         if(isClient) { // Client updates
+            // Send paddle pos to server
+            UpdatePacket clientPaddlePacket;
+            clientPaddlePacket.packetType = PACKET_UPDATE;
+            clientPaddlePacket.soundToPlay = -1;
+            clientPaddlePacket.scoreType = -1;
+            clientPaddlePacket.ballPos = Ogre::Vector3();
+            clientPaddlePacket.ballRot = Ogre::Quaternion();
+            clientPaddlePacket.paddlePos = paddleNode->getPosition();
+            clientPaddlePacket.paddleRot = paddleNode->getOrientation();
+
+            char toSend[sizeof(clientPaddlePacket)];
+            std::memcpy(&toSend[0], &clientPaddlePacket, sizeof(clientPaddlePacket));
+            mNetMgr->messageServer(PROTOCOL_TCP, toSend, sizeof(clientPaddlePacket));
+
             // TODO rcv packet
-            /* shitty pseudo code
-            if(packettype == update)
-                mSound->play(packet.soundToPlay)
-                ballNode->translate(packet.ballx,packet.bally,packet.ballz)
-                ballNode->rotate(packet.ballrotw,packet.ballrotx,packet.ballroty,packet.ballrotz)
-                Ogre::SceneNode* paddle1node = room->getPaddle1()->getNode();
-                paddle1Node->translate(packet.paddlex,packet.paddley,packet.paddlez)
-                paddle1Node->rotate(packet.paddlerotw,packet.paddlerotx,packet.paddleroty,packet.paddlerotz)
-            else if(packettype == roundover)
-                if(server score increase) {
-                    youMissedLabel->show();
-                    scoreWall->increaseScoreOther();
-                    updateScoreLabelOther();
-                } else if(client score increase) {
-                    youScoredLabel->show();
-                    scoreWall->increaseScore();
-                    updateScoreLabel();
-                    mSound->play(Sound::SOUND_SCORE);
-                } else if(no score increase) {
-                    drawLabel->show();
+            if(mNetMgr->scanForActivity()) {
+                std::memcpy(&clientPacketBuffer, mNetMgr->tcpServerData.output, sizeof(clientPacketBuffer));
+
+                if(clientPacketBuffer.packetType == PACKET_UPDATE) {
+                    mSound->play(clientPacketBuffer.soundToPlay);
+
+                    ballNode->setPosition(clientPacketBuffer.ballPos);
+                    ballNode->setOrientation(clientPacketBuffer.ballRot);
+
+                    Ogre::SceneNode* paddle1Node = room->getPaddle1()->getNode();
+                    paddle1Node->setPosition(clientPacketBuffer.paddlePos);
+                    paddle1Node->setOrientation(clientPacketBuffer.paddleRot);
                 }
-                restartRound()
-            else if(packettype == gameover)
-                if(client win) {
-                    youWinLabel->show();
-                    scoreWall->increaseScore();
-                    updateScoreLabel();
-                    mSound->play(Sound::SOUND_SCORE);          
-                } else if(server win) {
-                    youLoseLabel->show();
-                    scoreWall->increaseScoreOther();
-                    updateScoreLabelOther();
+                else if(clientPacketBuffer.packetType == PACKET_ROUND) {
+                    mGameState = STOPPED;
+
+                    if(clientPacketBuffer.scoreType == SCORE_SERVER) {
+                        youMissedLabel->show();
+                        scoreWall->increaseScoreOther();
+                        updateScoreLabelOther();
+                    }
+                    else if(clientPacketBuffer.scoreType == SCORE_CLIENT) {
+                        youScoredLabel->show();
+                        scoreWall->increaseScore();
+                        updateScoreLabel();
+                        mSound->play(Sound::SOUND_SCORE);
+                    }
+                    else if(clientPacketBuffer.scoreType == SCORE_DRAW) {
+                        drawLabel->show();
+                    }
+                    ++mRoundNum;
+                    room->resetMultiplayer(mRoundNum);
+                    mCamera2->setPosition(Ogre::Vector3(0,0,100));
+                    mTimeToRound = 3;
+                    roundTimerLabel->show();
                 }
-                endGame()
-            */
+                else if(clientPacketBuffer.packetType == PACKET_GAME) {
+                    mGameState = STOPPED;
+                    mTimeToRound = std::numeric_limits<double>::max();
 
-            // TODO send paddle pos update to server
-
-
+                    if(clientPacketBuffer.scoreType == SCORE_CLIENT) {
+                        youWinLabel->show();
+                        scoreWall->increaseScore();
+                        updateScoreLabel();
+                        mSound->play(Sound::SOUND_SCORE);
+                    }
+                    else if(clientPacketBuffer.scoreType == SCORE_SERVER) {
+                        youLoseLabel->show();
+                        scoreWall->increaseScoreOther();
+                        updateScoreLabelOther();
+                    }
+                }
+            }
         } else { // Server updates
             // Update kinematic paddle position in physics sim
             room->getPaddle1()->updateMotionState();
@@ -505,7 +533,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             //mDebugDraw->Update();
 
             if(mNetMgr->scanForActivity()) {
-                std::cout << "DATA: " << mNetMgr->tcpClientData[0]->output << "\n";
+                // std::cout << "DATA: " << mNetMgr->tcpClientData[0]->output << "\n";
             }
             btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
             btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
