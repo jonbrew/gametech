@@ -1,4 +1,4 @@
-Ac!d Milestone 3.2
+Ac!d Milestone 3.3
 
 Status Update
 
@@ -10,6 +10,6 @@ Changed paddle movement control to the mouse instead of WASD keyboard events.
 -Finished implementing game states such as pausing, resuming, restarting, and end-game. This is necessary for synchronization with multiplayer mode.
 -Added paddle whiffing sound which was missing in the previous version of the game.
 
-    In progress:
+In progress:
 -Establishing the protocol for transferring object positions and hit boxes for synchronized physics simulation.
 -Updating the client’s frame rendering queue using positions and orientations received from the server.
