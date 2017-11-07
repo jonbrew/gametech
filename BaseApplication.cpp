@@ -71,7 +71,7 @@ BaseApplication::BaseApplication(void)
     mGameState(BaseApplication::STOPPED),
     mGameMode(BaseApplication::IN_MENU),
     mNetRole(-1),
-    mTimeToRound(3)
+    mTimeToRound(5000)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";

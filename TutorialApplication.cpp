@@ -38,7 +38,10 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
 
     Ogre::Real x = mDirection.x;
     Ogre::Real y = mDirection.y;
-    Ogre::Real z = mDirection.z;
+    Ogre::Real z = mDirection.z;  
+
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectChar(ke.text);
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyDown((CEGUI::Key::Scan)ke.key);
 
     Ogre::Real move = 200;
     switch (ke.key)
@@ -380,6 +383,39 @@ void TutorialApplication::setupGUI() {
     serverButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.2, 0)));
     serverButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.1, 0)));
     serverButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::server, this));
+
+    // Host waiting for an opponent box
+    waitingBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/WaitingBox");
+    waitingBox->setFont("Jura-Regular");
+    waitingBox->setText("Waiting on an opponent...");
+    waitingBox->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.1, 0)));
+    waitingBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.45, 0)));
+    waitingBox->hide();
+    sheet->addChild(waitingBox);
+
+    // Search for host window
+    searchMenu = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/SearchMenu");
+    searchMenu->setFont("Jura-Regular");
+    searchMenu->setText("Search for IP Address");
+    searchMenu->setSize(CEGUI::USize(CEGUI::UDim(0.4, 0), CEGUI::UDim(0.2, 0)));
+    searchMenu->setPosition(CEGUI::UVector2(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.3, 0)));
+    searchMenu->hide();
+    sheet->addChild(searchMenu);
+
+    // Search for host text box
+    searchBox = static_cast<CEGUI::Editbox*>(searchMenu->createChild("Vanilla/Editbox", "SearchMenu/searchBox"));
+    searchBox->setSize(CEGUI::USize(CEGUI::UDim(0.5, 0), CEGUI::UDim(0.35, 0)));
+    searchBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25, 0), CEGUI::UDim(0.05, 0)));
+    searchBox->setText("");
+    searchBox->setTextParsingEnabled(true);
+    searchBox->setEnabled(true);
+
+    // Search for host button
+    searchButton = searchMenu->createChild("Vanilla/Button", "CEGUIDemo/searchMenu/SearchButton");
+    searchButton->setSize(CEGUI::USize(CEGUI::UDim(0.3, 0), CEGUI::UDim(0.35, 0)));
+    searchButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35, 0), CEGUI::UDim(0.5, 0)));
+    searchButton->setText("Search");
+    searchButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::client, this));
     
     // Search for Host Button
     clientButton = multiMenuBox->createChild("Vanilla/Button", "CEGUIDemo/Menu/ClientButton");
@@ -387,7 +423,7 @@ void TutorialApplication::setupGUI() {
     clientButton->setText("Search for a Host...");
     clientButton->setSize(CEGUI::USize(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.2, 0)));
     clientButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.3, 0)));
-    clientButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::client, this));
+    clientButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::search, this));
 
     // In Game Menu
     menuBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/Menu");
@@ -511,11 +547,28 @@ bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
     return true;
 }
 
+bool TutorialApplication::search(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    searchBox->activate();
+    // Show Multi Menu
+    searchMenu->show();
+
+    return true;
+}
+
+
 bool TutorialApplication::server(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
     // TODO wait for connection and show waiting label
+    
+    // waiting label
+    waitingBox->show();
+
+    //Wait for connection here 
 
     // Set net role
     mNetRole = BaseApplication::SERVER;
@@ -531,13 +584,17 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     // Hide Menu
     multiMenuBox->hide();
 
-    // TODO connect to host and show waiting label
-
+    CEGUI::String ip_addr = searchBox->getText();
     // Set net role
     mNetRole = BaseApplication::CLIENT;
     // Show Score Box
     multiScoreBox->show();
     // Start game
+
+    searchButton->hide();
+    searchMenu->hide();
+    searchBox->hide();
+
     start();
 
     return true;
