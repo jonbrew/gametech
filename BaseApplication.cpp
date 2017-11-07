@@ -504,9 +504,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             // Show Physics bounding boxes
             //mDebugDraw->Update();
 
-            if(mNetMgr->scanForActivity()) {
-                std::cout << "DATA: " << mNetMgr->tcpClientData[0]->output << "\n";
-            }
             btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
             btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
 
@@ -529,7 +526,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             std::memcpy(&toSend[0],&packet,sizeof(packet));
             mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
 
-            // TODO rcv client packet and update paddle2 pos
+            // Rcv client packet and update paddle2 pos
+            // if(mNetMgr->scanForActivity()) {
+            //     UpdatePacket clientPacket;
+            //     std::memcpy(&clientPacket,mNetMgr->tcpClientData[0]->output,sizeof(clientPacket));
+            //     Ogre::SceneNode* paddleNode2 = room->getPaddle2()->getNode();
+            //     paddleNode2->setPosition(clientPacket.paddlePos);
+            //     paddleNode2->setOrientation(clientPacket.paddleRot);
+            // }
 
             // Reset sound to play
             mSound->soundToPlay = Sound::SOUND_NONE;

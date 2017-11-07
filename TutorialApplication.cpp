@@ -648,33 +648,53 @@ void TutorialApplication::gameOver(bool ballStopped) {
 
 void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
     // This method only called by server
+    int scoreType = -1;
     if(ballPos <= -80) {
         youMissedLabel->show();
         scoreWall->increaseScoreOther();
         updateScoreLabelOther();
+        scoreType = BaseApplication::SCORE_CLIENT;
     } else if(ballPos >= 80) {
         youScoredLabel->show();
         scoreWall->increaseScore();
         updateScoreLabel();
         mSound->play(Sound::SOUND_SCORE);
+        scoreType = BaseApplication::SCORE_SERVER;
     } else if(ballStopped) {
         drawLabel->show();
+        scoreType = BaseApplication::SCORE_DRAW;
     }
 
     if(scoreWall->getScore() == 3) {
+        // Build gameover packet and send to client
+        GameOverPacket packet;
+        packet.packetType = BaseApplication::PACKET_GAME;
+        packet.scoreType = scoreType;
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
         youScoredLabel->hide();
         youWinLabel->show();
         mTimeToRound = std::numeric_limits<double>::max();
-        // TODO send gameover packet to client with new score and end game
-
     } else if(scoreWall->getScoreOther() == 3) {
+        // Build gameover packet and send to client
+        GameOverPacket packet;
+        packet.packetType = BaseApplication::PACKET_GAME;
+        packet.scoreType = scoreType;
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
         youMissedLabel->hide();
         youLoseLabel->show();
         mTimeToRound = std::numeric_limits<double>::max();
-        // TODO send gameover packet to client with score and end game
-
     } else {
-        // TODO send roundover packet to client with score
+        // Build roundover packet and send to client
+        RoundOverPacket packet;
+        packet.packetType = BaseApplication::PACKET_ROUND;
+        packet.scoreType = scoreType;
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
         ++mRoundNum;
         room->resetMultiplayer(mRoundNum);
         mCamera1->setPosition(Ogre::Vector3(0,0,-100));
