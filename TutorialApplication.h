@@ -60,7 +60,6 @@ protected:
     CEGUI::Window* resumeButton;
     CEGUI::Window* restartButton;
     CEGUI::Window* soundButton;
-    CEGUI::Window* waitingBox;
     CEGUI::Editbox* searchBox;
     CEGUI::Window* searchMenu;
     CEGUI::Window* searchButton;

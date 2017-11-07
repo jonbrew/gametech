@@ -71,6 +71,7 @@ bool Physics::handleCollisions() {
     	    	case TYPE_PADDLE :
     	    		if(!isCollidingPaddle) {
     	    			mSound->play(Sound::SOUND_HIT);
+                        mSound->soundToPlay = Sound::SOUND_HIT;
                     }
     	    		hitPaddle = true;
     	    		break;

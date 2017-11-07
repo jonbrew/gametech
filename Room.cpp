@@ -55,5 +55,5 @@ void Room::resetMultiplayer(int roundNum) {
 	ball->resetMultiplayer(roundNum);
 	// Reset paddles
 	paddle1->reset();
-	paddle2->reset();
+	//paddle2->reset();
 }

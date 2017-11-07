@@ -150,7 +150,11 @@ protected:
     CEGUI::Window*              drawLabel;
     CEGUI::Window*              youWinLabel;
     CEGUI::Window*              youLoseLabel;
-    CEGUI::Window* multiScoreBox;
+    CEGUI::Window*              multiScoreBox;
+    CEGUI::Window*              waitingBox;
+    CEGUI::Window*              ipLabel;
+
+
 
 
     //OIS Input devices
@@ -177,6 +181,7 @@ protected:
     Room*                       room;
     ScoreWall*                  scoreWall;
     virtual void updateScoreLabel(void) = 0;
+    virtual void updateScoreLabelOther(void) = 0;
 
     // GUI component
     GUI*                        gui;
@@ -216,21 +221,14 @@ protected:
     struct UpdatePacket {
         int packetType;
         int soundToPlay;
+        int scoreType;
         Ogre::Vector3 ballPos;
         Ogre::Quaternion ballRot;
         Ogre::Vector3 paddlePos;
         Ogre::Quaternion paddleRot;
     };
-
-    struct RoundOverPacket {
-        int packetType;
-        int scoreType;
-    };
-
-    struct GameOverPacket {
-        int packetType;
-        int scoreType;
-    };
+    UpdatePacket                clientPacketBuffer;
+    UpdatePacket                clientPacket;
 
     virtual void initNetwork(void) = 0;
     virtual void start(void) = 0;

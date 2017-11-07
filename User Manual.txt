@@ -8,10 +8,10 @@ The objective of the game is to hit the ball into the score zone, which is
 denoted by a dark green box on a red wall. Each score is worth 1 point, and the goal is to score as many points as possible. The score zone will change to a random position on the red wall every time it is hit and the ball will get a velocity boost. If the player misses the ball and it goes past the paddle or the ball is allowed to come to a slow creep, they lose and must restart the game. To control the paddle use the following controls:
 
 Move the mouse ->   Move the paddle around
-Up Arrow 	   ->  	pitch paddle to face upwards    -> Alternative Key: J
-Down Arrow 	   ->   pitch paddle to face downwards  -> Alternative Key: H 
-Right Arrow    ->  	roll paddle to the Right        -> Alternative Key: K 
-Left Arrow     ->  	roll maddle to the Left         -> Alternative Key: L
+Up Arrow 	   ->  	pitch paddle to face upwards    -> Alternative Key: W
+Down Arrow 	   ->   pitch paddle to face downwards  -> Alternative Key: S 
+Right Arrow    ->  	roll paddle to the Right        -> Alternative Key: A
+Left Arrow     ->  	roll paddle to the Left         -> Alternative Key: D 
 
 Use the SPACE bar to start the game and to hit the ball with the paddle.
 Important note: You must hit the ball with the paddle or the ball will

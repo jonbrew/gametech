@@ -426,6 +426,15 @@ void TutorialApplication::setupGUI() {
     waitingBox->hide();
     sheet->addChild(waitingBox);
 
+    // Your ip label
+    ipLabel = wmgr.createWindow("Vanilla/Label", "CEGUIDemo/IPLabel");
+    ipLabel->setFont("Jura-Regular");
+    ipLabel->setText("Your IP Address");
+    ipLabel->setSize(CEGUI::USize(CEGUI::UDim(0.5, 0), CEGUI::UDim(0.1, 0)));
+    ipLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25, 0), CEGUI::UDim(0.65, 0)));
+    ipLabel->hide();
+    sheet->addChild(ipLabel);
+
     // Search for host window
     searchMenu = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/SearchMenu");
     searchMenu->setFont("Jura-Regular");
@@ -595,11 +604,11 @@ bool TutorialApplication::server(const CEGUI::EventArgs &e) {
     multiMenuBox->hide();
 
     // TODO wait for connection and show waiting label
-    
     // waiting label
     waitingBox->show();
+    ipLabel->setText("Your IP Address: " + mNetMgr->getIPstring());
+    ipLabel->show();
 
-    //Wait for connection here 
     // Set net role
     mNetRole = BaseApplication::SERVER;
     // Init Server
@@ -618,7 +627,8 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
     CEGUI::String ip_addr = searchBox->getText();
 
     // Init Client and send message to server
-    initClient("localhost");
+    if(!initClient(ip_addr.c_str()))
+        std::cout << "\n\nFAILED TO CONNECT... TRY AGAIN\n\n";
     // Set net role
     mNetRole = BaseApplication::CLIENT;
     // Show Score Box
@@ -656,6 +666,10 @@ void TutorialApplication::start() {
             mViewport->setCamera(mCamera2);
             Ogre::Node* paddleNode = room->getPaddle2()->getNode();
             mCamera2->lookAt(paddleNode->getPosition());
+
+            room->getBall()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle1()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle2()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
         }
     }
 }
@@ -725,9 +739,14 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
 
     if(scoreWall->getScore() == 3) {
         // Build gameover packet and send to client
-        GameOverPacket packet;
+        UpdatePacket packet;
         packet.packetType = BaseApplication::PACKET_GAME;
         packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
         char toSend[sizeof(packet)];
         std::memcpy(&toSend[0],&packet,sizeof(packet));
         mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
@@ -736,9 +755,14 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
         mTimeToRound = std::numeric_limits<double>::max();
     } else if(scoreWall->getScoreOther() == 3) {
         // Build gameover packet and send to client
-        GameOverPacket packet;
+        UpdatePacket packet;
         packet.packetType = BaseApplication::PACKET_GAME;
         packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
         char toSend[sizeof(packet)];
         std::memcpy(&toSend[0],&packet,sizeof(packet));
         mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
@@ -747,9 +771,14 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
         mTimeToRound = std::numeric_limits<double>::max();
     } else {
         // Build roundover packet and send to client
-        RoundOverPacket packet;
+        UpdatePacket packet;
         packet.packetType = BaseApplication::PACKET_ROUND;
         packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
         char toSend[sizeof(packet)];
         std::memcpy(&toSend[0],&packet,sizeof(packet));
         mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
