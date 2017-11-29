@@ -32,8 +32,40 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
 void Goal::on() { 
     isActive = true;
     btBody->setUserIndex(Physics::TYPE_GOAL_ON);
-    goalEntity->setMaterialName("Colors/RadioactiveGreen");
+    goalEntity->setMaterialName("Colors/Green");
 }
+
+void Goal::createBrick(int hp) { 
+    isActive = true;
+    btBody->setUserIndex(Physics::TYPE_GOAL_ON);
+    health = hp;
+    Goal::updateColor(health);
+}
+bool Goal::decHealth(){
+    health--;
+    if(health == -1)
+        return true;
+    else 
+        Goal::updateColor(health);
+    return false;
+}
+
+void Goal::updateColor(int health){
+    switch (health)
+    {
+        case 0:
+           goalEntity->setMaterialName("Colors/Orange");
+            break; 
+        case 1:
+            goalEntity->setMaterialName("Colors/Yellow");
+            break;
+        case 2:
+            goalEntity->setMaterialName("Colors/Green");
+            break;
+        default:
+            break;
+    }
+ }
 
 void Goal::off() { 
     isActive = false;

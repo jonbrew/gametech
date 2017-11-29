@@ -29,6 +29,8 @@ public:
     int getScoreOther();
     void resetScore();
     void resetScoreOther();
+    bool decHealth();
+
 };
 
 #endif
