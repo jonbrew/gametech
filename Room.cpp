@@ -1,6 +1,5 @@
 #include "Room.h"
 
-
 Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 	wall(mSceneMgr, mPhys, wallSize)
 {
@@ -10,6 +9,7 @@ Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 	ball = new Ball(mSceneMgr, mPhys);
 	paddle1 = NULL;
 	paddle2 = NULL;
+	//brick = new Brick(mSceneMgr, mPhys);
 	scoreWall = new ScoreWall(mSceneMgr, mPhys, wallSize);
 	scoreWall->createScoreWall();
 }
@@ -18,6 +18,7 @@ void Room::setupSingle() {
 	ball->createBall(Ogre::Vector3(0,0,-60));
 	ball->getRigidBody()->applyCentralImpulse(btVector3(0,10,75));
 	paddle1 = new Paddle(mSceneMgr, mPhys, 30, 15, Ogre::Vector3(0,0,-75), -90);
+	//brick->createBrick(Ogre::Vector3(10, 10, 10), 1);
 }
 
 void Room::setupMulti() {

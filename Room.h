@@ -7,6 +7,7 @@
 #include "ScoreWall.h"
 #include "Paddle.h"
 #include "Goal.h"
+#include "Brick.h"
 
 class Room {
 public:
@@ -28,6 +29,7 @@ private:
 	Ball* ball;
 	Paddle* paddle1;
 	Paddle* paddle2;
+	Brick* brick;
 };
 
 #endif
