@@ -661,6 +661,10 @@ void TutorialApplication::updateScoreLabelOther() {
 void TutorialApplication::restartGame() {
     // Stop game
     mGameState = BaseApplication::STOPPED;
+    dRoll2 = 0;
+    dPitch2 = 0;
+    dRoll1 = 0;
+    dPitch1 = 0;
     // Reset score
     scoreWall->resetScore();
     updateScoreLabel();
