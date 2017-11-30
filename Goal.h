@@ -23,7 +23,7 @@ protected:
 
 public: 
     Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double, Ogre::Vector3 pos); 
-    void on(int);
+    //void on(int);
     void createBrick(int);
     void off();
     bool decHealth();

@@ -28,13 +28,13 @@ Goal::Goal(Ogre::SceneManager* scnMgr, Physics* mPhys, double goalSize, Ogre::Ve
     //add the body to the dynamics world
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
 } 
-
+/*
 void Goal::on() { 
     isActive = true;
     btBody->setUserIndex(Physics::TYPE_GOAL_ON);
     goalEntity->setMaterialName("Colors/Green");
 }
-
+*/
 void Goal::createBrick(int hp) { 
     isActive = true;
     btBody->setUserIndex(Physics::TYPE_GOAL_ON);
