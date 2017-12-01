@@ -7,18 +7,18 @@ Brick::Brick(Ogre::SceneManager* scnMgr, Physics* mPhys) {
 
 void Brick::createBrick(Ogre::Vector3 startPos, int level) {
 
-	if (brick_level == 1){
+	if (brick_level == 3){
 		brick_material = "Colors/Green";
 	} else if (brick_level == 2) {
 		brick_material = "Colors/Yellow";
-	} else if (brick_level == 3) {
-		brick_material = "Colors/Red";
+	} else if (brick_level == 1) {
+		brick_material = "Colors/Orange";
 	}
 
     brick = sceneMgr->createEntity("cube.mesh"); 
     brick->setCastShadows(true);
     brick->setMaterialName(brick_material);
-    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Brick"); 
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(); 
     rootNode->attachObject(brick);
     rootNode->scale(0.07,0.07,0.07); 
     rootNode->setPosition(startPos);
@@ -36,8 +36,8 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
     btMotionState = new btDefaultMotionState(btTrans);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
-    btBody->setRestitution(0.85);
-    btBody->setFriction(0.5);
+    btBody->setRestitution(1.0);
+    btBody->setFriction(0);
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BRICK);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);
@@ -49,15 +49,22 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
 void Brick::hitBrick() {
 	brick_level--;
 	if (brick_level == 0) {
-		sceneMgr->destroyEntity(brick->getname());
-	} else if (brick_level == 1){
+		delete this;
+	} else if (brick_level == 3){
 		brick_material = "Colors/Green";
 	} else if (brick_level == 2) {
 		brick_material = "Colors/Yellow";
-	} else if (brick_level == 3) {
-		brick_material = "Colors/Red";
+	} else if (brick_level == 1) {
+		brick_material = "Colors/Orange";
 	}
 
 	brick->setMaterialName(brick_material);
 
+}
+
+Brick::~Brick(void) {
+    sceneMgr->destroyEntity(brick->getname());
+    mPhysics->getDynamicsWorld->removeRigidBody(btBody);
+    delete btBody->getMotionState();
+    delete btBody;
 }

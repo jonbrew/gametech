@@ -30,6 +30,7 @@ private:
 	Ball* ball;
 	Paddle* paddle1;
 	Paddle* paddle2;
+	std::list<Brick*> 
 	void setProbability(int,int&,int&,int&,int&);
 };
 

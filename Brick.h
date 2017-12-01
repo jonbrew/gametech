@@ -21,6 +21,7 @@ protected:
 
 public:
 	Brick(Ogre::SceneManager*, Physics*);
+	virtual ~Brick(void);
 	void createBrick(Ogre::Vector3, int);
 	void hitBrick();
     Ogre::SceneNode* getNode(void) { return rootNode; }
