@@ -36,15 +36,109 @@ material Colors/RadioactiveGreen
       {
          lighting on
  
-         ambient 0.1 0.3 0.1 0.3
-         diffuse 0.2 0.2 0.2 0.3
-         emissive 0.05 0.8 0.05 0.3
+         ambient 0.1 0.3 0.1 0.23
+         diffuse 0.2 0.2 0.2 0.23
+         emissive 0.05 0.8 0.05 0.23
 
          depth_write off
          
          scene_blend alpha_blend
 
          cull_hardware none
+      }
+   }
+}
+
+material Colors/Green
+{
+   technique
+   {
+      pass
+      {
+         lighting on
+ 
+         ambient 0.2 0.7 0.2 0.6
+         diffuse 0.2 0.7 0.2 0.6
+         emissive 0 0 0 0.6
+
+         depth_write off
+         
+         scene_blend alpha_blend
+
+         cull_hardware none
+      }
+      pass
+      {
+         lighting on
+   
+         ambient 0.2 0.7 0.2 0.6
+         diffuse 0.2 0.7 0.2 0.6
+         emissive 0.1 0.1 0.1 1
+   
+         polygon_mode wireframe
+      }
+   }
+}
+   
+
+material Colors/Yellow
+{
+   technique
+   {
+      pass
+      {
+         lighting on
+ 
+         ambient 0.7 0.7 0.1 0.6
+         diffuse 0.7 0.7 0.1 0.6
+         emissive 0 0 0 0.6
+
+         depth_write off
+         
+         scene_blend alpha_blend
+
+         cull_hardware none
+      }
+      pass
+      {
+         lighting on
+
+         ambient 0.7 0.7 0.1 0.6
+         diffuse 0.7 0.7 0.1 0.6
+         emissive 0.1 0.1 0.1 1
+
+         polygon_mode wireframe
+      }
+   }
+}
+
+material Colors/Orange
+{
+   technique
+   {
+      pass
+      {
+         lighting on
+ 
+         ambient 0.8 0.5 0.1 0.6
+         diffuse 0.8 0.5 0.1 0.6
+         emissive 0 0 0 0.6
+
+         depth_write off
+         
+         scene_blend alpha_blend
+
+         cull_hardware none
+      }
+      pass
+      {
+         lighting on
+
+         ambient 0.8 0.5 0.1 0.6
+         diffuse 0.8 0.5 0.1 0.6
+         emissive 0.1 0.1 0.1 1
+
+         polygon_mode wireframe
       }
    }
 }

@@ -19,6 +19,7 @@ public:
 	Ball* getBall(void);
 	void reset(void);
 	void resetMultiplayer(int roundNum);
+	void generateBricks(int roundNum);
 
 private:
 	Physics* mPhys;
@@ -28,6 +29,8 @@ private:
 	Ball* ball;
 	Paddle* paddle1;
 	Paddle* paddle2;
+
+	void setProbability(int,int&,int&,int&,int&);
 };
 
 #endif

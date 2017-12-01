@@ -30,8 +30,8 @@ void Ball::createBall(Ogre::Vector3 startPos) {
     btMotionState = new btDefaultMotionState(btTrans);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(btMass, btMotionState, btShape, btInertia);
     btBody = new btRigidBody(rbInfo);
-    btBody->setRestitution(0.85);
-    btBody->setFriction(0.5);
+    btBody->setRestitution(1.0);
+    btBody->setFriction(0.0);
     btBody->setUserPointer(rootNode);
     btBody->setUserIndex(Physics::TYPE_BALL);
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);

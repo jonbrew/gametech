@@ -40,7 +40,7 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr, Physics* mPhys, int paddleWidth, int 
 	btBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
     btBody->setActivationState(DISABLE_DEACTIVATION);
     btBody->setUserIndex(Physics::TYPE_PADDLE);
-    btBody->setRestitution(1);
+    btBody->setRestitution(0.85);
     
     //add the body to the dynamics world
     mPhysics->getDynamicsWorld()->addRigidBody(btBody);

@@ -13,7 +13,7 @@ Physics::Physics(Sound* mSnd) {
 		overlappingPairCache,
 		solver,
 		collisionConfiguration); 
-	dynamicsWorld->setGravity(btVector3(0.0, -9.81, 0.0));
+	dynamicsWorld->setGravity(btVector3(0.0, 0.0, -5.0));
 }
 
 void Physics::addObject (btRigidBody* b) { 

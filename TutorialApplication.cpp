@@ -614,8 +614,7 @@ bool TutorialApplication::client(const CEGUI::EventArgs &e) {
 void TutorialApplication::start() {
     if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
         room->setupSingle();
-        scoreWall->allOff();
-        scoreWall->pickGoal();
+        
         Ogre::Node* paddleNode = room->getPaddle1()->getNode();
         mCamera1->lookAt(paddleNode->getPosition());
     } else { // Setup multi player scene
