@@ -8,11 +8,11 @@ class Brick {
 protected:
 	int brick_level;
 	Ogre::Entity* brick;
-	char brick_material;
+	char* brick_material;
 	Ogre::SceneManager* sceneMgr;
     Ogre::SceneNode* rootNode;
     Physics* mPhysics;
-	btCollisionShape* brickShape;
+	btCollisionShape* btShape;
 	btRigidBody* btBody; 
 	btDefaultMotionState *btMotionState;
 	btScalar btMass; ; 
@@ -22,7 +22,8 @@ protected:
 public:
 	Brick(Ogre::SceneManager*, Physics*);
 	void createBrick(Ogre::Vector3, int);
-	void hitBrick();
+	bool hitBrick();
+	void updateColor(int);
     Ogre::SceneNode* getNode(void) { return rootNode; }
     btRigidBody* getRigidBody(void) { return btBody; }
 

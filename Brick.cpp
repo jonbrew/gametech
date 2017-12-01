@@ -7,17 +7,9 @@ Brick::Brick(Ogre::SceneManager* scnMgr, Physics* mPhys) {
 
 void Brick::createBrick(Ogre::Vector3 startPos, int level) {
 
-	if (brick_level == 1){
-		brick_material = "Colors/Green";
-	} else if (brick_level == 2) {
-		brick_material = "Colors/Yellow";
-	} else if (brick_level == 3) {
-		brick_material = "Colors/Red";
-	}
-
     brick = sceneMgr->createEntity("cube.mesh"); 
     brick->setCastShadows(true);
-    brick->setMaterialName(brick_material);
+    updateColor(level);
     rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Brick"); 
     rootNode->attachObject(brick);
     rootNode->scale(0.07,0.07,0.07); 
@@ -46,18 +38,29 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
 
 }
 
-void Brick::hitBrick() {
+bool Brick::hitBrick() {
 	brick_level--;
 	if (brick_level == 0) {
-		sceneMgr->destroyEntity(brick->getname());
-	} else if (brick_level == 1){
-		brick_material = "Colors/Green";
-	} else if (brick_level == 2) {
-		brick_material = "Colors/Yellow";
-	} else if (brick_level == 3) {
-		brick_material = "Colors/Red";
-	}
-
-	brick->setMaterialName(brick_material);
-
+		//sceneMgr->destroyEntity(brick->getName());
+        return true;
+	} else 
+        updateColor(brick_level);
+    return false;
 }
+
+void Brick::updateColor(int health){
+    switch (health)
+    {
+        case 1:
+           brick->setMaterialName("Colors/Orange");
+            break; 
+        case 2:
+            brick->setMaterialName("Colors/Yellow");
+            break;
+        case 3:
+            brick->setMaterialName("Colors/Green");
+            break;
+        default:
+            break;
+    }
+ }
