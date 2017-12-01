@@ -25,6 +25,7 @@ public:
     static const int TYPE_PADDLE = 2;
     static const int TYPE_GOAL_OFF = 3;
     static const int TYPE_GOAL_ON = 4;
+    static const int TYPE_BRICK = 5;
 
     Physics(Sound* mSnd);
     void addObject(btRigidBody* b);

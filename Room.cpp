@@ -1,6 +1,5 @@
 #include "Room.h"
 
-
 Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 	wall(mSceneMgr, mPhys, wallSize)
 {
@@ -10,6 +9,7 @@ Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
 	ball = new Ball(mSceneMgr, mPhys);
 	paddle1 = NULL;
 	paddle2 = NULL;
+	//brick = new Brick(mSceneMgr, mPhys);
 	scoreWall = new ScoreWall(mSceneMgr, mPhys, wallSize);
 	scoreWall->createScoreWall();
 }

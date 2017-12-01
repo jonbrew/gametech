@@ -64,7 +64,12 @@ void ScoreWall::pickGoal() {
             i = rand() % goals.size();
     }
     activeGoal = &(goals[i]);
-    activeGoal->on();
+    int j = rand() % 3;
+    activeGoal->createBrick(j);
+}
+
+bool ScoreWall::decHealth(){
+    return activeGoal->decHealth();
 }
 
 void ScoreWall::increaseScore() {

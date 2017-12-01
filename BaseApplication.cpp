@@ -434,7 +434,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         if(scored) {
             scoreWall->increaseScore();
             updateScoreLabel();
-            scoreWall->pickGoal();
+            if(scoreWall->decHealth())
+                scoreWall->pickGoal();
             ballRigidBody->applyCentralImpulse(ballVelocity*0.1);
         }
     
