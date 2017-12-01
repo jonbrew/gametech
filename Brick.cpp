@@ -9,9 +9,9 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
     brick = sceneMgr->createEntity("cube.mesh"); 
     brick->setCastShadows(true);
     updateColor(level);
-    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Brick"); 
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(); 
     rootNode->attachObject(brick);
-    rootNode->scale(0.07,0.07,0.07); 
+    rootNode->scale(0.2,0.2,0.2); 
     rootNode->setPosition(startPos);
     //create the new physics shape
     btShape = new btBoxShape(btVector3(10, 10, 10));
@@ -40,11 +40,13 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
 bool Brick::hitBrick() {
     brick_level--;
     updateColor(brick_level);
+    if(brick_level == 0)
+        delete(this);
     return false;
 }
 
 Brick::~Brick(void) {
-    sceneMgr->destroyEntity(brick);
+    sceneMgr->destroySceneNode(rootNode);
     mPhysics->getDynamicsWorld()->removeRigidBody(btBody);
     delete btBody->getMotionState();
     delete btBody;

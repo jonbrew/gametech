@@ -74,23 +74,16 @@ void Room::generateBricks(int roundNum) {
 				int createChance = rand() % 100;
 				bool createBrick = createChance < brickDensity;
 				if(createBrick) {
-					Ogre::SceneNode* thisSceneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-					thisSceneNode->setPosition(Ogre::Vector3(x,y,z));
-					thisSceneNode->scale(Ogre::Vector3(0.2,0.2,0.2));
+					Brick* brick = new Brick(mSceneMgr,mPhys);
 					int brickHealth = rand() % 100;
 					if(brickHealth < greenChance) {
-						Ogre::Entity* brickEntity = mSceneMgr->createEntity("cube.mesh");
-						brickEntity->setMaterialName("Colors/Green");
-						thisSceneNode->attachObject(brickEntity);
+						brick->createBrick(Ogre::Vector3(x,y,z),3);
 					} else if (brickHealth < yellowChance) {
-						Ogre::Entity* brickEntity = mSceneMgr->createEntity("cube.mesh");
-						brickEntity->setMaterialName("Colors/Yellow");
-						thisSceneNode->attachObject(brickEntity);
+						brick->createBrick(Ogre::Vector3(x,y,z),2);
 					} else {
-						Ogre::Entity* brickEntity = mSceneMgr->createEntity("cube.mesh");
-						brickEntity->setMaterialName("Colors/Orange");
-						thisSceneNode->attachObject(brickEntity);
+						brick->createBrick(Ogre::Vector3(x,y,z),1);
 					}
+					bricks.push_back(brick);
 				}
 			}
 		}
