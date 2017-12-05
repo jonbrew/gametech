@@ -143,6 +143,7 @@ protected:
     int                         mHitMaxFrames;
     int                         mHitFrames;
     int                         mRoundNum;
+    int                         mLivesNum;
     double                      mTimeToRound;
     CEGUI::Window*              roundTimerLabel;
     CEGUI::Window*              youMissedLabel;
@@ -190,6 +191,7 @@ protected:
     static const int            STOPPED = 0;
     static const int            RUNNING = 1;
     static const int            PAUSED = 2;
+    static const int            ROUND_END = 3;
 
     int                         mGameState;
     virtual void gameOver(bool) = 0;

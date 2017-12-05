@@ -99,51 +99,51 @@ void Room::setProbability(int roundNum, int& greenChance, int& yellowChance, int
 		greenChance = 20;
 		yellowChance = 70;
 		orangeChance = 100;
-		brickDensity = 15;
+		brickDensity = 10;
 	} else if(roundNum == 1) {
 		greenChance = 25;
 		yellowChance = 75;
 		orangeChance = 100;
-		brickDensity = 20;
+		brickDensity = 12;
 	} else if(roundNum == 2) {
 		greenChance = 30;
 		yellowChance = 80;
 		orangeChance = 100;
-		brickDensity = 25;
+		brickDensity = 14;
 	} else if(roundNum == 3) {
 		greenChance = 35;
 		yellowChance = 85;
 		orangeChance = 100;
-		brickDensity = 30;
+		brickDensity = 17;
 	} else if(roundNum == 4) {
 		greenChance = 40;
 		yellowChance = 85;
 		orangeChance = 100;
-		brickDensity = 35;
+		brickDensity = 20;
 	} else if(roundNum >= 5) {
 		greenChance = 45;
 		yellowChance = 85;
 		orangeChance = 100;
-		brickDensity = 40;
-	} else if(roundNum >= 8) {
+		brickDensity = 25;
+	} else if(roundNum >= 7) {
 		greenChance = 55;
 		yellowChance = 85;
 		orangeChance = 100;
-		brickDensity = 50;
-	} else if(roundNum >= 10) {
+		brickDensity = 35;
+	} else if(roundNum >= 9) {
 		greenChance = 60;
 		yellowChance = 90;
 		orangeChance = 100;
-		brickDensity = 60;
-	} else if(roundNum >= 15) {
+		brickDensity = 45;
+	} else if(roundNum >= 14) {
 		greenChance = 75;
 		yellowChance = 90;
 		orangeChance = 100;
-		brickDensity = 70;
-	} else if(roundNum >= 20) {
+		brickDensity = 55;
+	} else if(roundNum >= 19) {
 		greenChance = 85;
 		yellowChance = 95;
 		orangeChance = 100;
-		brickDensity = 80;
+		brickDensity = 75;
 	}
 }

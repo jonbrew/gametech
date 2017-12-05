@@ -63,6 +63,7 @@ BaseApplication::BaseApplication(void)
     mHitMaxFrames(500),
     mHitFrames(0),
     mRoundNum(0),
+    mLivesNum(5),
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
@@ -283,7 +284,7 @@ bool BaseApplication::setup(void)
 
     // Init Bullet Physics
     mPhysics = new Physics(mSound);
-    // mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
+    mDebugDraw = new CDebugDraw(mSceneMgr,mPhysics->getDynamicsWorld());
 
     // Init NetManager
     mNetMgr = new NetManager();
@@ -362,9 +363,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     Ogre::Vector3 newDirection = mDirection;
     if(isClient)
         newDirection.x *= -1;
-    if((paddlePosition.x <= -70 && newDirection.x < 0) || (paddlePosition.x >= 70 && newDirection.x > 0))
+    if((paddlePosition.x <= -83 && newDirection.x < 0) || (paddlePosition.x >= 83 && newDirection.x > 0))
        newDirection.x = 0;
-    if((paddlePosition.y <= -85 && newDirection.y < 0) || (paddlePosition.y >= 85 && newDirection.y > 0))
+    if((paddlePosition.y <= -92 && newDirection.y < 0) || (paddlePosition.y >= 92 && newDirection.y > 0))
        newDirection.y = 0;
    
     Ogre::Radian newPitch = mPitch;
@@ -440,17 +441,22 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                     if(listBrick == brick) {
                         bricks.erase(it);
                         delete listBrick;
+                        ballRigidBody->setLinearVelocity(ballVelocity * -1);
                         break;
                     }
                 }
             }
         }
-    
+        // Limit ball speed
+        btScalar ballSpeed = ballVelocity.length();
+        if(ballSpeed > 300) {
+            ballVelocity *= 300/ballSpeed;
+            ballRigidBody->setLinearVelocity(ballVelocity);
+        }
         Ogre::Vector3 ballPosition = ballNode->getPosition();
-        bool ballStopped = abs(ballVelocity.z()) < 5 && abs(ballVelocity.y()) < 5 && abs(ballVelocity.z() < 5);
-        if(ballPosition.z <= -80 || ballStopped) {
+        if(ballPosition.z <= -80) {
             mGameState = BaseApplication::STOPPED;
-            gameOver(ballStopped);
+            gameOver(false);
         }
     } else { // Multiplayer updates
         if(isClient) { // Client updates

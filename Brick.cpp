@@ -16,11 +16,10 @@ void Brick::createBrick(Ogre::Vector3 startPos, int level) {
     //create the new physics shape
     btShape = new btBoxShape(btVector3(9, 9, 9));
     mPhysics->getCollisionShapes().push_back(btShape);
-    //set the initial position and transform
-    btTrans.setRotation(btQuaternion(1.0f, 1.0f, 1.0f, 0));
     //set the mass of the object. a mass of "0" means that it is an immovable object
     btMass = 0;
     btInertia = btVector3(0,0,0);
+    btTrans.setRotation(btQuaternion(btRadians(0),btRadians(0),btRadians(0)));
     btTrans.setOrigin(btVector3(startPos.x,startPos.y,startPos.z));
     btShape->calculateLocalInertia(btMass, btInertia);
     //construct the body and add it to the dynamics world

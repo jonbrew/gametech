@@ -197,6 +197,307 @@ bool TutorialApplication::initClient(const char* hostname) {
     return true;
 }
 
+bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
+    // Show menu
+    menuBox->show();
+
+    // Pause game
+    mGameState = BaseApplication::PAUSED;
+    return true;
+}
+
+bool TutorialApplication::sound(const CEGUI::EventArgs &e) {
+    // Toggle sound
+    mSound->toggle();
+
+    // Change text
+    if(mSound->getIsOn()) {
+        mainSoundButton->setText("Sound Off");
+        soundButton->setText("Sound Off");
+    }
+    else {
+        mainSoundButton->setText("Sound On");
+        soundButton->setText("Sound On");
+    }
+
+    return true;
+}
+
+bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
+    // Hide menu
+    menuBox->hide();
+    startLabel->hide();
+    // Resume game
+    mGameState = BaseApplication::RUNNING;
+    return true;
+}
+
+bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
+    restartGame();
+    // Show label
+    startLabel->show();
+    // Hide Menu
+    menuBox->hide();
+    return true;
+}
+
+bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
+    mShutDown = true;
+    return true;
+}
+
+bool TutorialApplication::single(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Set game mode
+    mGameMode = BaseApplication::SINGLE;
+    // Show start label, menu button, and score box
+    startLabel->show();
+    menuButton->show();
+    scoreBox->show();
+    roundBox->show();
+    livesBox->show();
+    updateRoundLabel();
+
+    // Start game
+    start();
+
+    return true;
+}
+
+bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    mainMenuBox->hide();
+    // Show Multi Menu
+    multiMenuBox->show();
+
+    return true;
+}
+
+bool TutorialApplication::search(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    searchBox->activate();
+    // Show Multi Menu
+    searchMenu->show();
+
+    return true;
+}
+
+
+bool TutorialApplication::server(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    // waiting label
+    waitingBox->show();
+    ipLabel->setText("Your IP Address: " + mNetMgr->getIPstring());
+    ipLabel->show();
+
+    // Set net role
+    mNetRole = BaseApplication::SERVER;
+    // Init Server
+    initServer();
+    // Set waiting for client flag to true
+    mWaiting = true;
+    
+    return true;
+}
+
+bool TutorialApplication::client(const CEGUI::EventArgs &e) {
+    // Hide Menu
+    multiMenuBox->hide();
+
+    CEGUI::String ip_addr = searchBox->getText();
+
+    // Init Client and send message to server
+    if(!initClient(ip_addr.c_str()))
+        std::cout << "\n\nFAILED TO CONNECT... TRY AGAIN\n\n";
+    // Set net role
+    mNetRole = BaseApplication::CLIENT;
+    // Show Score Box
+    multiScoreBox->show();
+    // Set game mode
+    mGameMode = BaseApplication::MULTI;
+    // Start game
+
+    searchButton->hide();
+    searchMenu->hide();
+    searchBox->hide();
+
+    start();
+
+    return true;
+}
+
+void TutorialApplication::start() {
+    if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
+        room->setupSingle();
+        
+        Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+        mCamera1->lookAt(paddleNode->getPosition());
+    } else { // Setup multi player scene
+        room->setupMulti();
+        if(mNetRole == BaseApplication::SERVER) {
+            mViewport->setCamera(mCamera2);
+            mViewport->setCamera(mCamera1);
+            Ogre::Node* paddleNode = room->getPaddle1()->getNode();
+            mCamera1->lookAt(paddleNode->getPosition());
+            mTimeToRound = 3;
+            roundTimerLabel->show();
+        } else {
+            mViewport->setCamera(mCamera2);
+            Ogre::Node* paddleNode = room->getPaddle2()->getNode();
+            mCamera2->lookAt(paddleNode->getPosition());
+
+            room->getBall()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle1()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            room->getPaddle2()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
+            mTimeToRound = 3;
+            roundTimerLabel->show();
+        }
+    }
+}
+
+void TutorialApplication::updateScoreLabel() {
+    int score = scoreWall->getScore();
+    std::stringstream ss;
+    ss << score;
+    if(mGameMode == BaseApplication::MULTI)
+        p1ScoreLabel->setText(ss.str());
+    else 
+        scoreLabel->setText(ss.str());
+}
+
+void TutorialApplication::updateScoreLabelOther() {
+    int scoreOther = scoreWall->getScoreOther();
+    std::stringstream ss;
+    ss << scoreOther;
+    p2ScoreLabel->setText(ss.str());
+}
+
+void TutorialApplication::updateRoundLabel() {
+    std::stringstream ss;
+    ss << mRoundNum + 1;
+    roundLabel->setText(ss.str());
+}
+
+void TutorialApplication::updateLivesLabel() {
+    std::stringstream ss;
+    ss << mLivesNum;
+    livesLabel->setText(ss.str());
+}
+
+void TutorialApplication::restartGame() {
+    // Stop game
+    mGameState = BaseApplication::STOPPED;
+    dRoll2 = 0;
+    dPitch2 = 0;
+    dRoll1 = 0;
+    dPitch1 = 0;
+    // Reset score
+    scoreWall->resetScore();
+    updateScoreLabel();
+    // Reset round
+    mRoundNum = 0;
+    updateRoundLabel();
+    // Reset lives
+    mRoundNum = 5;
+    updateLivesLabel();
+    // Reset room
+    room->reset();
+    // Re-center Camera
+    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+    // Hide gameOverLabel       
+    gameOverLabel->hide();
+    youMissedLabel->hide();
+    tooSlowLabel->hide();
+    // Show label
+    startLabel->show();
+}
+
+void TutorialApplication::gameOver(bool ballStopped) {
+    // Show label
+    gameOverLabel->show();
+    if(ballStopped)
+        tooSlowLabel->show();
+    else
+        youMissedLabel->show();
+}
+
+void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
+    // This method only called by server
+    int scoreType = -1;
+    if(ballPos <= -80) {
+        youMissedLabel->show();
+        scoreWall->increaseScoreOther();
+        updateScoreLabelOther();
+        scoreType = BaseApplication::SCORE_CLIENT;
+    } else if(ballPos >= 80) {
+        youScoredLabel->show();
+        scoreWall->increaseScore();
+        updateScoreLabel();
+        mSound->play(Sound::SOUND_SCORE);
+        scoreType = BaseApplication::SCORE_SERVER;
+    } else if(ballStopped) {
+        drawLabel->show();
+        scoreType = BaseApplication::SCORE_DRAW;
+    }
+
+    if(scoreWall->getScore() == 3) {
+        // Build gameover packet and send to client
+        UpdatePacket packet;
+        packet.packetType = BaseApplication::PACKET_GAME;
+        packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
+        youScoredLabel->hide();
+        youWinLabel->show();
+        mTimeToRound = std::numeric_limits<double>::max();
+    } else if(scoreWall->getScoreOther() == 3) {
+        // Build gameover packet and send to client
+        UpdatePacket packet;
+        packet.packetType = BaseApplication::PACKET_GAME;
+        packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
+        youMissedLabel->hide();
+        youLoseLabel->show();
+        mTimeToRound = std::numeric_limits<double>::max();
+    } else {
+        // Build roundover packet and send to client
+        UpdatePacket packet;
+        packet.packetType = BaseApplication::PACKET_ROUND;
+        packet.scoreType = scoreType;
+        packet.soundToPlay = -1;
+        packet.ballPos = Ogre::Vector3();
+        packet.ballRot = Ogre::Quaternion();
+        packet.paddlePos = Ogre::Vector3();
+        packet.paddleRot = Ogre::Quaternion();
+        char toSend[sizeof(packet)];
+        std::memcpy(&toSend[0],&packet,sizeof(packet));
+        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
+        ++mRoundNum;
+        room->resetMultiplayer(mRoundNum);
+        mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+        mTimeToRound = 3;
+        roundTimerLabel->show();
+    }
+}
+
 void TutorialApplication::setupGUI() {
     gui = new GUI();
 
@@ -307,6 +608,34 @@ void TutorialApplication::setupGUI() {
     scoreLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
     scoreBox->hide();
     sheet->addChild(scoreBox);
+
+    // Round Box
+    roundBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/RoundBox");
+    roundBox->setFont("Jura-Regular");
+    roundBox->setText("ROUND");
+    roundBox->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.125, 0)));
+    roundBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.75, 0), CEGUI::UDim(0.8, 0)));
+    roundLabel = roundBox->createChild("Vanilla/Label", "CEGUIDemo/RoundBox/RoundLabel");
+    roundLabel->setFont("Jura-Regular");
+    roundLabel->setText("1");
+    roundLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
+    roundLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    roundBox->hide();
+    sheet->addChild(roundBox);
+
+    // Lives Box
+    livesBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/LivesBox");
+    livesBox->setFont("Jura-Regular");
+    livesBox->setText("LIVES");
+    livesBox->setSize(CEGUI::USize(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.125, 0)));
+    livesBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.05, 0), CEGUI::UDim(0.8, 0)));
+    livesLabel = livesBox->createChild("Vanilla/Label", "CEGUIDemo/LivesBox/LivesLabel");
+    livesLabel->setFont("Jura-Regular");
+    livesLabel->setText("5");
+    livesLabel->setSize(CEGUI::USize(CEGUI::UDim(1, 0), CEGUI::UDim(0.5, 0)));
+    livesLabel->setPosition(CEGUI::UVector2(CEGUI::UDim(0.02, 0), CEGUI::UDim(0.25, 0)));
+    livesBox->hide();
+    sheet->addChild(livesBox);
 
     // Multiplayer Score Box
     multiScoreBox = wmgr.createWindow("Vanilla/FrameWindow", "CEGUIDemo/MultiScoreBox");
@@ -477,287 +806,6 @@ void TutorialApplication::setupGUI() {
     sheet->addChild(menuBox);
     sheet->addChild(mainMenuBox);
     sheet->addChild(multiMenuBox);
-}
-
-bool TutorialApplication::menu(const CEGUI::EventArgs &e) {
-    // Show menu
-    menuBox->show();
-
-    // Pause game
-    mGameState = BaseApplication::PAUSED;
-    return true;
-}
-
-bool TutorialApplication::sound(const CEGUI::EventArgs &e) {
-    // Toggle sound
-    mSound->toggle();
-
-    // Change text
-    if(mSound->getIsOn()) {
-        mainSoundButton->setText("Sound Off");
-        soundButton->setText("Sound Off");
-    }
-    else {
-        mainSoundButton->setText("Sound On");
-        soundButton->setText("Sound On");
-    }
-
-    return true;
-}
-
-
-bool TutorialApplication::resume(const CEGUI::EventArgs &e) {
-    // Hide menu
-    menuBox->hide();
-    startLabel->hide();
-    // Resume game
-    mGameState = BaseApplication::RUNNING;
-    return true;
-}
-
-bool TutorialApplication::restart(const CEGUI::EventArgs &e) {
-    restartGame();
-    // Show label
-    startLabel->show();
-    // Hide Menu
-    menuBox->hide();
-    return true;
-}
-
-bool TutorialApplication::quit(const CEGUI::EventArgs &e) {
-    mShutDown = true;
-    return true;
-}
-
-bool TutorialApplication::single(const CEGUI::EventArgs &e) {
-    // Hide Menu
-    mainMenuBox->hide();
-    // Set game mode
-    mGameMode = BaseApplication::SINGLE;
-    // Show start label, menu button, and score box
-    startLabel->show();
-    menuButton->show();
-    scoreBox->show();
-
-    // Start game
-    start();
-
-    return true;
-}
-
-bool TutorialApplication::multi(const CEGUI::EventArgs &e) {
-    // Hide Menu
-    mainMenuBox->hide();
-    // Show Multi Menu
-    multiMenuBox->show();
-
-    return true;
-}
-
-bool TutorialApplication::search(const CEGUI::EventArgs &e) {
-    // Hide Menu
-    multiMenuBox->hide();
-
-    searchBox->activate();
-    // Show Multi Menu
-    searchMenu->show();
-
-    return true;
-}
-
-
-bool TutorialApplication::server(const CEGUI::EventArgs &e) {
-    // Hide Menu
-    multiMenuBox->hide();
-
-    // waiting label
-    waitingBox->show();
-    ipLabel->setText("Your IP Address: " + mNetMgr->getIPstring());
-    ipLabel->show();
-
-    // Set net role
-    mNetRole = BaseApplication::SERVER;
-    // Init Server
-    initServer();
-    // Set waiting for client flag to true
-    mWaiting = true;
-    
-    return true;
-}
-
-bool TutorialApplication::client(const CEGUI::EventArgs &e) {
-    // Hide Menu
-    multiMenuBox->hide();
-
-    CEGUI::String ip_addr = searchBox->getText();
-
-    // Init Client and send message to server
-    if(!initClient(ip_addr.c_str()))
-        std::cout << "\n\nFAILED TO CONNECT... TRY AGAIN\n\n";
-    // Set net role
-    mNetRole = BaseApplication::CLIENT;
-    // Show Score Box
-    multiScoreBox->show();
-    // Set game mode
-    mGameMode = BaseApplication::MULTI;
-    // Start game
-
-    searchButton->hide();
-    searchMenu->hide();
-    searchBox->hide();
-
-    start();
-
-    return true;
-}
-
-void TutorialApplication::start() {
-    if(mGameMode == BaseApplication::SINGLE) {  // Setup single player scene
-        room->setupSingle();
-        
-        Ogre::Node* paddleNode = room->getPaddle1()->getNode();
-        mCamera1->lookAt(paddleNode->getPosition());
-    } else { // Setup multi player scene
-        room->setupMulti();
-        if(mNetRole == BaseApplication::SERVER) {
-            mViewport->setCamera(mCamera2);
-            mViewport->setCamera(mCamera1);
-            Ogre::Node* paddleNode = room->getPaddle1()->getNode();
-            mCamera1->lookAt(paddleNode->getPosition());
-            mTimeToRound = 3;
-            roundTimerLabel->show();
-        } else {
-            mViewport->setCamera(mCamera2);
-            Ogre::Node* paddleNode = room->getPaddle2()->getNode();
-            mCamera2->lookAt(paddleNode->getPosition());
-
-            room->getBall()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
-            room->getPaddle1()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
-            room->getPaddle2()->getRigidBody()->setActivationState(DISABLE_SIMULATION);
-            mTimeToRound = 3;
-            roundTimerLabel->show();
-        }
-    }
-}
-
-void TutorialApplication::updateScoreLabel() {
-    int score = scoreWall->getScore();
-    std::stringstream ss;
-    ss << score;
-    if(mGameMode == BaseApplication::MULTI)
-        p1ScoreLabel->setText(ss.str());
-    else 
-        scoreLabel->setText(ss.str());
-}
-
-void TutorialApplication::updateScoreLabelOther() {
-    int scoreOther = scoreWall->getScoreOther();
-    std::stringstream ss;
-    ss << scoreOther;
-    p2ScoreLabel->setText(ss.str());
-}
-
-void TutorialApplication::restartGame() {
-    // Stop game
-    mGameState = BaseApplication::STOPPED;
-    dRoll2 = 0;
-    dPitch2 = 0;
-    dRoll1 = 0;
-    dPitch1 = 0;
-    // Reset score
-    scoreWall->resetScore();
-    updateScoreLabel();
-    // Reset room
-    room->reset();
-    // Re-center Camera
-    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
-    // Hide gameOverLabel       
-    gameOverLabel->hide();
-    youMissedLabel->hide();
-    tooSlowLabel->hide();
-    // Show label
-    startLabel->show();
-}
-
-void TutorialApplication::gameOver(bool ballStopped) {
-    // Show label
-    gameOverLabel->show();
-    if(ballStopped)
-        tooSlowLabel->show();
-    else
-        youMissedLabel->show();
-}
-
-void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
-    // This method only called by server
-    int scoreType = -1;
-    if(ballPos <= -80) {
-        youMissedLabel->show();
-        scoreWall->increaseScoreOther();
-        updateScoreLabelOther();
-        scoreType = BaseApplication::SCORE_CLIENT;
-    } else if(ballPos >= 80) {
-        youScoredLabel->show();
-        scoreWall->increaseScore();
-        updateScoreLabel();
-        mSound->play(Sound::SOUND_SCORE);
-        scoreType = BaseApplication::SCORE_SERVER;
-    } else if(ballStopped) {
-        drawLabel->show();
-        scoreType = BaseApplication::SCORE_DRAW;
-    }
-
-    if(scoreWall->getScore() == 3) {
-        // Build gameover packet and send to client
-        UpdatePacket packet;
-        packet.packetType = BaseApplication::PACKET_GAME;
-        packet.scoreType = scoreType;
-        packet.soundToPlay = -1;
-        packet.ballPos = Ogre::Vector3();
-        packet.ballRot = Ogre::Quaternion();
-        packet.paddlePos = Ogre::Vector3();
-        packet.paddleRot = Ogre::Quaternion();
-        char toSend[sizeof(packet)];
-        std::memcpy(&toSend[0],&packet,sizeof(packet));
-        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
-        youScoredLabel->hide();
-        youWinLabel->show();
-        mTimeToRound = std::numeric_limits<double>::max();
-    } else if(scoreWall->getScoreOther() == 3) {
-        // Build gameover packet and send to client
-        UpdatePacket packet;
-        packet.packetType = BaseApplication::PACKET_GAME;
-        packet.scoreType = scoreType;
-        packet.soundToPlay = -1;
-        packet.ballPos = Ogre::Vector3();
-        packet.ballRot = Ogre::Quaternion();
-        packet.paddlePos = Ogre::Vector3();
-        packet.paddleRot = Ogre::Quaternion();
-        char toSend[sizeof(packet)];
-        std::memcpy(&toSend[0],&packet,sizeof(packet));
-        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
-        youMissedLabel->hide();
-        youLoseLabel->show();
-        mTimeToRound = std::numeric_limits<double>::max();
-    } else {
-        // Build roundover packet and send to client
-        UpdatePacket packet;
-        packet.packetType = BaseApplication::PACKET_ROUND;
-        packet.scoreType = scoreType;
-        packet.soundToPlay = -1;
-        packet.ballPos = Ogre::Vector3();
-        packet.ballRot = Ogre::Quaternion();
-        packet.paddlePos = Ogre::Vector3();
-        packet.paddleRot = Ogre::Quaternion();
-        char toSend[sizeof(packet)];
-        std::memcpy(&toSend[0],&packet,sizeof(packet));
-        mNetMgr->messageClient(PROTOCOL_TCP,0,toSend,sizeof(packet));
-        ++mRoundNum;
-        room->resetMultiplayer(mRoundNum);
-        mCamera1->setPosition(Ogre::Vector3(0,0,-100));
-        mTimeToRound = 3;
-        roundTimerLabel->show();
-    }
 }
 
 //---------------------------------------------------------------------------

@@ -43,11 +43,15 @@ protected:
     CEGUI::Window* tooSlowLabel;
     CEGUI::Window* menuButton;
     CEGUI::Window* scoreBox;
+    CEGUI::Window* roundBox;
+    CEGUI::Window* livesBox;
     CEGUI::Window* p1ScoreBox;
     CEGUI::Window* p1ScoreLabel;
     CEGUI::Window* p2ScoreBox;
     CEGUI::Window* p2ScoreLabel;
     CEGUI::Window* scoreLabel;
+    CEGUI::Window* roundLabel;
+    CEGUI::Window* livesLabel;
     CEGUI::Window* mainMenuBox;
     CEGUI::Window* singleButton;
     CEGUI::Window* multiButton;
@@ -83,6 +87,8 @@ protected:
     void start(void);
     void updateScoreLabel(void);
     void updateScoreLabelOther(void);
+    void updateRoundLabel(void);
+    void updateLivesLabel(void);
     void gameOver(bool);
     void roundOverMulti(int,bool);
     void restartGame(void);
