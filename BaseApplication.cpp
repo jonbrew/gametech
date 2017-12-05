@@ -432,11 +432,18 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
         btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
         if(scored) {
-            scoreWall->increaseScore();
-            updateScoreLabel();
-            if(scoreWall->decHealth())
-                scoreWall->pickGoal();
-            ballRigidBody->applyCentralImpulse(ballVelocity*0.1);
+            Brick *brick = static_cast<Brick *>(mPhysics->getBrick());
+            if(brick->hitBrick()) {
+                std::list<Brick*> bricks = room->getBricks();
+                for(std::list<Brick*>::iterator it = bricks.begin(); it != bricks.end(); ++it) {
+                    Brick* listBrick = *it;
+                    if(listBrick == brick) {
+                        bricks.erase(it);
+                        delete listBrick;
+                        break;
+                    }
+                }
+            }
         }
     
         Ogre::Vector3 ballPosition = ballNode->getPosition();

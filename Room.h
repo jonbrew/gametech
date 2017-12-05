@@ -18,6 +18,7 @@ public:
 	Paddle* getPaddle1(void);
 	Paddle* getPaddle2(void);
 	Ball* getBall(void);
+	std::list<Brick*>& getBricks(void);
 	void reset(void);
 	void resetMultiplayer(int roundNum);
 	void generateBricks(int roundNum);

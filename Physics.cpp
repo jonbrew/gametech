@@ -5,6 +5,7 @@ Physics::Physics(Sound* mSnd) {
 	isCollidingWall = false;
 	isCollidingPaddle = false;
 	isCollidingGoal = false;
+    isCollidingBrick = false;
 	collisionConfiguration = new btDefaultCollisionConfiguration(); 
 	dispatcher = new btCollisionDispatcher(collisionConfiguration); 
 	overlappingPairCache = new btDbvtBroadphase(); 
@@ -14,6 +15,7 @@ Physics::Physics(Sound* mSnd) {
 		solver,
 		collisionConfiguration); 
 	dynamicsWorld->setGravity(btVector3(0.0, 0.0, -5.0));
+    brick = NULL;
 }
 
 void Physics::addObject (btRigidBody* b) { 
@@ -34,7 +36,8 @@ bool Physics::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, cons
 			body->getMotionState()->getWorldTransform(trans);
 
 			void *userPointer = body->getUserPointer();
-			if(userPointer) {
+            int type = body->getUserIndex();
+			if(userPointer && type == TYPE_BALL) {
 				btQuaternion orientation = trans.getRotation();
 				Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(userPointer);
 				sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
@@ -50,6 +53,7 @@ bool Physics::handleCollisions() {
 	bool hitWall = false;
     bool hitPaddle = false;
     bool hitGoal = false;
+    bool hitBrick = false;
 	bool scored = false;
 	if(numManifolds > 0) {
     	for(int i = 0; i < numManifolds; i++) {
@@ -58,8 +62,10 @@ bool Physics::handleCollisions() {
     	    const btCollisionObject* obB = contactManifold->getBody1();
     	    int aType = obA->getUserIndex();
     	    int bType = obB->getUserIndex();
-    	    if(aType == TYPE_BALL)
-    	    	aType = bType;
+    	    if(aType == TYPE_BALL) {
+                aType = bType;
+                obA = obB;
+            }
     	    switch(aType) {
     	    	case TYPE_WALL :
     	    		if(!isCollidingWall) {
@@ -89,11 +95,20 @@ bool Physics::handleCollisions() {
     	    		}
     	    		hitGoal = true;
     	    		break;
-    	    }
+                case TYPE_BRICK :
+                    if(!isCollidingBrick) {
+                        mSound->play(Sound::SOUND_SCORE);
+                        brick = obA->getUserPointer();
+                        scored = true;
+                    }
+                    hitBrick = true;
+                    break;
+    	    }  
     	}
     }
     isCollidingWall = hitWall;
     isCollidingPaddle = hitPaddle;
     isCollidingGoal = hitGoal;
+    isCollidingBrick = hitBrick;
     return scored;
 }

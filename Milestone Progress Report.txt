@@ -4,13 +4,14 @@ Status Update
 
 Completed:
 -Fully removed unnecessary functionalities from previous assignments (e.g., scorewall, goals, etc.)
--Semi-randomized location of bricks in 3D space
+-Semi-randomized location of bricks in 3D space that increase in difficulty as rounds increase
 -Fixed ongoing bugs with the paddle 
 -Finished implementing a brick class that changes color to reflect current health status
 -Fully integrated bricks into physics system
 
     In progress/To do:
--Reset round whenever all bricks are broken, creating a more difficult assortment of bricks (i.e., level system).
+-Reset round whenever all bricks are broken
+-GUI changes to add rounds and lives count
 -Implement lives system so that the game doesn't end on the first miss of a ball.
 -(maybe) add an animation for whenever a brick is destroyed  
 -More tweaking of physics and controls

@@ -44,6 +44,10 @@ Ball* Room::getBall() {
 	return ball;
 }
 
+std::list<Brick*>& Room::getBricks() {
+	return bricks;
+}
+
 void Room::reset() {
 	// Reset ball
 	ball->reset();

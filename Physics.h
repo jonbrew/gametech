@@ -12,12 +12,14 @@ protected:
     bool isCollidingWall;
     bool isCollidingPaddle;
     bool isCollidingGoal;
+    bool isCollidingBrick;
     btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btBroadphaseInterface* overlappingPairCache;
 	btSequentialImpulseConstraintSolver* solver;
     btDiscreteDynamicsWorld* dynamicsWorld;
 	btAlignedObjectArray<btCollisionShape*> collisionShapes;
+    void* brick;
 
 public:
     static const int TYPE_BALL = 0;
@@ -34,7 +36,8 @@ public:
     btDiscreteDynamicsWorld* getDynamicsWorld(void) {return dynamicsWorld;}
     bool stepSimulation(const Ogre::Real elapsedTime, 
         int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f);
-    bool handleCollisions(void); 
+    bool handleCollisions(void);
+    void* getBrick(void) {return brick;}
 };
 
 #endif
