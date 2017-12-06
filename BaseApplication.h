@@ -183,6 +183,7 @@ protected:
     ScoreWall*                  scoreWall;
     virtual void updateScoreLabel(void) = 0;
     virtual void updateScoreLabelOther(void) = 0;
+    virtual void updateLivesLabel(void) = 0;
 
     // GUI component
     GUI*                        gui;
@@ -195,6 +196,7 @@ protected:
 
     int                         mGameState;
     virtual void gameOver(bool) = 0;
+    virtual void roundOverSingle(void) = 0;
     virtual void roundOverMulti(int,bool) = 0;
 
     // Game Mode

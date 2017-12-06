@@ -72,8 +72,8 @@ bool ScoreWall::decHealth(){
     return activeGoal->decHealth();
 }
 
-void ScoreWall::increaseScore() {
-    score++;
+void ScoreWall::increaseScore(int increment) {
+    score += increment;
 }
 
 void ScoreWall::increaseScoreOther() {

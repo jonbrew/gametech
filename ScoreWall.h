@@ -23,7 +23,7 @@ public:
     void allOff();
     void pickGoal(); 
     Goal* getActiveGoal() { return activeGoal; } 
-    void increaseScore();
+    void increaseScore(int);
     void increaseScoreOther();
     int getScore();
     int getScoreOther();

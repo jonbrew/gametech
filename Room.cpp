@@ -1,7 +1,8 @@
 #include "Room.h"
 
 Room::Room(Ogre::SceneManager* mSceneMgr, Physics* mPhys, int wallSize):
-	wall(mSceneMgr, mPhys, wallSize)
+	wall(mSceneMgr, mPhys, wallSize),
+	brickCount(0)
 {
 	this->mPhys = mPhys;
 	this->mSceneMgr = mSceneMgr;
@@ -48,6 +49,10 @@ std::list<Brick*>& Room::getBricks() {
 	return bricks;
 }
 
+int& Room::getBrickCount() {
+	return brickCount;
+}
+
 void Room::reset() {
 	// Reset ball
 	ball->reset();
@@ -71,7 +76,7 @@ void Room::generateBricks(int roundNum) {
 	int orangeChance;
 	int brickDensity;
 	setProbability(roundNum,greenChance,yellowChance,orangeChance,brickDensity);
-
+	brickDensity = 1;
 	for(int x = -70; x <= 70; x += brickSize) {
 		for(int y = -70; y <= 70; y += brickSize) {
 			for(int z = 20; z <= 60; z += brickSize) {
@@ -88,6 +93,7 @@ void Room::generateBricks(int roundNum) {
 						brick->createBrick(Ogre::Vector3(x,y,z),1);
 					}
 					bricks.push_back(brick);
+					brickCount++;
 				}
 			}
 		}

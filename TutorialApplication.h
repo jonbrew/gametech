@@ -90,6 +90,7 @@ protected:
     void updateRoundLabel(void);
     void updateLivesLabel(void);
     void gameOver(bool);
+    void roundOverSingle(void);
     void roundOverMulti(int,bool);
     void restartGame(void);
 

@@ -433,13 +433,15 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         btRigidBody* ballRigidBody = room->getBall()->getRigidBody();
         btVector3 ballVelocity = ballRigidBody->getLinearVelocity();
         if(scored) {
+            scoreWall->increaseScore(1);
+            updateScoreLabel();
             Brick *brick = static_cast<Brick *>(mPhysics->getBrick());
             if(brick->hitBrick()) {
                 std::list<Brick*> bricks = room->getBricks();
                 for(std::list<Brick*>::iterator it = bricks.begin(); it != bricks.end(); ++it) {
                     Brick* listBrick = *it;
                     if(listBrick == brick) {
-                        bricks.erase(it);
+                        --room->getBrickCount();
                         delete listBrick;
                         ballRigidBody->setLinearVelocity(ballVelocity * -1);
                         break;
@@ -447,6 +449,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                 }
             }
         }
+        if(room->getBrickCount() == 0)
+            roundOverSingle();
         // Limit ball speed
         btScalar ballSpeed = ballVelocity.length();
         if(ballSpeed > 300) {
@@ -456,7 +460,15 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         Ogre::Vector3 ballPosition = ballNode->getPosition();
         if(ballPosition.z <= -80) {
             mGameState = BaseApplication::STOPPED;
-            gameOver(false);
+            if(mLivesNum == 0) {
+                gameOver(false);
+            } else {
+                --mLivesNum;
+                updateLivesLabel();
+                room->reset();
+                youMissedLabel->show();
+                mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+            }
         }
     } else { // Multiplayer updates
         if(isClient) { // Client updates
@@ -498,7 +510,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                     }
                     else if(clientPacketBuffer.scoreType == SCORE_CLIENT) {
                         youScoredLabel->show();
-                        scoreWall->increaseScore();
+                        scoreWall->increaseScore(1);
                         updateScoreLabel();
                         mSound->play(Sound::SOUND_SCORE);
                     }
@@ -517,7 +529,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
                     if(clientPacketBuffer.scoreType == SCORE_CLIENT) {
                         youWinLabel->show();
-                        scoreWall->increaseScore();
+                        scoreWall->increaseScore(1);
                         updateScoreLabel();
                         mSound->play(Sound::SOUND_SCORE);
                     }

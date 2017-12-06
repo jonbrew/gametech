@@ -135,6 +135,7 @@ bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke)
         case OIS::KC_RETURN:
             if(mGameState == BaseApplication::STOPPED && mGameMode == BaseApplication::SINGLE) {
                 startLabel->hide();
+                youMissedLabel->hide();
                 mGameState = BaseApplication::RUNNING;
             }
             break;
@@ -426,6 +427,23 @@ void TutorialApplication::gameOver(bool ballStopped) {
         youMissedLabel->show();
 }
 
+void TutorialApplication::roundOverSingle() {
+    mGameState = BaseApplication::STOPPED;
+    dRoll2 = 0;
+    dPitch2 = 0;
+    dRoll1 = 0;
+    dPitch1 = 0;
+    scoreWall->increaseScore(mRoundNum*50);
+    updateScoreLabel();
+    mRoundNum++;
+    updateRoundLabel();
+    room->reset();
+    mCamera1->setPosition(Ogre::Vector3(0,0,-100));
+    room->getBricks().clear();
+    room->generateBricks(mRoundNum);
+    startLabel->show();
+}
+
 void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
     // This method only called by server
     int scoreType = -1;
@@ -436,7 +454,7 @@ void TutorialApplication::roundOverMulti(int ballPos, bool ballStopped) {
         scoreType = BaseApplication::SCORE_CLIENT;
     } else if(ballPos >= 80) {
         youScoredLabel->show();
-        scoreWall->increaseScore();
+        scoreWall->increaseScore(1);
         updateScoreLabel();
         mSound->play(Sound::SOUND_SCORE);
         scoreType = BaseApplication::SCORE_SERVER;

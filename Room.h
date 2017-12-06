@@ -19,6 +19,7 @@ public:
 	Paddle* getPaddle2(void);
 	Ball* getBall(void);
 	std::list<Brick*>& getBricks(void);
+	int& getBrickCount(void);
 	void reset(void);
 	void resetMultiplayer(int roundNum);
 	void generateBricks(int roundNum);
@@ -32,6 +33,7 @@ private:
 	Paddle* paddle1;
 	Paddle* paddle2;
 	std::list<Brick*> bricks;
+	int brickCount;
 	void setProbability(int,int&,int&,int&,int&);
 };
 
