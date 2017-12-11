@@ -38,7 +38,6 @@ protected:
 
     // GUI components
     CEGUI::Window* sheet;
-    CEGUI::Window* startLabel;
     CEGUI::Window* gameOverLabel;
     CEGUI::Window* tooSlowLabel;
     CEGUI::Window* menuButton;

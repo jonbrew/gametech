@@ -7,7 +7,7 @@ Brick::Brick(Ogre::SceneManager* scnMgr, Physics* mPhys) {
 
 void Brick::createBrick(Ogre::Vector3 startPos, int level) {
     brick = sceneMgr->createEntity("cube.mesh"); 
-    brick->setCastShadows(true);
+    brick->setCastShadows(false);
     updateColor(level);
     rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(); 
     rootNode->attachObject(brick);

@@ -148,6 +148,7 @@ protected:
     CEGUI::Window*              roundTimerLabel;
     CEGUI::Window*              youMissedLabel;
     CEGUI::Window*              youScoredLabel;
+    CEGUI::Window*              startLabel;
     CEGUI::Window*              drawLabel;
     CEGUI::Window*              youWinLabel;
     CEGUI::Window*              youLoseLabel;

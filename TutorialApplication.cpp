@@ -404,10 +404,11 @@ void TutorialApplication::restartGame() {
     mRoundNum = 0;
     updateRoundLabel();
     // Reset lives
-    mRoundNum = 5;
+    mLivesNum = 5;
     updateLivesLabel();
     // Reset room
     room->reset();
+    room->generateBricks(mRoundNum);
     // Re-center Camera
     mCamera1->setPosition(Ogre::Vector3(0,0,-100));
     // Hide gameOverLabel       
@@ -433,7 +434,7 @@ void TutorialApplication::roundOverSingle() {
     dPitch2 = 0;
     dRoll1 = 0;
     dPitch1 = 0;
-    scoreWall->increaseScore(mRoundNum*50);
+    scoreWall->increaseScore((mRoundNum+1)*50);
     updateScoreLabel();
     mRoundNum++;
     updateRoundLabel();

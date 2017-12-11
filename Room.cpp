@@ -76,7 +76,6 @@ void Room::generateBricks(int roundNum) {
 	int orangeChance;
 	int brickDensity;
 	setProbability(roundNum,greenChance,yellowChance,orangeChance,brickDensity);
-	brickDensity = 1;
 	for(int x = -70; x <= 70; x += brickSize) {
 		for(int y = -70; y <= 70; y += brickSize) {
 			for(int z = 20; z <= 60; z += brickSize) {

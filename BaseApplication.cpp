@@ -140,6 +140,7 @@ void BaseApplication::createCamera(void)
     mCamera2->lookAt(Ogre::Vector3(0,0,0));
     mCamera2->setNearClipDistance(5);
     mCamera2->setFOVy(Ogre::Radian(Ogre::Degree(90)));
+    mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -442,6 +443,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                     Brick* listBrick = *it;
                     if(listBrick == brick) {
                         --room->getBrickCount();
+                        bricks.erase(it);
                         delete listBrick;
                         ballRigidBody->setLinearVelocity(ballVelocity * -1);
                         break;
@@ -466,7 +468,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                 --mLivesNum;
                 updateLivesLabel();
                 room->reset();
+                dRoll2 = 0;
+                dPitch2 = 0;
+                dRoll1 = 0;
+                dPitch1 = 0;
                 youMissedLabel->show();
+                startLabel->show();
                 mCamera1->setPosition(Ogre::Vector3(0,0,-100));
             }
         }
